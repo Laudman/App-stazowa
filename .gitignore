@@ -1,0 +1,4 @@
+/app-model/target/
+/app-service/target/
+/app-dao/target/
+/app-web/target/
