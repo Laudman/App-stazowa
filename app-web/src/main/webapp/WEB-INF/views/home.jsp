@@ -2,13 +2,38 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home</title>
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+<!DOCTYPE html>
+<html lang="pl" ng-app>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+ 
+    <title></title>
+    <script type="text/javascript" src="/js/angular.min.js"></script>
     </head>
-    <body>
-        <h1>Hello World!</h1>
-        <p>This is the homepage!</p>
-    </body>
+	<body>
+ 
+	<input type="text" ng-model="name" ng-pattern="/^\d+$/" />{{ name }}
+ 
+	</body>
 </html>
