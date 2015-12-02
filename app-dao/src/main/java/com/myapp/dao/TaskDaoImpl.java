@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import com.myapp.model.Task;
 
+//@Repository("taskDao")
 public class TaskDaoImpl extends AbstractDao<Integer, Task> implements TaskDao{
 	public Task findTask(int id) {
 		return getByKey(id);

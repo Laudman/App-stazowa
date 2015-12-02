@@ -1,17 +1,20 @@
 package com.myapp.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="FLAGGEDS")
 public class Flagged {
+	@Id
 	private int id_user;
 	private int id_task;
 	private int id_answer;
 	private boolean flag;
 	private String comment;
 	
+	public Flagged (){}
 	public Flagged ( int id_user, int id_task, int id_answer, boolean flag, String comment){
 		id_user = this.id_user;
 		id_task = this.id_task;

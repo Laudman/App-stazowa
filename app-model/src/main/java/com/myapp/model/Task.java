@@ -20,6 +20,7 @@ public class Task {
 	private String type_of_job;
 	private int amount_answer;
 	
+	public Task(){}
 	public Task ( int id_task, String text, int id_user, String type_of_question, 
 				  String type_of_speak, String type_of_job, int amount_answer){
 		id_task = this.id_task;

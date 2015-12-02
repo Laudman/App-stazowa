@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.myapp.dao.TaskDao;
 import com.myapp.model.Task;
 
-@Service("appService")
+//@Service("taskService")
 @Transactional
 public class TaskServiceImpl implements TaskService{
 	

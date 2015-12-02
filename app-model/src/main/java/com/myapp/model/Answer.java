@@ -17,6 +17,7 @@ public class Answer {
 	private int id_task;
 	private String text_answer;
 	
+	public Answer(){}
 	public Answer ( int id_answer, int id_user, int id_task, String text_answer){
 		id_answer = this.id_answer;
 		id_user = this.id_user;

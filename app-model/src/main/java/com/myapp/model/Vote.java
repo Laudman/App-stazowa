@@ -1,18 +1,27 @@
 package com.myapp.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="VOTES")
 public class Vote {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id_vote;
 	private int id_user;
 	private int id_task;
 	private int id_answer;
 	private int vote;
 	
-	public Vote (int id_user, int id_task, int id_answer, int vote){
+	public Vote(){}
+	
+	public Vote (int id_vote, int id_user, int id_task, int id_answer, int vote){
+		id_vote = this.id_vote;
 		id_user = this.id_user;
 		id_task = this.id_task;
 		id_answer = this.id_answer;
@@ -48,6 +57,16 @@ public class Vote {
 	public String toString(){
 		return "id_user = " + id_user + "id_answer = " + id_answer + 
 				"id_task = "+ id_task + "vote = " + vote;
+	}
+
+
+	public int getId_vote() {
+		return id_vote;
+	}
+
+
+	public void setId_vote(int id_vote) {
+		this.id_vote = id_vote;
 	}
 	
 }

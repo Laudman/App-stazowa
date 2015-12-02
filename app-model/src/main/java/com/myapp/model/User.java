@@ -17,6 +17,7 @@ public class User {
 	private String password;
 	private String email;
 	
+	public User (){}
 	public User (int id_user, String login, String password, String email){
 		id_user = this.id_user;
 		login = this.login;

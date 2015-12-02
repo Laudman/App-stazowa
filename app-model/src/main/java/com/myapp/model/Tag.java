@@ -16,6 +16,7 @@ public class Tag {
 	private int id_task;
 	private String tag;
 	
+	public Tag (){}
 	public Tag (int id_tag, int id_task, String tag){
 		id_tag = this.id_tag;
 		id_task = this.id_task;
