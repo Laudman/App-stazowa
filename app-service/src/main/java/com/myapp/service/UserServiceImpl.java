@@ -16,6 +16,10 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDao dao;
 	
+	private static List<User> users;
+	
+
+	
 	public User findUser(int id) {
 		return dao.findUser(id);
 	}
@@ -39,6 +43,19 @@ public class UserServiceImpl implements UserService{
 
 	public List<User> findAllUsers() {
 		return dao.findAllUsers();
+	}
+
+	public boolean isUserExist(User user) {
+		return findUserLogin(user.getLogin())!=null;
+	}
+
+	public User findUserLogin(String login) {
+		for(User user : users){
+			if(user.getLogin().equalsIgnoreCase(login)){
+				return user;
+			}
+		}
+		return null;
 	}
 
 }
