@@ -1,6 +1,6 @@
-'use strict';
+	'use strict';
 
-App.factory('UserService', ['$http', '$q', function($http, $q){
+App.factory('UserService', ['$resource', '$q', function($resource, $q){
 
 	return {
 		

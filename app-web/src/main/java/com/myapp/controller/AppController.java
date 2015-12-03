@@ -11,7 +11,7 @@ public class AppController {
 
 	  @RequestMapping(method = RequestMethod.GET)
 	    public String getIndexPage() {
-	        return "home";
+	        return "/views/home.html";
 	    }
 
 }

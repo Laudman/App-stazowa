@@ -29,17 +29,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
 //        registry.addResourceHandler("/views/**").addResourceLocations("/views/");
 //    }
     
-  @Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/views/");
-		viewResolver.setSuffix(".html");
-		registry.viewResolver(viewResolver);
-	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/view/**").addResourceLocations("/view/");
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 //        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
