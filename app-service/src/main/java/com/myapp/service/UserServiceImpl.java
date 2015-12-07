@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService{
 	
 
 	
-	public User findUser(int id) {
-		return dao.findUser(id);
+	public User findUser(int id_user) {
+		return dao.findUser(id_user);
 	}
 
 	public void saveOrUpdateUser(User user) {
@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
-	public void deleteUser(int id) {
-		dao.deleteUser(id);
+	public void deleteUser(int id_user) {
+		dao.deleteUser(id_user);
 	}
 
 	public List<User> findAllUsers() {

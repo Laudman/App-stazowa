@@ -6,13 +6,13 @@ import com.myapp.model.User;
 
 public interface UserService {
 	
-	User findUser(int id);
+	User findUser(int id_user);
 	
 	User findUserLogin(String login);
 
 	void saveOrUpdateUser(User user);
 	
-	void deleteUser(int id);
+	void deleteUser(int id_user);
 	
 	List<User> findAllUsers();
 	

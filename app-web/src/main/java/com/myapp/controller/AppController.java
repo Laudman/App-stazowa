@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AppController {
 
 	  @RequestMapping(method = RequestMethod.GET)
-	    public String getIndexPage() {
+	    public String getHomePage() {
 	        return "/views/home.html";
 	    }
 

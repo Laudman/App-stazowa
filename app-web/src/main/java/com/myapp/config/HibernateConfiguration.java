@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "com.myapp.dao", "com.myapp.service" })
+@ComponentScan({ "com.myapp" })
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfiguration {
 

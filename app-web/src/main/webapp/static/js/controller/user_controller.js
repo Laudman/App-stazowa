@@ -1,90 +1,34 @@
-'use strict';
+angular.module('userApp.controllers', [])
+        .controller('UserListController', function($scope, $state, popupService, $window, User) {
+  $scope.users = User.query(); //fetch all users. Issues a GET to /App/users
 
-App.controller('UserController', ['$scope', 'UserService', function($scope, UserService) {
-          var self = this;
-          self.user={id:null,login:'',password:'',email:''};
-          self.users=[];
-              
-          self.fetchAllUsers = function(){
-              UserService.fetchAllUsers()
-                  .then(
-      					       function(d) {
-      						        self.users = d;
-      					       },
-            					function(errResponse){
-            						console.error('Error while fetching Currencies');
-            					}
-      			       );
-          };
-           
-          self.createUser = function(user){
-              UserService.createUser(user)
-		              .then(
-                      self.fetchAllUsers, 
-				              function(errResponse){
-					               console.error('Error while creating User.');
-				              }	
-                  );
-          };
+  $scope.deleteUser = function(user) { // Delete a user. Issues a DELETE to /App/users/:id
+    if (popupService.showPopup('Really delete this?')) {
+      user.$delete(function() {
+        $window.location.href = ''; //redirect to home
+      });
+    }
+  };
+}).controller('UserViewController', function($scope, $stateParams, User) {
+  $scope.user = User.get({ id_user: $stateParams.id_user }); //Get a single user.Issues a GET to /App/users/:id
+}).controller('UserCreateController', function($scope, $state, $stateParams, User) {
+  $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
 
-         self.updateUser = function(user, id){
-              UserService.updateUser(user, id)
-		              .then(
-				              self.fetchAllUsers, 
-				              function(errResponse){
-					               console.error('Error while updating User.');
-				              }	
-                  );
-          };
+  $scope.addUser = function() { //create a new user. Issues a POST to /App/users
+    $scope.user.$save(function() {
+      $state.go('users'); // on success go back to home i.e. users state.
+    });
+  };
+}).controller('UserEditController', function($scope, $state, $stateParams, User) {
+  $scope.updateUser = function() { //Update the edited user. Issues a PUT to /App/users/:id
+    $scope.user.$update(function() {
+      $state.go('users'); // on success go back to home i.e. user state.
+    });
+  };
 
-         self.deleteUser = function(id){
-              UserService.deleteUser(id)
-		              .then(
-				              self.fetchAllUsers, 
-				              function(errResponse){
-					               console.error('Error while deleting User.');
-				              }	
-                  );
-          };
+  $scope.loadUser = function() { //Issues a GET request to /App/users/:id to get a user to update
+    $scope.user = User.get({ id_user: $stateParams.id_user });
+  };
 
-          self.fetchAllUsers();
-
-          self.submit = function() {
-              if(self.user.id==null){
-                  console.log('Saving New User', self.user);    
-                  self.createUser(self.user);
-              }else{
-                  self.updateUser(self.user, self.user.id);
-                  console.log('User updated with id ', self.user.id);
-              }
-              self.reset();
-          };
-              
-          self.edit = function(id){
-              console.log('id to be edited', id);
-              for(var i = 0; i < self.users.length; i++){
-                  if(self.users[i].id == id) {
-                     self.user = angular.copy(self.users[i]);
-                     break;
-                  }
-              }
-          };
-              
-          self.remove = function(id){
-              console.log('id to be deleted', id);
-              for(var i = 0; i < self.users.length; i++){
-                  if(self.users[i].id == id) {
-                     self.reset();
-                     break;
-                  }
-              }
-              self.deleteUser(id);
-          };
-
-          
-          self.reset = function(){
-              self.user={id:null,login:'',password:'',email:''};
-              $scope.myForm.$setPristine(); //reset Form
-          };
-
-      }]);
+  $scope.loadUser(); // Load a user which can be edited on UI
+});
