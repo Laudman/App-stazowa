@@ -11,9 +11,9 @@ angular.module('userApp.controllers', [])
   };
 }).controller('UserViewController', function($scope, $stateParams, User) {
   $scope.user = User.get({ id_user: $stateParams.id_user }); //Get a single user.Issues a GET to /App/users/:id
-}).controller('UserCreateController', function($scope, $state, $stateParams, User) {
+})
+        .controller('UserCreateController', function($scope, $state, $stateParams, User) {
   $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
-
   $scope.addUser = function() { //create a new user. Issues a POST to /App/users
     $scope.user.$save(function() {
       $state.go('users'); // on success go back to home i.e. users state.
@@ -21,7 +21,7 @@ angular.module('userApp.controllers', [])
   };
 }).controller('UserEditController', function($scope, $state, $stateParams, User) {
   $scope.updateUser = function() { //Update the edited user. Issues a PUT to /App/users/:id
-    $scope.user.$update(function() {
+      $scope.user.$save(function() {
       $state.go('users'); // on success go back to home i.e. user state.
     });
   };

@@ -23,6 +23,5 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
 
 	}
         
-
 	
 }

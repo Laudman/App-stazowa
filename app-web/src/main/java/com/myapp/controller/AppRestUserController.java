@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.myapp.model.User;
 import com.myapp.service.UserService;
+import javax.ws.rs.Produces;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
@@ -23,8 +24,9 @@ public class AppRestUserController {
 	@Autowired
     UserService userService;
         
+        @Produces("application/json")
 	@ResponseBody
-	@RequestMapping(value = "/users", method = RequestMethod.GET, produces={"application/json"})
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
     public  ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAllUsers();
         if(users.isEmpty()){
@@ -36,8 +38,9 @@ public class AppRestUserController {
  
     
     //-------------------Retrieve Single User--------------------------------------------------------
+    @Produces("application/json")
     @ResponseBody
-    @RequestMapping(value = "/users/{id_user}", method = RequestMethod.GET, produces={"application/json"})
+    @RequestMapping(value = "/users/{id_user}", method = RequestMethod.GET)
     public  ResponseEntity<User> getUser(@PathVariable("id_user") int id_user) {
         System.out.println("Fetching User with id " + id_user);
         User user = userService.findUser(id_user);
@@ -51,15 +54,16 @@ public class AppRestUserController {
      
      
     //-------------------Create a User--------------------------------------------------------
+    @Produces("application/json")
     @ResponseBody
-    @RequestMapping(value = "/users", method = RequestMethod.POST , produces={"application/json"})
+    @RequestMapping(value = "/users", method = RequestMethod.POST )
     public  ResponseEntity<User> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getLogin());
  
-        if (userService.isUserExist(user)) {
-            System.out.println("A User with login " + user.getLogin() + " already exist");
-            return new ResponseEntity<User>(HttpStatus.CONFLICT);
-        }
+//        if (userService.isUserExist(user)) {
+//            System.out.println("A User with login " + user.getLogin() + " already exist");
+//            return new ResponseEntity<User>(HttpStatus.CONFLICT);
+//        }
  
         userService.saveOrUpdateUser(user);
  
@@ -71,17 +75,18 @@ public class AppRestUserController {
     
      
     //------------------- Update a User --------------------------------------------------------
-    
-    @RequestMapping(value = "/users/{id_user}", method = RequestMethod.PUT, produces={"application/json"})
-    public @ResponseBody ResponseEntity<User> updateUser(@PathVariable("id_user") int id_user, @RequestBody User user) {
+    @Produces("application/json")
+    @ResponseBody
+    @RequestMapping(value = "/users/{id_user}", method = RequestMethod.POST)
+    public ResponseEntity<User> updateUser(@PathVariable("id_user") int id_user, @RequestBody User user) {
         System.out.println("Updating User " + id_user);
          
         User currentUser = userService.findUser(id_user);
          
-        if (currentUser == null) {
-            System.out.println("User with id_user " + id_user + " not found");
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-        }
+//        if (currentUser == null) {
+//            System.out.println("User with id_user " + id_user + " not found");
+//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+//        }
  
         currentUser.setLogin(user.getLogin());
         currentUser.setPassword(user.getPassword());
@@ -94,8 +99,9 @@ public class AppRestUserController {
     
     
     //------------------- Delete a User --------------------------------------------------------
+    @Produces("application/json")
     @ResponseBody
-    @RequestMapping(value = "/users/{id_user}", method = RequestMethod.DELETE, produces={"application/json"})
+    @RequestMapping(value = "/users/{id_user}", method = RequestMethod.DELETE)
     public  ResponseEntity<User> deleteUser(@PathVariable("id_user") int id_user) {
         System.out.println("Fetching & Deleting User with id_user " + id_user);
  
