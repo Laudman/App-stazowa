@@ -4,7 +4,7 @@ angular.module('userApp.controllers', [])
 
   $scope.deleteUser = function(user) { // Delete a user. Issues a DELETE to /App/users/:id
     if (popupService.showPopup('Really delete this?')) {
-      user.$delete(function() {
+         user.$delete(function() {
         $window.location.href = ''; //redirect to home
       });
     }
@@ -21,7 +21,7 @@ angular.module('userApp.controllers', [])
   };
 }).controller('UserEditController', function($scope, $state, $stateParams, User) {
   $scope.updateUser = function() { //Update the edited user. Issues a PUT to /App/users/:id
-      $scope.user.$save(function() {
+      $scope.user.$update(function() {
       $state.go('users'); // on success go back to home i.e. user state.
     });
   };

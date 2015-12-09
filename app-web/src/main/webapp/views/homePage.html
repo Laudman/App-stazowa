@@ -1,48 +1,41 @@
 <!DOCTYPE html>
-<html lang="pl" ng-app>
-  <head>
+  <html data-ng-app="userApp">
+  <head lang="pl">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
- 
-    <title>Home page</title>
-    <script type="text/javascript" src="/static/js/angular.min.js"></script>
-    <script src="<c:url value='/js/service/user_service.js' />"></script>
-    <script src="<c:url value='/js/controller/user_controller.js' />"></script>
-      </head>
-      <div ng-controller="ContactController">
-    <form>
-    <label>Name</label> 
-        <input type="text" name="name" ng-model="newcontact.name"/>
-    <label>Email</label> 
-        <input type="text" name="email" ng-model="newcontact.email"/>
-    <label>Phone</label> 
-        <input type="text" name="phone" ng-model="newcontact.phone"/>
-        <br/>
-        <input type="hidden" ng-model="newcontact.id" />
-     <input type="button" value="Save" ng-click="saveContact()" />
-    </form>
-<table>
-<thead> 
-<tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr ng-repeat="contact in contacts">
-    <td>{{ contact.name }}</td>
-    <td>{{ contact.email }}</td>
-    <td>{{ contact.phone }}</td>
-    <td>
-        <a  href="#" ng-click="edit(contact.id)">edit</a> | 
-        <a href="#" ng-click="delete(contact.id)">delete</a>
-    </td>
- </tr>
-</tbody>
-</table>    
-</div>
-  </html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Tasks App</title>
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/app.css"/>
+  </head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" ui-sref="users">The Tasks App</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a ui-sref="users">Users</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row top-buffer">
+        <div class="col-xs-8 col-xs-offset-2">
+          <div ui-view></div> <!-- This is where our views will load -->
+        </div>
+      </div>
+    </div>
+      
+<!--      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>-->
+      <script type="text/javascript" src="static/angular.min.js"></script>
+      <script type="text/javascript" src="static/angular-resource.min.js"></script>
+      <script type="text/javascript" src="static/angular-ui-router.js"></script>
+      <script type="text/javascript" src="static/js/app.js"></script>
+      <script type="text/javascript" src="static/js/service/user_service.js"></script>
+      <script type="text/javascript" src="static/js/controller/user_controller.js"></script>
+      
+  </body>
+</html>

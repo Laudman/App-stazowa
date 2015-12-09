@@ -18,10 +18,15 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 	public void saveOrUpdateUser(User user) {
 		persist(user);
 	}
+        
+//        public void updateUser(User user){
+//            update (user);
+//        }
+
 
 	public void deleteUser(int id_user) {
 
-		Query query = getSession().createSQLQuery("delete from User where id_user = :id_user");
+		Query query = getSession().createSQLQuery("delete from Users where id_user = :id_user");
 		query.setParameter("id_user", id_user);
 		query.executeUpdate();
 	}

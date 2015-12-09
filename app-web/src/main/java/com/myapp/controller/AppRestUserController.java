@@ -20,24 +20,41 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 public class AppRestUserController {
-	
-	@Autowired
-    UserService userService;
-        
-        @Produces("application/json")
+
+    @Autowired
+        private UserService userService;
+    
+    // --------------------- version 1 ------------------------ 
+//        @Produces("application/json")
+//	@ResponseBody
+//	@RequestMapping(value = "/users", method = RequestMethod.GET)
+//    public  List<User>listAllUsers() {
+//        return userService.findAllUsers();
+//        
+//    }
+    
+       @Produces("application/json")
 	@ResponseBody
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-    public  ResponseEntity<List<User>> listAllUsers() {
-        List<User> users = userService.findAllUsers();
-        if(users.isEmpty()){
-            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+    public  List<User>listAllUsers() {
+        return userService.findAllUsers();
+        
     }
+    // ----------------version 2 ---------------------------------
+//     @Produces("application/json")
+//	@ResponseBody
+//	@RequestMapping(value = "/users", method = RequestMethod.GET)
+//    public  ResponseEntity<List<User>> listAllUsers() {
+//        List<User> users = userService.findAllUsers();
+//        if(users.isEmpty()){
+//            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+//    }
  
  
     
-    //-------------------Retrieve Single User--------------------------------------------------------
+    //-------------------Retrieve Single User version 1--------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
     @RequestMapping(value = "/users/{id_user}", method = RequestMethod.GET)
@@ -53,18 +70,13 @@ public class AppRestUserController {
  
      
      
-    //-------------------Create a User--------------------------------------------------------
+   // -------------------Create a User--------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
     @RequestMapping(value = "/users", method = RequestMethod.POST )
     public  ResponseEntity<User> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getLogin());
- 
-//        if (userService.isUserExist(user)) {
-//            System.out.println("A User with login " + user.getLogin() + " already exist");
-//            return new ResponseEntity<User>(HttpStatus.CONFLICT);
-//        }
- 
+
         userService.saveOrUpdateUser(user);
  
         HttpHeaders headers = new HttpHeaders();
@@ -77,44 +89,57 @@ public class AppRestUserController {
     //------------------- Update a User --------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
-    @RequestMapping(value = "/users/{id_user}", method = RequestMethod.POST)
-    public ResponseEntity<User> updateUser(@PathVariable("id_user") int id_user, @RequestBody User user) {
-        System.out.println("Updating User " + id_user);
+    @RequestMapping(value = "/users/update", method = RequestMethod.POST)
+    public ResponseEntity<User> updateUser(@RequestBody User userJSON) {
+        System.out.println("Updating User " + userJSON.getId_user());
          
-        User currentUser = userService.findUser(id_user);
+        User currentUser = userService.findUser(userJSON.getId_user());
          
-//        if (currentUser == null) {
-//            System.out.println("User with id_user " + id_user + " not found");
-//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//        }
- 
-        currentUser.setLogin(user.getLogin());
-        currentUser.setPassword(user.getPassword());
-        currentUser.setEmail(user.getEmail());
-         
-        userService.saveOrUpdateUser(currentUser);
-        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
-    }
- 
-    
-    
-    //------------------- Delete a User --------------------------------------------------------
-    @Produces("application/json")
-    @ResponseBody
-    @RequestMapping(value = "/users/{id_user}", method = RequestMethod.DELETE)
-    public  ResponseEntity<User> deleteUser(@PathVariable("id_user") int id_user) {
-        System.out.println("Fetching & Deleting User with id_user " + id_user);
- 
-        User user = userService.findUser(id_user);
-        if (user == null) {
-            System.out.println("Unable to delete. User with id_user " + id_user + " not found");
+        if (currentUser == null) {
+            System.out.println("User with id_user " + userJSON.getId_user() + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
  
-        userService.deleteUser(id_user);
-        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        currentUser.setLogin(userJSON.getLogin());
+        currentUser.setPassword(userJSON.getPassword());
+        currentUser.setEmail(userJSON.getEmail());
+         
+        userService.updateUser(currentUser);
+        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
  
+    //------------------- Delete a User --------------------------------------------------------
+    @Produces("application/json")
+    @ResponseBody
+    @RequestMapping(value = "/users/delete", method = RequestMethod.POST)
+    public ResponseEntity<User> deleteUser(@RequestBody User userJSON) {
+        System.out.println("Fetching & Deleting User with id_user " + userJSON.getId_user());
+ 
+        User user = userService.findUser(userJSON.getId_user());
+        if (user == null) {
+            System.out.println("Unable to delete. User with id_user " + userJSON.getId_user() + " not found");
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+ 
+        userService.deleteUser(userJSON.getId_user());
+        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+    }
+// ------------------test version DELETE to upgrade in future -------------
+//    @Produces("application/json")
+//    @ResponseBody
+//    @RequestMapping(value = "/users/delete/{id_user}", method = RequestMethod.POST)
+//    public ResponseEntity<User> deleteUser(@PathVariable("id_user") int id_user) {
+//        System.out.println("Fetching & Deleting User with id_user " + id_user);
+// 
+//        User user = userService.findUser(id_user);
+//        if (user == null) {
+//            System.out.println("Unable to delete. User with id_user " + id_user + " not found");
+//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+//        }
+// 
+//        userService.deleteUser(id_user);
+//        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+//    }
      
     
     //------------------- Delete All Users --------------------------------------------------------
