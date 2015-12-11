@@ -11,9 +11,10 @@ import javax.persistence.Table;
  * @author zama
  */
 @Entity
-@Table(name="userprofile")
+@Table(name="USERPROFILE")
 public class UserProfile {
-         @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+         @Id 
+         @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id_profile; 
  
   //  @Column(name="TYPE", length=15, unique=true, nullable=false)

@@ -25,8 +25,8 @@ public class User {
         private String state=State.ACTIVE.getState();
         
                 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "userprofile", 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "APP_USER_USER_PROFILE", 
              joinColumns = { @JoinColumn(name = "id_user") }, 
              inverseJoinColumns = { @JoinColumn(name = "id_profile") })
         private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
@@ -75,6 +75,13 @@ public class User {
 		this.email = email;
 	}
         
+        public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+        
 
         public Set<UserProfile> getUserProfiles() {
         return userProfiles;
@@ -118,11 +125,7 @@ public class User {
     @Override
     public String toString() {
         return "User [id_user=" + id_user + ", login=" + login + ", password=" + password
-                + ", email=" + email + "]";
-    }
-
-    public Object getState() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                + ", email=" + email  + ", state=" + state + ", userProfiles=" + userProfiles +"]";
     }
 	
 
