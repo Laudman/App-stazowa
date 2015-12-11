@@ -3,14 +3,28 @@
  xmlns="http://java.sun.com/xml/ns/j2ee"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee                     http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
  <display-name>SpringApp</display-name>
+ 
  <context-param>
   <param-name>contextClass</param-name>
   <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
  </context-param>
  <context-param>
   <param-name>contextConfigLocation</param-name>
-  <param-value>com.myapp.config.HibernateConfiguration</param-value>
+  <param-value>
+      com.myapp.config.HibernateConfiguration
+      com.myapp.config.WebSecurityConfig   
+  </param-value>
  </context-param>
+ 
+     
+<!--  <param-name>contextClass</param-name>
+  <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+ </context-param>
+ <context-param>
+  <param-name>contextConfigLocation</param-name>
+  <param-value>com.myapp.config.WebSecurityConfiguration</param-value>
+ </context-param>
+ -->
  <listener>
   <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
  </listener>
@@ -34,7 +48,17 @@
   <session-timeout>30</session-timeout>
  </session-config>
 
+
+<filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
  
+<filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
  <filter>
     <filter-name>hiddenHttpMethodFilter</filter-name>
     <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>

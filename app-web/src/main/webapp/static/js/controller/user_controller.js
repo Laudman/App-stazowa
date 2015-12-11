@@ -1,4 +1,4 @@
-angular.module('userApp.controllers', [])
+angular.module('mainApp.user.controllers', [])
         .controller('UserListController', function($scope, $state, popupService, $window, User) {
   $scope.users = User.query(); //fetch all users. Issues a GET to /App/users
 

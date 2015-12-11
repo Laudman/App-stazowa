@@ -1,12 +1,12 @@
-angular.module('mainApp.user.services', []).factory('User', function($resource) {
-  return $resource('/users/:id_user', { id_user: '@_id_user' }, {
+angular.module('mainApp.task.services', []).factory('Task', function($resource) {
+  return $resource('/tasks/:id_task', { id_task: '@_id_task' }, {
     delete: {
       method: 'POST',
-      url: '/users/delete/:id_user'
+      url: '/tasks/delete/:id_task'
     },
     update: {
       method: 'POST',
-      url: '/users/update/:id_user'
+      url: '/tasks/update/:id_task'
     }
     });
 }).service('popupService',function($window){

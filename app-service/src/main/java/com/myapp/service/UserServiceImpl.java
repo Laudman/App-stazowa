@@ -14,48 +14,50 @@ import com.myapp.model.User;
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
-	private UserDao dao;
+	private UserDao userdao;
 	
-	private static List<User> users;
-	
+	//private static List<User> users;
+	public User findUserByLogin(String login) {
+        User user = userdao.findUserByLogin(login);
+        return user;
+    }
 
 	
 	public User findUser(int id_user) {
-		return dao.findUser(id_user);
+		return userdao.findUser(id_user);
 	}
 
-	public void saveOrUpdateUser(User user) {
-		dao.saveOrUpdateUser(user);
+	public void saveUser(User user) {
+		userdao.saveUser(user);
 	}
 	
 	public void updateUser(User user) {
-		User entity = dao.findUser(user.getId_user());
+		User entity = userdao.findUser(user.getId_user());
 		if(entity!=null){
 			entity.setLogin(user.getLogin());
 			entity.setPassword(user.getPassword());
 			entity.setEmail(user.getEmail());
+                        entity.setUserProfiles(user.getUserProfiles());
 		}
 	}
 
 	public void deleteUser(int id_user) {
-		dao.deleteUser(id_user);
+		userdao.deleteUser(id_user);
 	}
+        
+        public void deleteUserByLogin(String login) {
+        userdao.deleteUserByLogin(login);
+    }
 
 	public List<User> findAllUsers() {
-		return dao.findAllUsers();
+		return userdao.findAllUsers();
 	}
 
-	public boolean isUserExist(User user) {
-		return findUserLogin(user.getLogin())!=null;
-	}
+ 
+    public boolean isUserLoginUnique(Integer id_user, String login) {
+        User user = findUserByLogin(login);
+        return ( user == null || ((id_user != null) && (user.getId_user() == id_user)));
+    }
 
-	public User findUserLogin(String login) {
-		for(User user : users){
-			if(user.getLogin().equalsIgnoreCase(login)){
-				return user;
-			}
-		}
-		return null;
-	}
 
 }

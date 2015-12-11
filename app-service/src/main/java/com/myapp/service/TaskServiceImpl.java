@@ -9,23 +9,25 @@ import org.springframework.transaction.annotation.Transactional;
 import com.myapp.dao.TaskDao;
 import com.myapp.model.Task;
 
-//@Service("taskService")
+@Service("taskService")
 @Transactional
 public class TaskServiceImpl implements TaskService{
 	
 	@Autowired
-	private TaskDao dao;
+	private TaskDao taskdao;
+        
+        private static List<Task> tasks;
 	
-	public Task findTask(int id) {
-		return dao.findTask(id);
+	public Task findTask(int id_task) {
+		return taskdao.findTask(id_task);
 	}
 
 	public void saveOrUpdateTask(Task task) {
-		dao.saveOrUpdateTask(task);
+		taskdao.saveOrUpdateTask(task);
 	}
 	
-	public void updateUser(Task task) {
-		Task entity = dao.findTask(task.getId_user());
+	public void updateTask(Task task) {
+		Task entity = taskdao.findTask(task.getId_task());
 		if(entity!=null){
 			entity.setText(task.getText());
 			entity.setType_of_question(task.getType_of_question());
@@ -35,12 +37,12 @@ public class TaskServiceImpl implements TaskService{
 		}
 	}
 
-	public void deleteTask(int id) {
-		dao.deleteTask(id);
+	public void deleteTask(int id_task) {
+		taskdao.deleteTask(id_task);
 	}
 
 	public List<Task> findAllTasks() {
-		return dao.findAllTasks();
+		return taskdao.findAllTasks();
 	}
 
 }

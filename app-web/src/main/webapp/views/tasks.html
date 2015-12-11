@@ -1,0 +1,30 @@
+<a ui-sref="newTask" class="btn-primary btn-lg nodecoration">Add New Task</a>
+
+<table class="table tasktable">
+  <tr>
+    <td><h3>All Tasks</h3></td>
+    <td></td>
+  </tr>
+      <tr>
+        <th>ID</th>
+        <th>Text</th>
+        <th>Author</th>
+        <th>Type of question</th>
+        <th>Type of speak</th>
+        <th>Type of job</th>
+        <th>Amount answer</th>
+      </tr>
+  <tr ng-repeat="task in tasks">
+    <td>{{task.id_task}}</td>
+    <td>{{task.text}}</td>
+    <td>{{task.id_user}}</td>
+    <td>{{task.type_of_question}}</td>
+    <td>{{task.type_of_speak}}</td>
+    <td>{{task.type_of_job}}</td>
+    <td>{{task.amount_answer}}</td>
+    <td>
+      <a class="btn btn-primary" ui-sref="viewTask({id_task:task.id_task})">View</a>
+      <a class="btn btn-danger"  ng-click="deleteTask(task)">Delete</a>
+    </td>
+  </tr>
+</table>

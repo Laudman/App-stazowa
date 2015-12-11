@@ -1,5 +1,6 @@
 package com.myapp.controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,15 @@ import javax.ws.rs.Produces;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
-public class AppRestUserController {
+public class UserRestController {
 
     @Autowired
         private UserService userService;
+    
+    
+    //--------------------------------------------------------------------------
+    //*************************USER CONTROLLER**********************************
+    //--------------------------------------------------------------------------
     
     // --------------------- version 1 ------------------------ 
 //        @Produces("application/json")
@@ -70,14 +76,14 @@ public class AppRestUserController {
  
      
      
-   // -------------------Create a User--------------------------------------------------------
+   // -------------------Create User--------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
     @RequestMapping(value = "/users", method = RequestMethod.POST )
     public  ResponseEntity<User> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getLogin());
 
-        userService.saveOrUpdateUser(user);
+        userService.saveUser(user);
  
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/users/{id_user}").buildAndExpand(user.getId_user()).toUri());
@@ -86,7 +92,7 @@ public class AppRestUserController {
  
     
      
-    //------------------- Update a User --------------------------------------------------------
+    //------------------- Update User --------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
     @RequestMapping(value = "/users/update", method = RequestMethod.POST)
@@ -108,7 +114,7 @@ public class AppRestUserController {
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
  
-    //------------------- Delete a User --------------------------------------------------------
+    //------------------- Delete User --------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
     @RequestMapping(value = "/users/delete", method = RequestMethod.POST)
@@ -152,5 +158,7 @@ public class AppRestUserController {
 //        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 //    }
  
-
+// *****************************END USER CONTROLLER************************************************
+    
+    
 }

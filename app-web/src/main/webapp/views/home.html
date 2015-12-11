@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="userApp">
+<html data-ng-app="mainApp">
     <head lang="pl">
     <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="static/css/app.css"/>
@@ -26,7 +26,7 @@
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin Tools <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#users">Users manager</a></li>
-            <li><a href="#">Page 1-2</a></li>
+            <li><a href="#tasks">Tasks manager</a></li>
             <li><a href="#">Page 1-3</a></li>
           </ul>
         </li>
@@ -53,9 +53,11 @@
       <script type="text/javascript" src="static/angular.min.js"></script>
       <script type="text/javascript" src="static/angular-resource.min.js"></script>
       <script type="text/javascript" src="static/angular-ui-router.js"></script>
-      <script type="text/javascript" src="static/js/user.js"></script>
+      <script type="text/javascript" src="static/js/app.js"></script>
       <script type="text/javascript" src="static/js/service/user_service.js"></script>
       <script type="text/javascript" src="static/js/controller/user_controller.js"></script>
+      <script type="text/javascript" src="static/js/service/task_service.js"></script>
+      <script type="text/javascript" src="static/js/controller/task_controller.js"></script>
       
   </body>
 </html>

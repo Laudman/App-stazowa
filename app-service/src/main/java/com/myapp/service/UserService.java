@@ -8,15 +8,17 @@ public interface UserService {
 	
 	User findUser(int id_user);
 	
-	User findUserLogin(String login);
+	User findUserByLogin(String login);
 
-	void saveOrUpdateUser(User user);
+	void saveUser(User user);
         
         void updateUser (User user);
 	
 	void deleteUser(int id_user);
+        
+        void deleteUserByLogin(String login);
 	
 	List<User> findAllUsers();
 	
-	public boolean isUserExist(User user);
+	boolean isUserLoginUnique(Integer id_user, String login);
 }
