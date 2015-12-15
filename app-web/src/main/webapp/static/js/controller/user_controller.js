@@ -13,6 +13,15 @@ angular.module('mainApp.user.controllers', [])
 }).controller('UserViewController', function($scope, $stateParams, User) {
   $scope.user = User.get({ id_user: $stateParams.id_user }); //Get a single user.Issues a GET to /App/users/:id
 })
+.controller('UserStateDropDown', ['$scope', function($scope) {
+   $scope.data = {
+    availableOptions: [
+      {name: 'user'},
+      {name: 'admin'}
+    ],
+    selectedOption: {name: 'user'}
+       };
+}])
         .controller('UserCreateController', function($scope, $state, $stateParams, User) {
   $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
   $scope.addUser = function() { //create a new user. Issues a POST to /App/users

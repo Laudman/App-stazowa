@@ -11,7 +11,6 @@ package com.myapp.model;
  */
 public enum UserProfileType {
     USER("USER"),
-    DBA("DBA"),
     ADMIN("ADMIN");
      
     String userProfileType;

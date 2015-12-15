@@ -79,7 +79,7 @@ public class UserRestController {
    // -------------------Create User--------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
-    @RequestMapping(value = "/users", method = RequestMethod.POST )
+    @RequestMapping(value = {"/users", "/signup"}, method = RequestMethod.POST )
     public  ResponseEntity<User> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getLogin());
 
@@ -95,7 +95,7 @@ public class UserRestController {
     //------------------- Update User --------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
-    @RequestMapping(value = "/users/update", method = RequestMethod.POST)
+    @RequestMapping(value = {"/users/update"}, method = RequestMethod.POST)
     public ResponseEntity<User> updateUser(@RequestBody User userJSON) {
         System.out.println("Updating User " + userJSON.getId_user());
          
