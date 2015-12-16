@@ -8,10 +8,25 @@ angular.module('mainApp.user.services', []).factory('User', function($resource) 
     update: {
       method: 'POST',
       url: '/users/update/:id_user'
-    }
+    },
+//    login: {
+//      method: 'POST',
+//      url: '/users/login/'
+//    }
     });
-}).service('popupService',function($window){
-    this.showPopup=function(message){
-        return $window.confirm(message);
-    };
-});
+    });
+//    .service('Session', function($rootScope, USER_ROLES) {
+//
+//	this.create = function(user) {
+//		this.user = user;
+//		this.userRole = user.userRole;
+//	};
+//	this.destroy = function() {
+//		this.user = null;
+//		this.userRole = null;
+//	};
+//	return this;
+//});
+
+
+//});

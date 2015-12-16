@@ -1,4 +1,6 @@
 <a ui-sref="newUser" class="btn-primary btn-lg nodecoration">Add New User</a>
+<!--<a class="btn btn-primary btn-lg nodecoration"  ng-click="submit()">Login</a>-->
+<a ui-sref="login" class="btn-primary btn-lg nodecoration">Login</a>
 
 <table class="table usertable">
   <tr>
@@ -21,6 +23,7 @@
     <td>
       <a class="btn btn-primary" ui-sref="viewUser({id_user:user.id_user})">View</a>
       <a class="btn btn-danger"  ng-click="deleteUser(user)">Delete</a>
+      
     </td>
   </tr>
 </table>

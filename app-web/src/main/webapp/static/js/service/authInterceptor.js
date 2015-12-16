@@ -4,9 +4,8 @@
  * if the user doesn't have access to something runs the according
  * event, given the response status codes from the server. 
  */
-angular.module('mainApp')
-.factory('AuthInterceptor', [ '$rootScope', '$q', 'Session', 'AUTH_EVENTS',
-function($rootScope, $q, Session, AUTH_EVENTS) {
+angular.module('mainApp.AuthInterceptor', [])
+.factory('AuthInterceptor', function($rootScope, $q, Session, AUTH_EVENTS) {
 	return {
 		responseError : function(response) {
 			$rootScope.$broadcast({
@@ -18,4 +17,4 @@ function($rootScope, $q, Session, AUTH_EVENTS) {
 			return $q.reject(response);
 		}
 	};
-} ]);
+} );

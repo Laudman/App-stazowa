@@ -1,8 +1,7 @@
 //'use strict';
 
-angular.module('mainApp').
-controller('ParentController', ['$scope', '$rootScope', '$modal', 'Auth', 'AUTH_EVENTS','USER_ROLES',
-function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
+angular.module('mainApp.ParentController', [])
+        .controller('ParentController',function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
 	// this is the parent controller for all controllers.
 	// Manages auth login functions and each controller
 	// inherits from this controller	
@@ -13,7 +12,7 @@ function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
 		if(!$scope.modalShown){
 			$scope.modalShown = true;
 			var modalInstance = $modal.open({
-				templateUrl : 'static/views/login.html',
+				templateUrl : '/login.html',
 				controller : "LoginCtrl",
 				backdrop : 'static'
 			});
@@ -26,11 +25,11 @@ function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
 	
 	var setCurrentUser = function(){
 		$scope.currentUser = $rootScope.currentUser;
-	}
+	};
 	
 	var showNotAuthorized = function(){
 		alert("Not Authorized");
-	}
+	};
 	
 	$scope.currentUser = null;
 	$scope.userRoles = USER_ROLES;
@@ -43,4 +42,4 @@ function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
 	$rootScope.$on(AUTH_EVENTS.logoutSuccess, showLoginDialog);
 	$rootScope.$on(AUTH_EVENTS.loginSuccess, setCurrentUser);
 	
-} ]);
+} );

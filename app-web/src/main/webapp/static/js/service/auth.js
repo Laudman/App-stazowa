@@ -1,15 +1,14 @@
 //'use strict';
 
-angular.module('mainApp')
-.factory('Auth', [ '$http', '$rootScope', '$window', 'Session', 'AUTH_EVENTS', 
-function($http, $rootScope, $window, Session, AUTH_EVENTS) {
+angular.module('mainApp.Auth', [])
+.factory('Auth', function($http, $rootScope, $window, Session, AUTH_EVENTS) {
 	var authService = {};
 	
 	
 	//the login function
 	authService.login = function(user, success, error) {
-		$http.post('misc/users.json').success(function(data) {
-		
+//		$http.post('static/misc/users.json').success(function(data) {
+		$http.post.this.success(function(data) {
 		//this is my dummy technique, normally here the 
 		//user is returned with his data from the db
 		var users = data.users;
@@ -69,4 +68,4 @@ function($http, $rootScope, $window, Session, AUTH_EVENTS) {
 	}
 
 	return authService;
-} ]);
+} );

@@ -5,7 +5,16 @@ var mainApp = angular.module('mainApp', [ 'ui.router',
                             'mainApp.user.controllers', 
                             'mainApp.user.services', 
                             'mainApp.task.controllers', 
-                            'mainApp.task.services' ])
+                            'mainApp.task.services',
+                            'mainApp.ParentController',
+                            'mainApp.LoginCtrl',
+                            'mainApp.Auth',
+                            'mainApp.Session',
+                            'ngCookies',
+                            'mainApp.AuthInterceptor'
+                             
+                             
+                        ])
        .constant('AUTH_EVENTS', {
         loginSuccess: 'auth-login-success',
         loginFailed: 'auth-login-failed',
@@ -24,12 +33,22 @@ var mainApp = angular.module('mainApp', [ 'ui.router',
 
 .config(function($stateProvider, $urlRouterProvider, USER_ROLES) {    
             
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/tasks");
   
   $stateProvider.state('users', { 
     url: '/users',
     templateUrl: 'views/users.html',
     controller: 'UserListController',
+    data: {
+                authorizedRoles: []
+    }
+
+}).state('login', { 
+    url: '/users/login',
+    templateUrl: 'views/login.html',
+//    controller: ['LoginCtrl', 'AuthInterceptor', 'ParentController'],
+    controller: 'LoginCtrl',
+    
     data: {
                 authorizedRoles: []
     }
@@ -60,21 +79,22 @@ data: {
     url: '/contact',
     templateUrl: 'views/contact.html',
 data: {
-                authorizedRoles: [USER_ROLES.admin]
+                authorizedRoles: [USER_ROLES.user]
                }
   })
   //--------------------------Login------------------
-  .state('login', { 
-    url: '/login',
-    templateUrl: 'views/login.html',
-data: {
-                authorizedRoles: []
-               }
-  })
+//  .state('login', { 
+//    url: '/login',
+//    templateUrl: 'views/login.html',
+//data: {
+//                authorizedRoles: []
+//               }
+//  })
   //--------------------------Signup-----------------------
   .state('signup', { 
     url: '/signup',
     templateUrl: 'views/signup.html',
+//    controller: 'LoginCtrl',
     controller: 'UserCreateController',
 data: {
                 authorizedRoles: []
@@ -115,15 +135,18 @@ data: {
                }
   });
 })
+
+//});
 //.run(function($state) {
 //  $state.go('users'); //make a transition to user state when app starts
-// });
- 
-  
-.run(function($rootScope, $state, Auth, AUTH_EVENTS) {
+//});
+// 
+//  
+.run(function($rootScope, $state, Auth, AUTH_EVENTS, $http, $cookies) {
 	
 	//before each state change, check if the user is logged in
 	//and authorized to move onto the next state
+        $http.defaults.headers.post['X-CSRFToken'] = $cookies['csrftoken'];
 	$rootScope.$on('$stateChangeStart', function (event, next) {
 	    var authorizedRoles = next.data.authorizedRoles;
 	    if (!Auth.isAuthorized(authorizedRoles) && authorizedRoles != 0) {
@@ -145,7 +168,7 @@ data: {
 		} else {
 			return "";
 		}
-	}
+	};
 	
 	$rootScope.logout = function(){
 		Auth.logout();
@@ -180,3 +203,4 @@ data: {
     }
   };
  });
+

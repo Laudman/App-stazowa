@@ -1,8 +1,7 @@
 //'use strict';
 
-angular.module('mainApp')
-.controller('LoginCtrl', [ '$scope', '$state', '$modalInstance' , '$window', 'Auth', 
-function($scope, $state, $modalInstance, $window, Auth ) {
+angular.module('mainApp.LoginCtrl', [])
+        .controller('LoginCtrl', function($scope, $state, $modalInstance, $window, Auth ) {
 	$scope.credentials = {};
 	$scope.loginForm = {};
 	$scope.error = false;
@@ -24,7 +23,7 @@ function($scope, $state, $modalInstance, $window, Auth ) {
 		Auth.login(credentials, function(user) {
 			//success function
 			$modalInstance.close();
-			$state.go('home');
+			$state.go('users');
 		}, function(err) {
 			console.log("error");
 			$scope.error = true;
@@ -38,21 +37,4 @@ function($scope, $state, $modalInstance, $window, Auth ) {
 		$scope.login(credentials);
 	}
 
-} ]);
-
-
-
-
-
-
-
-
-
-//
-//angular.module('mainApp.authenticate.controllers', [])
-//	.controller('MyCtrl1', function() {
-//
-//	})
-//	.controller('MyCtrl2', function() {
-//
-//	});
+} );

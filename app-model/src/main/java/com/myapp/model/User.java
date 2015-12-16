@@ -22,7 +22,7 @@ public class User {
 	private String login;
 	private String password;
 	private String email;
-        private String state=State.ACTIVE.getState();
+        private String state = State.ACTIVE.getState();
         
                 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -125,7 +125,7 @@ public class User {
     @Override
     public String toString() {
         return "User [id_user=" + id_user + ", login=" + login + ", password=" + password
-                + ", email=" + email  + ", state=" + state + ", userProfiles=" + userProfiles +"]";
+                + ", email=" + email  + ", state =" + state + ", userProfiles=" + userProfiles +"]";
     }
 	
 

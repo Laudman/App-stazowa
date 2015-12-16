@@ -6,7 +6,7 @@
  * refreshed the user is reinitialized through $window.sessionStorage at the
  * login.js file.
  */
-angular.module('mainApp').service('Session', function($rootScope, USER_ROLES) {
+angular.module('mainApp.Session', []).service('Session', function($rootScope, USER_ROLES) {
 
 	this.create = function(user) {
 		this.user = user;

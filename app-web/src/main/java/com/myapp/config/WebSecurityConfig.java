@@ -4,11 +4,13 @@ package com.myapp.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 //import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 
@@ -30,15 +32,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       http.authorizeRequests()
-        .antMatchers("/", "/home", "/contact", "/login", "/signup").permitAll()
-        .antMatchers("/admin/**").access("hasRole('ADMIN')")
-        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
-        .and().formLogin().loginPage("/login")
-        .usernameParameter("login").passwordParameter("password")
-        .and().csrf()
-        .and().exceptionHandling().accessDeniedPage("/Access_Denied");
+              .antMatchers(HttpMethod.POST, "/**").authenticated()
+              .antMatchers(HttpMethod.DELETE, "/**").authenticated()
+              .anyRequest().permitAll()
+        .and()
+      .httpBasic().and()
+      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+              
+//        .antMatchers("/", "/home", "/contact", "/login", "/users").permitAll()
+//        .antMatchers("/admin/**").access("hasRole('ADMIN')")
+//        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
+//        .and().formLogin().loginPage("/login")
+//        .usernameParameter("login").passwordParameter("password")
+//        .and().csrf()
+//        .and().exceptionHandling().accessDeniedPage("/Access_Denied");
     }
      
-    
     
 }
