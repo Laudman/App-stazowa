@@ -10,7 +10,7 @@ var mainApp = angular.module('mainApp', [ 'ui.router',
                             'mainApp.LoginCtrl',
                             'mainApp.Auth',
                             'mainApp.Session',
-                            'ngCookies',
+//                            'ngCookies',
                             'mainApp.AuthInterceptor'
                              
                              
@@ -142,11 +142,12 @@ data: {
 //});
 // 
 //  
-.run(function($rootScope, $state, Auth, AUTH_EVENTS, $http, $cookies) {
+.run(function($rootScope, $state, Auth, AUTH_EVENTS) {
 	
 	//before each state change, check if the user is logged in
 	//and authorized to move onto the next state
-        $http.defaults.headers.post['X-CSRFToken'] = $cookies['csrftoken'];
+//        $http.defaults.headers.post['X-CSRFToken'] = $cookies['csrftoken'];
+
 	$rootScope.$on('$stateChangeStart', function (event, next) {
 	    var authorizedRoles = next.data.authorizedRoles;
 	    if (!Auth.isAuthorized(authorizedRoles) && authorizedRoles != 0) {
