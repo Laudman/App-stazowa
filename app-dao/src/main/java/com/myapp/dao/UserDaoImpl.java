@@ -24,7 +24,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
         }
         return user;
     }
-       // @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked")
         public User findUserByLogin(String login) {
        // System.out.println("Login : "+login);
         Criteria crit = createEntityCriteria();
@@ -60,6 +60,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 //	}
          @SuppressWarnings("unchecked")
     public List<User> findAllUsers() {
+        
         Criteria criteria = createEntityCriteria().addOrder(Order.asc("login"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<User> users = (List<User>) criteria.list();
