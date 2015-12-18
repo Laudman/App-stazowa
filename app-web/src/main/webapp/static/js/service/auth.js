@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 angular.module('mainApp.Auth', [])
 .factory('Auth', function($http, $rootScope, $window, Session, AUTH_EVENTS) {
@@ -7,35 +7,20 @@ angular.module('mainApp.Auth', [])
 	
 	//the login function
 	authService.login = function(user, success, error) {
-//		$http.post('static/misc/users.json').success(function(data) {
-		$http.post.this.success(function(data) {
-		//this is my dummy technique, normally here the 
-		//user is returned with his data from the db
+		$http.post('static/views/users/login.html').success(function(data) {
 		var users = data.users;
-		if(users[user.username]){
-			var loginData = users[user.username];
-			//insert your custom login function here 
-			if(user.username == loginData.username && user.password == loginData.username){
-				//set the browser session, to avoid relogin on refresh
+		if(users[user.login]){
+			var loginData = users[user.login];
+		
+			if(user.login == loginData.login && user.password == loginData.login){
+				
 				$window.sessionStorage["userInfo"] = JSON.stringify(loginData);
-				
-				//delete password not to be seen clientside 
-				delete loginData.password;
-				
-				//update current user into the Session service or $rootScope.currentUser
-				//whatever you prefer
-				Session.create(loginData);
-				//or
+				delete loginData.password;				
+				Session.create(loginData);			
 				$rootScope.currentUser = loginData;
-				
-				//fire event of successful login
 				$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-				//run success function
 				success(loginData);
 			} else{
-				//OR ELSE
-				//unsuccessful login, fire login failed event for 
-				//the according functions to run
 				$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
 				error();
 			}
@@ -43,15 +28,9 @@ angular.module('mainApp.Auth', [])
 		});
 		
 	};
-
-	//check if the user is authenticated
 	authService.isAuthenticated = function() {
 		return !!Session.user;
 	};
-	
-	//check if the user is authorized to access the next route
-	//this function can be also used on element level
-	//e.g. <p ng-if="isAuthorized(authorizedRoles)">show this only to admins</p>
 	authService.isAuthorized = function(authorizedRoles) {
 		if (!angular.isArray(authorizedRoles) ) {
 	      authorizedRoles = [authorizedRoles];
@@ -59,13 +38,11 @@ angular.module('mainApp.Auth', [])
 	    return (authService.isAuthenticated() &&
 	      authorizedRoles.indexOf(Session.userRole) !== -1);
 	};
-	
-	//log out the user and broadcast the logoutSuccess event
 	authService.logout = function(){
 		Session.destroy();
 		$window.sessionStorage.removeItem("userInfo");
 		$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-	}
+	};
 
 	return authService;
 } );

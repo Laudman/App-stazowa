@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="static/angular.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script></head>
 <body>
 
@@ -31,14 +32,21 @@
           </ul>
         </li>
       </ul>
+        
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       </ul>
     </div>
   </div>
 </nav>
-  
+  <div ng-if="currentUser">Welcome, {{ currentUser.name }}</div>
+<div ng-if="isAuthorized(userRoles.admin)">You're admin.</div>
+<div ng-switch on="currentUser.role">
+  <div ng-switch-when="userRoles.admin">You're admin.</div>
+  <div ng-switch-when="userRoles.user">You're user.</div>
+  <div ng-switch-default>You're guest.</div>
+</div>
  
  <div class="container">
       <div class="row top-buffer">
@@ -49,7 +57,6 @@
     </div>
     
       
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
       <script type="text/javascript" src="static/angular.js"></script>
       <script type="text/javascript" src="static/angular-resource.min.js"></script>
       <script type="text/javascript" src="static/angular-ui-router.js"></script>
@@ -58,21 +65,16 @@
       <script type="text/javascript" src="static/js/controller/user_controller.js"></script>
       <script type="text/javascript" src="static/js/service/task_service.js"></script>
       <script type="text/javascript" src="static/js/controller/task_controller.js"></script>
-      
-      <!--<script type="text/javascript" src="static/angular-cookies.js"></script>-->
-      
+<!--      <script type="text/javascript" src="static/angular-cookies.js"></script>
+      <script type="text/javascript" src="static/js/service/signup_service.js"></script>-->
       
       <script type="text/javascript" src="static/js/service/auth.js"></script>
       <script type="text/javascript" src="static/js/service/session.js"></script>
       <script type="text/javascript" src="static/js/service/authInterceptor.js"></script>
-      <script type="text/javascript" src="static/js/controller/authenticate_controller.js"></script>
+      <!--<script type="text/javascript" src="static/js/controller/authenticate_controller.js"></script>-->
       <script type="text/javascript" src="static/js/controller/auth_parentController.js"></script>
-
-<!--      <script src="static/js/libs/angular-ui-router.min.js"></script>
-      <script src="static/js/libs/ui-bootstrap-tpls-0.11.2.min.js"></script>-->
       
-      
-     
+ 
   </body>
 </html>
 

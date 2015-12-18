@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 angular.module('mainApp.task.controllers', [])
         .controller('TaskListController', function($scope, $state, popupService, $window, Task) {
   $scope.tasks = Task.query(); //fetch all tasks. Issues a GET to /App/tasks

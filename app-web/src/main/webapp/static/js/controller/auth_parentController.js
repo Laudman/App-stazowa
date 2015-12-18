@@ -1,18 +1,14 @@
-//'use strict';
+'use strict';
 
 angular.module('mainApp.ParentController', [])
         .controller('ParentController',function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
-	// this is the parent controller for all controllers.
-	// Manages auth login functions and each controller
-	// inherits from this controller	
-
 	
 	$scope.modalShown = false;
 	var showLoginDialog = function() {
 		if(!$scope.modalShown){
 			$scope.modalShown = true;
 			var modalInstance = $modal.open({
-				templateUrl : '/login.html',
+				templateUrl : 'views/users/login.html',
 				controller : "LoginCtrl",
 				backdrop : 'static'
 			});

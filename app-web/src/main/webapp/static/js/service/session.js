@@ -1,12 +1,7 @@
-//'use strict';
+'use strict';
 
-/*
- * In this service the user data is defined for the current session. Within
- * angular current session is until the page is refreshed. When the page is
- * refreshed the user is reinitialized through $window.sessionStorage at the
- * login.js file.
- */
-angular.module('mainApp.Session', []).service('Session', function($rootScope, USER_ROLES) {
+angular.module('mainApp.Session', [])
+        .service('Session', function($rootScope, USER_ROLES) {
 
 	this.create = function(user) {
 		this.user = user;
@@ -17,4 +12,12 @@ angular.module('mainApp.Session', []).service('Session', function($rootScope, US
 		this.userRole = null;
 	};
 	return this;
-});
+})
+.config(function ($httpProvider) {
+  $httpProvider.interceptors.push([
+    '$injector',
+    function ($injector) {
+      return $injector.get('AuthInterceptor');
+    }
+  ]);
+})

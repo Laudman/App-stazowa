@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 angular.module('mainApp.user.controllers', [])
         .controller('UserListController', function($scope, $state, popupService, $window, User) {
   $scope.users = User.query(); //fetch all users. Issues a GET to /App/users
@@ -23,9 +23,11 @@ angular.module('mainApp.user.controllers', [])
        };
 }])
         .controller('UserCreateController', function($scope, $state, $stateParams, User) {
-  $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
-  $scope.addUser = function() { //create a new user. Issues a POST to /App/users
+    $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
+    $scope.user.profile = 'user';
+    $scope.addUser = function() { //create a new user. Issues a POST to /App/users
     $scope.user.$save(function() {
+       
       $state.go('users'); // on success go back to home i.e. users state.
     });
   };
@@ -41,90 +43,61 @@ angular.module('mainApp.user.controllers', [])
 
   $scope.loadUser(); // Load a user which can be edited on UI
 })
-;
-//;
-//
-//.controller('LoginCtrl', function($scope, $state, $modalInstance, $window, Auth ) {
-//	$scope.credentials = {};
-//	$scope.loginForm = {};
-//	$scope.error = false;
-//	
-//	//when the form is submitted
-//	$scope.submit = function() {
-//		$scope.submitted = true;
-//		if (!$scope.loginForm.$invalid) {
-//			$scope.login($scope.credentials);
-//		} else {
-//			$scope.error = true;
-//			return;
-//		}
-//	};
-//
-//	//Performs the login function, by sending a request to the server with the Auth service
-//	$scope.login = function(credentials) {
-//		$scope.error = false;
-//		Auth.login(credentials, function(user) {
-//			//success function
+
+
+.controller('LoginCtrl', function($scope, $state, /*$modalInstance,*/ $window, Auth ) {
+	$scope.credentials = {};
+	$scope.loginForm = {};
+	$scope.error = false;
+	
+	//when the form is submitted
+	$scope.submit = function() {
+		$scope.submitted = true;
+		if (!$scope.loginForm.$invalid) {
+			$scope.login($scope.credentials);
+		} else {
+			$scope.error = true;
+			return;
+		}
+	};
+	//Performs the login function, by sending a request to the server with the Auth service
+	$scope.login = function(credentials) {
+		$scope.error = false;
+		Auth.login(credentials, function(user) {
+			//success function
 //			$modalInstance.close();
-//			$state.go('users');
-//		}, function(err) {
-//			console.log("error");
-//			$scope.error = true;
-//		});
-//	};
-//	
-//	// if a session exists for current user (page was refreshed)
-//	// log him in again
-//	if ($window.sessionStorage["userInfo"]) {
-//		var credentials = JSON.parse($window.sessionStorage["userInfo"]);
-//		$scope.login(credentials);
-//	}
-//
-//} )
-//
-// .controller('ParentController', function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
-//	// this is the parent controller for all controllers.
-//	// Manages auth login functions and each controller
-//	// inherits from this controller	
-//
-//	
-//	$scope.modalShown = false;
-//	var showLoginDialog = function() {
-//		if(!$scope.modalShown){
-//			$scope.modalShown = true;
-//			var modalInstance = $modal.open({
-//				templateUrl : 'static/views/login.html',
-//				controller : "LoginCtrl",
-//				backdrop : 'static'
-//			});
-//
-//			modalInstance.result.then(function() {
-//				$scope.modalShown = false;
-//			});
-//		}
-//	};
-//	
-//	var setCurrentUser = function(){
-//		$scope.currentUser = $rootScope.currentUser;
-//	};
-//	
-//	var showNotAuthorized = function(){
-//		alert("Not Authorized");
-//	};
-//	
-//	$scope.currentUser = null;
-//	$scope.userRoles = USER_ROLES;
-//	$scope.isAuthorized = Auth.isAuthorized;
-//
-//	//listen to events of unsuccessful logins, to run the login dialog
-//	$rootScope.$on(AUTH_EVENTS.notAuthorized, showNotAuthorized);
-//	$rootScope.$on(AUTH_EVENTS.notAuthenticated, showLoginDialog);
-//	$rootScope.$on(AUTH_EVENTS.sessionTimeout, showLoginDialog);
-//	$rootScope.$on(AUTH_EVENTS.logoutSuccess, showLoginDialog);
-//	$rootScope.$on(AUTH_EVENTS.loginSuccess, setCurrentUser);
-//	
-//} );
+			$state.go('users');
+		}, function(err) {
+			console.log("error");
+			$scope.error = true;
+		});
+	}
+	// if a session exists for current user (page was refreshed)
+	// log him in again
+	if ($window.sessionStorage["userInfo"]) {
+		var credentials = JSON.parse($window.sessionStorage["userInfo"]);
+		$scope.login(credentials);
+	}
 
-
-////  
-////  
+} )
+ 
+        .controller('RegisterController', function (UserService, $location, $rootScope, FlashService) {
+        var vm = this;
+ 
+        vm.register = register;
+ 
+        function register() {
+            vm.dataLoading = true;
+            UserService.Create(vm.user)
+                .then(function (response) {
+                    if (response.success) {
+                        FlashService.Success('Registration successful', true);
+                        $location.path('/login');
+                    } else {
+                        FlashService.Error(response.message);
+                        vm.dataLoading = false;
+                    }
+                });
+        }
+    }
+); 

@@ -1,16 +1,14 @@
-//'use strict';
+'use strict';
 
-var mainApp = angular.module('mainApp', [ 'ui.router', 
-                            'ngResource', 
+var mainApp = angular.module('mainApp', [ 'ui.router',
+                            'ngResource',                          
                             'mainApp.user.controllers', 
                             'mainApp.user.services', 
                             'mainApp.task.controllers', 
                             'mainApp.task.services',
                             'mainApp.ParentController',
-                            'mainApp.LoginCtrl',
                             'mainApp.Auth',
-                            'mainApp.Session',
-//                            'ngCookies',
+                            'mainApp.Session',                 
                             'mainApp.AuthInterceptor'
                              
                              
@@ -44,9 +42,8 @@ var mainApp = angular.module('mainApp', [ 'ui.router',
     }
 
 }).state('login', { 
-    url: '/users/login',
+    url: '/login',
     templateUrl: 'views/login.html',
-//    controller: ['LoginCtrl', 'AuthInterceptor', 'ParentController'],
     controller: 'LoginCtrl',
     
     data: {
@@ -94,16 +91,14 @@ data: {
   .state('signup', { 
     url: '/signup',
     templateUrl: 'views/signup.html',
-//    controller: 'LoginCtrl',
-    controller: 'UserCreateController',
+ controller: 'UserCreateController',
 data: {
                 authorizedRoles: []
                }
   })
 
      //--------------------------------------------------------------------------   
-//        
-//})
+
 //-----------------------Taskapp-------------------------------------------------
 .state('tasks', { // state for showing all tasks
     url: '/tasks',
@@ -134,18 +129,10 @@ data: {
                 authorizedRoles: []
                }
   });
+  
 })
-
-//});
-//.run(function($state) {
-//  $state.go('users'); //make a transition to user state when app starts
-//});
-// 
-//  
-.run(function($rootScope, $state, Auth, AUTH_EVENTS) {
+.run(function($rootScope, $state, Auth, AUTH_EVENTS){   //,$http, $cookies) {
 	
-	//before each state change, check if the user is logged in
-	//and authorized to move onto the next state
 //        $http.defaults.headers.post['X-CSRFToken'] = $cookies['csrftoken'];
 
 	$rootScope.$on('$stateChangeStart', function (event, next) {
@@ -164,7 +151,7 @@ data: {
 	
 	/* To show current active state on menu */
 	$rootScope.getClass = function(path) {
-		if ($state.current.name === path) {
+		if ($state.current.name == path) {
 			return "active";
 		} else {
 			return "";
@@ -176,14 +163,7 @@ data: {
 	};
 
 })
-.config(function ($httpProvider) {
-  $httpProvider.interceptors.push([
-    '$injector',
-    function ($injector) {
-      return $injector.get('AuthInterceptor');
-    }
-  ]);
-})
+
 .directive('formAutofillFix', function ($timeout) {
   return function (scope, element, attrs) {
     element.prop('method', 'post');

@@ -17,21 +17,21 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 //		return getByKey(id_user);
 //	}
         
-        public User findUser(int id) {
-        User user = getByKey(id);
+        public User findUser(int id_user) {
+        User user = getByKey(id_user);
         if(user!=null){
-            Hibernate.initialize(user.getUserProfiles());
+            Hibernate.initialize(user.getUserRole());
         }
         return user;
     }
-
+       // @SuppressWarnings("unchecked")
         public User findUserByLogin(String login) {
        // System.out.println("Login : "+login);
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("LoginId", login));
         User user = (User)crit.uniqueResult();
         if(user!=null){
-            Hibernate.initialize(user.getUserProfiles());
+            Hibernate.initialize(user.getUserRole());
         }
         return user;
     }

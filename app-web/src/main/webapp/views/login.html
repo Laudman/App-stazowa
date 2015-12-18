@@ -24,14 +24,16 @@
 			</div>
 		</div>
 		<div style="padding-top: 30px" class="panel-body">
-			<form name="loginForm" ng-controller="LoginCtrl"
-                        ng-submit="login(credentials)" novalidate>
+			<form name="loginForm" class="form-horizontal" method="post"
+				ng-submit="login(credentials)" novalidate form-autofill-fix>
+<!--                            <form name="loginForm" ng-controller="LoginCtrl"
+                        ng-submit="login(credentials)" novalidate form-autofill-fix>-->
 				<table class="table" width="100%">
-					<tr>
+<!--					<tr>
 						<td><p>Either: <br>user: admin<br> pass: admin</p></td>
 						<td><p>Or: <br>user: editor<br> pass: editor</p></td>
 						<td><p>Or: <br>user: guest<br> pass: guest</p></td>
-					</tr>
+					</tr>-->
 				</table>
 				<div style="margin-top: 25px" class="input-group">
 					<span class="input-group-addon"><i
@@ -65,6 +67,7 @@
 					</div>
 
 				</div>
+                                  
 				<p ng-show="error" class="error">The password you entered is incorrect.
 				 Please try again (make sure your caps lock is off).</p>
 			</form>

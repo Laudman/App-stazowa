@@ -14,43 +14,45 @@ import com.myapp.model.User;
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
-	private UserDao userdao;
+	private UserDao userDao;
 	
-	//private static List<User> users;
+	private static List<User> users;
+        
 	public User findUserByLogin(String login) {
-        User user = userdao.findUserByLogin(login);
+        User user = userDao.findUserByLogin(login);
         return user;
     }
 
 	
 	public User findUser(int id_user) {
-		return userdao.findUser(id_user);
+		return userDao.findUser(id_user);
 	}
 
 	public void saveUser(User user) {
-		userdao.saveUser(user);
+		userDao.saveUser(user);
 	}
 	
 	public void updateUser(User user) {
-		User entity = userdao.findUser(user.getId_user());
+		User entity = userDao.findUser(user.getId_user());
 		if(entity!=null){
 			entity.setLogin(user.getLogin());
 			entity.setPassword(user.getPassword());
 			entity.setEmail(user.getEmail());
-                        entity.setUserProfiles(user.getUserProfiles());
+                        entity.setUserRole(user.getUserRole());
+                        entity.setEnabled(user.isEnabled());
 		}
 	}
 
 	public void deleteUser(int id_user) {
-		userdao.deleteUser(id_user);
+		userDao.deleteUser(id_user);
 	}
         
         public void deleteUserByLogin(String login) {
-        userdao.deleteUserByLogin(login);
+        userDao.deleteUserByLogin(login);
     }
 
 	public List<User> findAllUsers() {
-		return userdao.findAllUsers();
+		return userDao.findAllUsers();
 	}
 
  
