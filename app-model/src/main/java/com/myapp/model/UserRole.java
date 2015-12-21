@@ -1,8 +1,9 @@
 package com.myapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "userRole")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class UserRole implements Serializable {
 
     @Id
@@ -35,7 +37,15 @@ public class UserRole implements Serializable {
         this.user = user;
         this.role = role;
     }
-         
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+              
     public User getUser() {
         return this.user;
     }
