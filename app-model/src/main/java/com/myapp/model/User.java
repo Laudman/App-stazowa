@@ -28,18 +28,18 @@ public class User implements Serializable {
     private String email;
     private boolean enabled;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserRole> userRole = new HashSet<UserRole>();
 
     public User() {
     }
 
-    public User(int id_user, String login, String password, String email, boolean enabled) {
+    public User(int id_user, String login, String password, boolean enabled) {
         id_user = this.id_user;
         login = this.login;
         password = this.password;
         enabled = this.enabled;
-        email = this.email;
+        
 
     }
 

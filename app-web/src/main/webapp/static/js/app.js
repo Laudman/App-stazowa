@@ -76,7 +76,7 @@ data: {
     url: '/contact',
     templateUrl: 'views/contact.html',
 data: {
-                authorizedRoles: [USER_ROLES.user]
+                authorizedRoles: [USER_ROLES.user, USER_ROLES.admin]
                }
   })
   //--------------------------Login------------------

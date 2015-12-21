@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import com.myapp.model.User;
+import javax.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -24,16 +25,30 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
         }
         return user;
     }
-        @SuppressWarnings("unchecked")
-        public User findUserByLogin(String login) {
-       // System.out.println("Login : "+login);
-        Criteria crit = createEntityCriteria();
-        crit.add(Restrictions.eq("LoginId", login));
-        User user = (User)crit.uniqueResult();
-        if(user!=null){
-            Hibernate.initialize(user.getUserRole());
-        }
-        return user;
+//        @Transactional
+//        @SuppressWarnings("unchecked")
+//        public User findUserByLogin(String login) {
+//       // System.out.println("Login : "+login);
+//        Criteria crit = createEntityCriteria();
+//        crit.add(Restrictions.eq("login", login));
+//        User user = (User)crit.uniqueResult();
+//        if(user!=null){
+//            Hibernate.initialize(user.getUserRole());
+//        }
+//        return user;
+//    }
+        
+        @Override
+    //@Transactional
+    @SuppressWarnings("unchecked")
+    public User findUserByLogin(String login){
+        String query = "from User where login = ?";
+        List<User> listUser = sessionFactory.getCurrentSession().createQuery(query).setParameter(0, login).list();
+
+        if(listUser.size() > 0)
+            return listUser.get(0);
+        else
+            return null;
     }
 
 
@@ -60,12 +75,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 //	}
          @SuppressWarnings("unchecked")
     public List<User> findAllUsers() {
-        
-        Criteria criteria = createEntityCriteria().addOrder(Order.asc("login"));
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-        List<User> users = (List<User>) criteria.list();
-        
-        return users;
+        return getSession().createCriteria(User.class).addOrder(Order.asc("login")).list();
     }
 
      public void deleteUserByLogin(String login) {
@@ -74,6 +84,8 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
         User user = (User)crit.uniqueResult();
         delete(user);
     }
+
+   
 
 
 }

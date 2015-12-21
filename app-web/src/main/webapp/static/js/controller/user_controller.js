@@ -24,7 +24,7 @@ angular.module('mainApp.user.controllers', [])
 }])
         .controller('UserCreateController', function($scope, $state, $stateParams, User) {
     $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
-    $scope.user.profile = 'user';
+    $scope.user.role = 'user';
     $scope.addUser = function() { //create a new user. Issues a POST to /App/users
     $scope.user.$save(function() {
        

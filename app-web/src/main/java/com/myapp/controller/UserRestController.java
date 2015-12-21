@@ -129,15 +129,16 @@ public class UserRestController {
     @ResponseBody
     @RequestMapping(value = "/users/delete", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> deleteUser(@RequestBody User userJSON) {
-        System.out.println("Fetching & Deleting User with id_user " + userJSON.getId_user());
+        System.out.println("Fetching & Deleting User with login " + userJSON.getLogin());
 
-        User user = userService.findUser(userJSON.getId_user());
+        User user = userService.findUserByLogin(userJSON.getLogin());
         if (user == null) {
-            System.out.println("Unable to delete. User with id_user " + userJSON.getId_user() + " not found");
+        
+            System.out.println("Unable to delete. User with login " + userJSON.getLogin() + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
 
-        userService.deleteUser(userJSON.getId_user());
+        userService.deleteUserByLogin(userJSON.getLogin());
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 // ------------------test version DELETE to upgrade in future -------------
@@ -167,7 +168,19 @@ public class UserRestController {
 //        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 //    }
 // *****************************END USER CONTROLLER************************************************
-    
+    @Produces("application/json")
+    @ResponseBody
+    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+	public ModelAndView adminPage() {
+
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "Spring Security + Hibernate Example");
+		model.addObject("message", "This page is for ROLE_ADMIN only!");
+		model.setViewName("admin");
+
+		return model;
+
+	}
     @Produces("application/json")
     @ResponseBody
 @RequestMapping(value = "/login", method = RequestMethod.GET)
