@@ -42,7 +42,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
     //@Transactional
     @SuppressWarnings("unchecked")
     public User findUserByLogin(String login){
-        String query = "from User where login = ?";
+        String query = "from Users where login = ?";
         List<User> listUser = sessionFactory.getCurrentSession().createQuery(query).setParameter(0, login).list();
 
         if(listUser.size() > 0)
