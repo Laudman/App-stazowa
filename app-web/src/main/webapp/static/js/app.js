@@ -1,4 +1,3 @@
-/* global _ */
 
 'use strict';
 
@@ -35,6 +34,14 @@ var mainApp = angular.module('mainApp', [ 'ui.router',
     url: '/users',
     templateUrl: 'views/users.html',
     controller: 'UserListController',
+   data: {
+                authorizedRoles: []
+    }
+    
+    }).state('user', { 
+    url: '/user',
+    templateUrl: 'views/user.html',
+    
    data: {
                 authorizedRoles: []
     }
@@ -133,23 +140,18 @@ var mainApp = angular.module('mainApp', [ 'ui.router',
 
 .run(function($rootScope, $state, Auth, AUTH_EVENTS) {
 	
-	//before each state change, check if the user is logged in
-	//and authorized to move onto the next state
 	$rootScope.$on('$stateChangeStart', function (event, next) {
 	    var authorizedRoles = next.data.authorizedRoles;
 	    if (!Auth.isAuthorized(authorizedRoles)&& authorizedRoles != 0) {
 	      event.preventDefault();
 	      if (Auth.isAuthenticated()) {
-	        // user is not allowed
 	        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
 	      } else {
-	        // user is not logged in
 	        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
 	      }
 	    }
 	  });
 	
-	/* To show current active state on menu */
 	$rootScope.getClass = function(path) {
 		if ($state.current.name == path) {
 			return "active";

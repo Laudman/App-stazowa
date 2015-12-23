@@ -5,9 +5,13 @@ angular.module('mainApp.Auth', [])
 	var authService = {};
 	
 	
-	//the login function
+//	authService.login = function( login, password) {
+//		$http.post('/login.html', { login: login, password: password })
+//		.success(function (response) {
+//              callback(response);
+//		});
 	authService.login = function(user, success, error) {
-		$http.post('static/views/users/login.html').success(function(data) {
+		$http.post('/login.html').success(function(data) {
 		var users = data.users;
 		if(users[user.login]){
 			var loginData = users[user.login];

@@ -10,13 +10,13 @@ angular.module('mainApp.user.services', []).factory('User', function($resource) 
     update: {
       method: 'POST',
       url: '/users/update/:id'
+    },
+     login: {
+      method: 'POST',
+      url: '/login'
     }
-//    login: {
-//      method: 'POST',
-//      url: '/users/login/'
-//    }
     });
-    })
+    });
 
     
     

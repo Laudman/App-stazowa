@@ -16,14 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.myapp.model.User;
 import com.myapp.service.UserService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -51,58 +44,6 @@ public class UserRestController {
 
     }
     
-    @Produces("application/json")
-    @ResponseBody
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
-        return "admin";
-    }
-     @Produces("application/json")
-    @ResponseBody
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String dbaPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
-        return "user";
-    }
-    @Produces("application/json")
-    @ResponseBody
-    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
-    public String accessDeniedPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
-        return "accessDenied";
-    }
-    @Produces("application/json")
-    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage() {
-        return "login";
-    }
-    @Produces("application/json")
-    @ResponseBody
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){    
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        return "redirect:/login?logout";
-    }
-    // ----------------version 2 ---------------------------------
-//     @Produces("application/json")
-//	@ResponseBody
-//	@RequestMapping(value = "/users", method = RequestMethod.GET)
-//    public  ResponseEntity<List<User>> listAllUsers() {
-//        List<User> users = userService.findAllUsers();
-//        if(users.isEmpty()){
-//            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
-//    }
-
- 
-    
-    //-------------------Retrieve Single User version 1--------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
     @RequestMapping(value = {"/users/{id}"}, method = RequestMethod.GET)
@@ -171,117 +112,14 @@ public class UserRestController {
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
     
+//  @RequestMapping(value = "/login",method = RequestMethod.POST, consumes = "application/json")
+// @ResponseBody
+// public User getUser(@RequestBody User userJSON) {
+// 
+//     
+//   return userService.findUser(userJSON.getLogin());
+//   
+//};
     
-    private String getPrincipal(){
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
- 
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails)principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        return userName;
-    }
 
-// ------------------test version DELETE to upgrade in future -------------
-//    @Produces("application/json")
-//    @ResponseBody
-//    @RequestMapping(value = "/users/delete/{id_user}", method = RequestMethod.POST)
-//    public ResponseEntity<User> deleteUser(@PathVariable("id_user") int id_user) {
-//        System.out.println("Fetching & Deleting User with id_user " + id_user);
-// 
-//        User user = userService.findUser(id_user);
-//        if (user == null) {
-//            System.out.println("Unable to delete. User with id_user " + id_user + " not found");
-//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//        }
-// 
-//        userService.deleteUser(id_user);
-//        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-//    }
-
-    //------------------- Delete All Users --------------------------------------------------------
-//    @ResponseBody
-//    @RequestMapping(value = "/user/", method = RequestMethod.DELETE, produces={"application/json"})
-//    public ResponseEntity<User> deleteAllUsers() {
-//        System.out.println("Deleting All Users");
-// 
-//        userService.deleteAllUsers();
-//        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-//    }
-// *****************************END USER CONTROLLER************************************************
-//    @Produces("application/json")
-//    @ResponseBody
-//    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
-//	public ModelAndView adminPage() {
-//
-//		ModelAndView model = new ModelAndView();
-//		model.addObject("title", "Spring Security + Hibernate Example");
-//		model.addObject("message", "This page is for ROLE_ADMIN only!");
-//		model.setViewName("admin");
-//
-//		return model;
-//
-//	}
-//    @Produces("application/json")
-//    @ResponseBody
-//@RequestMapping(value = "/login", method = RequestMethod.GET)
-//	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-//			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
-//
-//		ModelAndView model = new ModelAndView();
-//		if (error != null) {
-//			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-//		}
-//
-//		if (logout != null) {
-//			model.addObject("msg", "You've been logged out successfully.");
-//		}
-//		model.setViewName("login");
-//
-//		return model;
-//
-//	}
-//
-//	// customize the error message
-//	private String getErrorMessage(HttpServletRequest request, String key) {
-//
-//		Exception exception = (Exception) request.getSession().getAttribute(key);
-//
-//		String error = "";
-//		if (exception instanceof BadCredentialsException) {
-//			error = "Invalid login and password!";
-//		} else if (exception instanceof LockedException) {
-//			error = exception.getMessage();
-//		} else {
-//			error = "Invalid login and password!";
-//		}
-//
-//		return error;
-//	}
-//
-//        
-//	// for 403 access denied page
-//	@RequestMapping(value = "/403", method = RequestMethod.GET)
-//	public ModelAndView accesssDenied() {
-//
-//		ModelAndView model = new ModelAndView();
-//
-//		// check if user is login
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		if (!(auth instanceof AnonymousAuthenticationToken)) {
-//			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-//			System.out.println(userDetail);
-//
-//			model.addObject("login", userDetail.getUsername());
-//
-//		}
-//
-//		model.setViewName("403");
-//		return model;
-//
-//	}
-
-   
-}
+};

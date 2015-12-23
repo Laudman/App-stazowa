@@ -45,7 +45,7 @@ angular.module('mainApp.user.controllers', [])
   $scope.loadUser(); // Load a user which can be edited on UI
 })
 
-.controller('LoginCtrl', function($scope, $state, $modalInstance, $window, Auth ) {
+.controller('LoginCtrl', function($scope, $state, /*$modalInstance*/$uibModal, $window, Auth ) {
 	$scope.credentials = {};
 	$scope.loginForm = {};
 	$scope.error = false;
@@ -65,15 +65,13 @@ angular.module('mainApp.user.controllers', [])
 		$scope.error = false;
 		Auth.login(credentials, function(user) {
 			//success function
-			$modalInstance.close();
+			$uibModal.close();
 			$state.go('users');
 		}, function(err) {
 			console.log("error");
 			$scope.error = true;
 		});
-	}
-	// if a session exists for current user (page was refreshed)
-	// log him in again
+	};
 	if ($window.sessionStorage["userInfo"]) {
 		var credentials = JSON.parse($window.sessionStorage["userInfo"]);
 		$scope.login(credentials);
@@ -82,17 +80,13 @@ angular.module('mainApp.user.controllers', [])
 } )
  
          .controller('ParentController', function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
-	// this is the parent controller for all controllers.
-	// Manages auth login functions and each controller
-	// inherits from this controller	
-
 	
 	$scope.modalShown = false;
 	var showLoginDialog = function() {
 		if(!$scope.modalShown){
 			$scope.modalShown = true;
 			var modalInstance = $modal.open({
-				templateUrl : 'static/views/users/login.html',
+				templateUrl : '/login.html',
 				controller : "LoginCtrl",
 				backdrop : 'static',
 			});
@@ -115,7 +109,6 @@ angular.module('mainApp.user.controllers', [])
 	$scope.userRoles = USER_ROLES;
 	$scope.isAuthorized = Auth.isAuthorized;
 
-	//listen to events of unsuccessful logins, to run the login dialog
 	$rootScope.$on(AUTH_EVENTS.notAuthorized, showNotAuthorized);
 	$rootScope.$on(AUTH_EVENTS.notAuthenticated, showLoginDialog);
 	$rootScope.$on(AUTH_EVENTS.sessionTimeout, showLoginDialog);
