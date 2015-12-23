@@ -1,6 +1,7 @@
 package com.myapp.controller;
 
 
+import com.myapp.dao.RoleDAO;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import com.myapp.model.User;
 import com.myapp.service.UserService;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+
 
 
 @RestController
@@ -34,20 +33,15 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
-
+    
+    @Autowired
+    private RoleDAO roleDAO;
     
     //--------------------------------------------------------------------------
     //*************************USER CONTROLLER**********************************
     //--------------------------------------------------------------------------
     
     // --------------------- version 1 ------------------------ 
-//        @Produces("application/json")
-//	@ResponseBody
-//	@RequestMapping(value = "/users", method = RequestMethod.GET)
-//    public  List<User>listAllUsers() {
-//        return userService.findAllUsers();
-//        
-//    }
     
     @Produces("application/json")
     @ResponseBody
@@ -55,6 +49,44 @@ public class UserRestController {
     public List<User> listAllUsers() {
         return userService.findAllUsers();
 
+    }
+    
+    @Produces("application/json")
+    @ResponseBody
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String adminPage(ModelMap model) {
+        model.addAttribute("user", getPrincipal());
+        return "admin";
+    }
+     @Produces("application/json")
+    @ResponseBody
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String dbaPage(ModelMap model) {
+        model.addAttribute("user", getPrincipal());
+        return "user";
+    }
+    @Produces("application/json")
+    @ResponseBody
+    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+    public String accessDeniedPage(ModelMap model) {
+        model.addAttribute("user", getPrincipal());
+        return "accessDenied";
+    }
+    @Produces("application/json")
+    @ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
+    }
+    @Produces("application/json")
+    @ResponseBody
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){    
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout";
     }
     // ----------------version 2 ---------------------------------
 //     @Produces("application/json")
@@ -73,12 +105,12 @@ public class UserRestController {
     //-------------------Retrieve Single User version 1--------------------------------------------------------
     @Produces("application/json")
     @ResponseBody
-    @RequestMapping(value = {"/users/{id_user}"}, method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable("id_user") int id_user) {
-        System.out.println("Fetching User with id " + id_user);
-        User user = userService.findUser(id_user);
+    @RequestMapping(value = {"/users/{id}"}, method = RequestMethod.GET)
+    public ResponseEntity<User> getUser(@PathVariable("id") int id) {
+        System.out.println("Fetching User with id " + id);
+        User user = userService.findUser(id);
         if (user == null) {
-            System.out.println("User with id_user " + id_user + " not found");
+            System.out.println("User with id " + id + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -96,7 +128,7 @@ public class UserRestController {
         userService.saveUser(user);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/users/{id_user}").buildAndExpand(user.getId_user()).toUri());
+        headers.setLocation(ucBuilder.path("/users/{id}").buildAndExpand(user.getLogin()).toUri());
         return new ResponseEntity<User>(headers, HttpStatus.CREATED);
     }
 
@@ -104,21 +136,18 @@ public class UserRestController {
     @ResponseBody
     @RequestMapping(value = {"/users/update"}, method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> updateUser(@RequestBody User userJSON) {
-        System.out.println("Updating User " + userJSON.getId_user());
+        System.out.println("Updating User " + userJSON.getId());
 
-        User currentUser = userService.findUser(userJSON.getId_user());
+        User currentUser = userService.findUser(userJSON.getId());
 
         if (currentUser == null) {
-            System.out.println("User with id_user " + userJSON.getId_user() + " not found");
+            System.out.println("User with id " + userJSON.getId() + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
 
         currentUser.setLogin(userJSON.getLogin());
         currentUser.setPassword(userJSON.getPassword());
         currentUser.setEmail(userJSON.getEmail());
-        //******************************************
-//        currentUser.setEmail(userJSON.getState());
-        //********************************************
 
         userService.updateUser(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
@@ -141,6 +170,20 @@ public class UserRestController {
         userService.deleteUserByLogin(userJSON.getLogin());
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
+    
+    
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+ 
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+
 // ------------------test version DELETE to upgrade in future -------------
 //    @Produces("application/json")
 //    @ResponseBody
@@ -168,76 +211,77 @@ public class UserRestController {
 //        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 //    }
 // *****************************END USER CONTROLLER************************************************
-    @Produces("application/json")
-    @ResponseBody
-    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
-	public ModelAndView adminPage() {
+//    @Produces("application/json")
+//    @ResponseBody
+//    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+//	public ModelAndView adminPage() {
+//
+//		ModelAndView model = new ModelAndView();
+//		model.addObject("title", "Spring Security + Hibernate Example");
+//		model.addObject("message", "This page is for ROLE_ADMIN only!");
+//		model.setViewName("admin");
+//
+//		return model;
+//
+//	}
+//    @Produces("application/json")
+//    @ResponseBody
+//@RequestMapping(value = "/login", method = RequestMethod.GET)
+//	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+//			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
+//
+//		ModelAndView model = new ModelAndView();
+//		if (error != null) {
+//			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+//		}
+//
+//		if (logout != null) {
+//			model.addObject("msg", "You've been logged out successfully.");
+//		}
+//		model.setViewName("login");
+//
+//		return model;
+//
+//	}
+//
+//	// customize the error message
+//	private String getErrorMessage(HttpServletRequest request, String key) {
+//
+//		Exception exception = (Exception) request.getSession().getAttribute(key);
+//
+//		String error = "";
+//		if (exception instanceof BadCredentialsException) {
+//			error = "Invalid login and password!";
+//		} else if (exception instanceof LockedException) {
+//			error = exception.getMessage();
+//		} else {
+//			error = "Invalid login and password!";
+//		}
+//
+//		return error;
+//	}
+//
+//        
+//	// for 403 access denied page
+//	@RequestMapping(value = "/403", method = RequestMethod.GET)
+//	public ModelAndView accesssDenied() {
+//
+//		ModelAndView model = new ModelAndView();
+//
+//		// check if user is login
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		if (!(auth instanceof AnonymousAuthenticationToken)) {
+//			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+//			System.out.println(userDetail);
+//
+//			model.addObject("login", userDetail.getUsername());
+//
+//		}
+//
+//		model.setViewName("403");
+//		return model;
+//
+//	}
 
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security + Hibernate Example");
-		model.addObject("message", "This page is for ROLE_ADMIN only!");
-		model.setViewName("admin");
-
-		return model;
-
-	}
-    @Produces("application/json")
-    @ResponseBody
-@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
-
-		ModelAndView model = new ModelAndView();
-		if (error != null) {
-			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-		}
-
-		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
-		}
-		model.setViewName("login");
-
-		return model;
-
-	}
-
-	// customize the error message
-	private String getErrorMessage(HttpServletRequest request, String key) {
-
-		Exception exception = (Exception) request.getSession().getAttribute(key);
-
-		String error = "";
-		if (exception instanceof BadCredentialsException) {
-			error = "Invalid login and password!";
-		} else if (exception instanceof LockedException) {
-			error = exception.getMessage();
-		} else {
-			error = "Invalid login and password!";
-		}
-
-		return error;
-	}
-
-        
-	// for 403 access denied page
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public ModelAndView accesssDenied() {
-
-		ModelAndView model = new ModelAndView();
-
-		// check if user is login
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			System.out.println(userDetail);
-
-			model.addObject("login", userDetail.getUsername());
-
-		}
-
-		model.setViewName("403");
-		return model;
-
-	}
-
+   
 }

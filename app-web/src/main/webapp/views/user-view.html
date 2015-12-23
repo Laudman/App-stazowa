@@ -15,11 +15,11 @@
     <td>Email</td>
     <td>{{user.email}}</td>
   </tr>
-   <tr>
+<!--   <tr>
     <td>Profile</td>
-    <td>{{user.role}}</td>
-  </tr>
+    <td>{{user.userRole.getUserRole()}}</td>
+  </tr>-->
 </table>
 <div>
-  <a class="btn btn-primary" ui-sref="editUser({id_user:user.id_user})">Edit</a>
+  <a class="btn btn-primary" ui-sref="editUser({id:user.id})">Edit</a>
 </div>

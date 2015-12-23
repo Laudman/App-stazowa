@@ -11,20 +11,21 @@ angular.module('mainApp.user.controllers', [])
     }
   };
 }).controller('UserViewController', function($scope, $stateParams, User) {
-  $scope.user = User.get({ id_user: $stateParams.id_user }); //Get a single user.Issues a GET to /App/users/:id
+  $scope.user = User.get({ id: $stateParams.id }); //Get a single user.Issues a GET to /App/users/:id
 })
 .controller('UserStateDropDown', ['$scope', function($scope) {
    $scope.data = {
     availableOptions: [
-      {name: 'user'},
-      {name: 'admin'}
+      {id: 1, name: 'admin'},
+      {id: 2, name: 'user'}
     ],
-    selectedOption: {name: 'user'}
+    selectedOption: {id: 2,name: 'user'}
        };
 }])
         .controller('UserCreateController', function($scope, $state, $stateParams, User) {
     $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
-    $scope.user.role = 'user';
+//    $scope.user.role = 'USER';
+//    $scope.user.userRole:['user'];
     $scope.addUser = function() { //create a new user. Issues a POST to /App/users
     $scope.user.$save(function() {
        
@@ -38,14 +39,13 @@ angular.module('mainApp.user.controllers', [])
     });
   };
    $scope.loadUser = function() { //Issues a GET request to /App/users/:id to get a user to update
-    $scope.user = User.get({ id_user: $stateParams.id_user });
+    $scope.user = User.get({ id: $stateParams.id });
   };
 
   $scope.loadUser(); // Load a user which can be edited on UI
 })
 
-
-.controller('LoginCtrl', function($scope, $state, /*$modalInstance,*/ $window, Auth ) {
+.controller('LoginCtrl', function($scope, $state, $modalInstance, $window, Auth ) {
 	$scope.credentials = {};
 	$scope.loginForm = {};
 	$scope.error = false;
@@ -65,7 +65,7 @@ angular.module('mainApp.user.controllers', [])
 		$scope.error = false;
 		Auth.login(credentials, function(user) {
 			//success function
-//			$modalInstance.close();
+			$modalInstance.close();
 			$state.go('users');
 		}, function(err) {
 			console.log("error");
@@ -81,23 +81,45 @@ angular.module('mainApp.user.controllers', [])
 
 } )
  
-        .controller('RegisterController', function (UserService, $location, $rootScope, FlashService) {
-        var vm = this;
- 
-        vm.register = register;
- 
-        function register() {
-            vm.dataLoading = true;
-            UserService.Create(vm.user)
-                .then(function (response) {
-                    if (response.success) {
-                        FlashService.Success('Registration successful', true);
-                        $location.path('/login');
-                    } else {
-                        FlashService.Error(response.message);
-                        vm.dataLoading = false;
-                    }
-                });
-        }
-    }
-); 
+         .controller('ParentController', function($scope, $rootScope, $modal, Auth, AUTH_EVENTS, USER_ROLES){
+	// this is the parent controller for all controllers.
+	// Manages auth login functions and each controller
+	// inherits from this controller	
+
+	
+	$scope.modalShown = false;
+	var showLoginDialog = function() {
+		if(!$scope.modalShown){
+			$scope.modalShown = true;
+			var modalInstance = $modal.open({
+				templateUrl : 'static/views/users/login.html',
+				controller : "LoginCtrl",
+				backdrop : 'static',
+			});
+
+			modalInstance.result.then(function() {
+				$scope.modalShown = false;
+			});
+		}
+	};
+	
+	var setCurrentUser = function(){
+		$scope.currentUser = $rootScope.currentUser;
+	};
+	
+	var showNotAuthorized = function(){
+		alert("Not Authorized");
+	};
+	
+	$scope.currentUser = null;
+	$scope.userRoles = USER_ROLES;
+	$scope.isAuthorized = Auth.isAuthorized;
+
+	//listen to events of unsuccessful logins, to run the login dialog
+	$rootScope.$on(AUTH_EVENTS.notAuthorized, showNotAuthorized);
+	$rootScope.$on(AUTH_EVENTS.notAuthenticated, showLoginDialog);
+	$rootScope.$on(AUTH_EVENTS.sessionTimeout, showLoginDialog);
+	$rootScope.$on(AUTH_EVENTS.logoutSuccess, showLoginDialog);
+	$rootScope.$on(AUTH_EVENTS.loginSuccess, setCurrentUser);
+	
+} );

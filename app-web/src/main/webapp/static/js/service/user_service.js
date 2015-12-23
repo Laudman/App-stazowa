@@ -1,20 +1,43 @@
+/* global _ */
+
 'use strict';
 angular.module('mainApp.user.services', []).factory('User', function($resource) {
-  return $resource('/users/:id_user', { id_user: '@_id_user' }, {
+  return $resource('/users/:id', { id: '@_id' }, {
     delete: {
       method: 'POST',
-      url: '/users/delete/:id_user'
+      url: '/users/delete/:id'
     },
     update: {
       method: 'POST',
-      url: '/users/update/:id_user'
-    },
+      url: '/users/update/:id'
+    }
 //    login: {
 //      method: 'POST',
 //      url: '/users/login/'
 //    }
     });
-    });
+    })
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //    .service('Session', function($rootScope, USER_ROLES) {
 //
 //	this.create = function(user) {
@@ -30,3 +53,4 @@ angular.module('mainApp.user.services', []).factory('User', function($resource) 
 
 
 //});
+

@@ -6,7 +6,7 @@ import com.myapp.model.User;
 
 public interface UserService {
 	
-	User findUser(int id_user);
+	User findUser(int id);
 	
 	User findUserByLogin(String login);
 
@@ -14,11 +14,11 @@ public interface UserService {
         
         void updateUser (User user);
 	
-	void deleteUser(int id_user);
+	void deleteUser(int id);
         
         void deleteUserByLogin(String login);
 	
 	List<User> findAllUsers();
 	
-	boolean isUserLoginUnique(Integer id_user, String login);
+//	boolean isUserLoginUnique(Integer id_user, String login);
 }

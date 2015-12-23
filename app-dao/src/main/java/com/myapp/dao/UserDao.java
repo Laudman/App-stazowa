@@ -6,15 +6,15 @@ import com.myapp.model.User;
 
 public interface UserDao {
 
-	User findUser(int id_user);
+	User findUser(int id);
         
-        User findUserByLogin(String login);
+        public User findUserByLogin(String login);
 
 	void saveUser(User user);
         
         //void updateUser (User user);
 	
-	void deleteUser(int id_user);
+	void deleteUser(int id);
         
         void deleteUserByLogin (String login);
 	

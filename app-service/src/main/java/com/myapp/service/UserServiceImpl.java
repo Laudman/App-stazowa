@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDao userDao;
 	
-	private static List<User> users;
+//	private static List<User> users;
         
 	public User findUserByLogin(String login) {
         User user = userDao.findUserByLogin(login);
@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService{
     }
 
 	
-	public User findUser(int id_user) {
-		return userDao.findUser(id_user);
+	public User findUser(int id) {
+		return userDao.findUser(id);
 	}
 
 	public void saveUser(User user) {
@@ -33,18 +33,18 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	public void updateUser(User user) {
-		User entity = userDao.findUser(user.getId_user());
+		User entity = userDao.findUser(user.getId());
 		if(entity!=null){
 			entity.setLogin(user.getLogin());
 			entity.setPassword(user.getPassword());
 			entity.setEmail(user.getEmail());
-                        entity.setUserRole(user.getUserRole());
-                        entity.setEnabled(user.isEnabled());
+//                        entity.setUserRole(user.getUserRole());
+//                        entity.setEnabled(user.isEnabled());
 		}
 	}
 
-	public void deleteUser(int id_user) {
-		userDao.deleteUser(id_user);
+	public void deleteUser(int id) {
+		userDao.deleteUser(id);
 	}
         
         public void deleteUserByLogin(String login) {
@@ -56,10 +56,10 @@ public class UserServiceImpl implements UserService{
 	}
 
  
-    public boolean isUserLoginUnique(Integer id_user, String login) {
-        User user = findUserByLogin(login);
-        return ( user == null || ((id_user != null) && (user.getId_user() == id_user)));
-    }
+//    public boolean isUserLoginUnique(Integer id_user, String login) {
+//        User user = findUserByLogin(login);
+//        return ( user == null || ((id_user != null) && (user.getId_user() == id_user)));
+//    }
 
 
 }

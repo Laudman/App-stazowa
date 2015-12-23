@@ -52,6 +52,16 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 -- Data exporting was unselected.
 
 
+-- Zrzut struktury tabela appdb.roles
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Data exporting was unselected.
+
+
 -- Zrzut struktury tabela appdb.tags
 CREATE TABLE IF NOT EXISTS `tags` (
   `id_tag` int(11) NOT NULL AUTO_INCREMENT,
@@ -78,29 +88,29 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 -- Data exporting was unselected.
 
 
--- Zrzut struktury tabela appdb.userrole
-CREATE TABLE IF NOT EXISTS `userrole` (
+-- Zrzut struktury tabela appdb.users
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `login` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
-  CONSTRAINT `FK_dkyhc7giky9fr52ete058dc2j` FOREIGN KEY (`login`) REFERENCES `users` (`login`)
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 
 
--- Zrzut struktury tabela appdb.users
-CREATE TABLE IF NOT EXISTS `users` (
-  `id_user` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) DEFAULT NULL,
-  `enabled` bit(1) NOT NULL,
-  `login` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_user`),
-  UNIQUE KEY `id_user` (`id_user`),
-  UNIQUE KEY `UK_ow0gan20590jrb00upg3va2fn` (`login`)
+-- Zrzut struktury tabela appdb.user_roles
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `user_id` int(6) NOT NULL,
+  `role_id` int(6) NOT NULL,
+  UNIQUE KEY `UK_g1uebn6mqk9qiaw45vnacmyo2` (`user_id`),
+  KEY `user` (`user_id`),
+  KEY `role` (`role_id`),
+  CONSTRAINT `FK_5q4rc4fh1on6567qk69uesvyf` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
+  CONSTRAINT `FK_g1uebn6mqk9qiaw45vnacmyo2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.

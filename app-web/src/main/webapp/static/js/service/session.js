@@ -20,4 +20,4 @@ angular.module('mainApp.Session', [])
       return $injector.get('AuthInterceptor');
     }
   ]);
-})
+});

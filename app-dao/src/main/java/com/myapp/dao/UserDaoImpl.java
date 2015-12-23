@@ -6,10 +6,13 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import com.myapp.model.User;
-import javax.transaction.Transactional;
+import java.util.ArrayList;
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Repository("userDao")
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
@@ -18,38 +21,55 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 //		return getByKey(id_user);
 //	}
         
-        public User findUser(int id_user) {
-        User user = getByKey(id_user);
+        public User findUser(int id) {
+        User user = getByKey(id);
         if(user!=null){
-            Hibernate.initialize(user.getUserRole());
+            Hibernate.initialize(user.getRole());
         }
         return user;
     }
-//        @Transactional
-//        @SuppressWarnings("unchecked")
+
 //        public User findUserByLogin(String login) {
 //       // System.out.println("Login : "+login);
 //        Criteria crit = createEntityCriteria();
 //        crit.add(Restrictions.eq("login", login));
 //        User user = (User)crit.uniqueResult();
 //        if(user!=null){
-//            Hibernate.initialize(user.getUserRole());
+//            Hibernate.initialize(user.getRole());
 //        }
 //        return user;
 //    }
         
-        @Override
-    //@Transactional
-    @SuppressWarnings("unchecked")
-    public User findUserByLogin(String login){
-        String query = "from Users where login = ?";
-        List<User> listUser = sessionFactory.getCurrentSession().createQuery(query).setParameter(0, login).list();
-
-        if(listUser.size() > 0)
-            return listUser.get(0);
-        else
-            return null;
+        @Autowired
+    private SessionFactory sessionFactory;
+     
+    private Session openSession() {
+        return sessionFactory.getCurrentSession();
     }
+        
+        public User findUserByLogin(String login) {
+        List<User> userList = new ArrayList<User>();
+        Query query = openSession().createQuery("from User u where u.login = :login");
+        query.setParameter("login", login);
+        userList = query.list();
+        if (userList.size() > 0)
+            return userList.get(0);
+        else
+            return null;    
+    }
+        
+//        @Override
+//    //@Transactional
+//    @SuppressWarnings("unchecked")
+//    public User findUserByLogin(String login){
+//        String query = "from User where login = ?";
+//        List<User> listUser = sessionFactory.getCurrentSession().createQuery(query).setParameter(0, login).list();
+//
+//        if(listUser.size() > 0)
+//            return listUser.get(0);
+//        else
+//            return null;
+//    }
 
 
 	public void saveUser(User user) {
@@ -61,10 +81,10 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 //        }
 
 
-	public void deleteUser(int id_user) {
+	public void deleteUser(int id) {
 
-		Query query = getSession().createSQLQuery("delete from Users where id_user = :id_user");
-		query.setParameter("id_user", id_user);
+		Query query = getSession().createSQLQuery("delete from Users where id = :id");
+		query.setParameter("id", id);
 		query.executeUpdate();
 	}
 
