@@ -52,7 +52,7 @@ angular.module('app.controllers')
 //            }
 //        };
             $scope.deleteUser = function() {
-            $scope.user.$delete({ id: $stateParams.id });};
+            $scope.user.$delete({ id: $stateParams.id });$window.location.href = '/';};
         });
         
         
