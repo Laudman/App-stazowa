@@ -1,56 +1,25 @@
-/* global _ */
+//'use strict';
 
-'use strict';
-angular.module('mainApp.user.services', []).factory('User', function($resource) {
-  return $resource('/users/:id', { id: '@_id' }, {
-    delete: {
-      method: 'POST',
-      url: '/users/delete/:id'
-    },
-    update: {
-      method: 'POST',
-      url: '/users/update/:id'
-    },
-     login: {
-      method: 'POST',
-      url: '/login'
-    }
+angular.module('app.services').factory('User', function ($resource) {
+    return $resource('user/:id', {id_user: '@_id'}, {
+        save:{
+            method:'POST',
+            url: '/user/register'
+        },
+        delete: {
+            method: 'POST',
+            url: '/user/delete/:id'
+        },
+        update: {
+            method: 'POST',
+            url: '/user/update/:id'
+            
+        }
+        
     });
-    });
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    .service('Session', function($rootScope, USER_ROLES) {
-//
-//	this.create = function(user) {
-//		this.user = user;
-//		this.userRole = user.userRole;
-//	};
-//	this.destroy = function() {
-//		this.user = null;
-//		this.userRole = null;
-//	};
-//	return this;
-//});
-
-
-//});
+}).service('popupService',function($window){
+    this.showPopup=function(message){
+        return $window.confirm(message);
+        };
+});
 

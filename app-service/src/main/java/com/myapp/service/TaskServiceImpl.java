@@ -18,12 +18,12 @@ public class TaskServiceImpl implements TaskService{
         
         private static List<Task> tasks;
 	
-	public Task findTask(int id_task) {
+	public Task findTask(Long id_task) {
 		return taskdao.findTask(id_task);
 	}
 
-	public void saveOrUpdateTask(Task task) {
-		taskdao.saveOrUpdateTask(task);
+	public void saveTask(Task task) {
+		taskdao.saveTask(task);
 	}
 	
 	public void updateTask(Task task) {
@@ -37,7 +37,7 @@ public class TaskServiceImpl implements TaskService{
 		}
 	}
 
-	public void deleteTask(int id_task) {
+	public void deleteTask(Long id_task) {
 		taskdao.deleteTask(id_task);
 	}
 

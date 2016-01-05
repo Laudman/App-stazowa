@@ -1,3 +1,4 @@
+
 <table class="table user">
   <tr>
     <td><h3>Welcome {{user.login}}</h3></td>
@@ -15,11 +16,9 @@
     <td>Email</td>
     <td>{{user.email}}</td>
   </tr>
-   <tr>
-    <td>Profile</td>
-    <td>{{user.profile}}</td>
-  </tr>
 </table>
 <div>
-  <a class="btn btn-primary"  ui-sref="editUser({id:user.id})">Edit</a>
+  <!--<a class="btn btn-primary" ui-sref="viewUser({id_test:{{currentUser.id}}})">View</a>-->
+  <a href="/test_1/{{currentUser.id}}">Edit</a>
+  
 </div>

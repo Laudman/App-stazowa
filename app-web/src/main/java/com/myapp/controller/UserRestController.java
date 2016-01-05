@@ -1,125 +1,86 @@
 package com.myapp.controller;
 
-
-import com.myapp.dao.RoleDAO;
+import com.myapp.model.User;
+import com.myapp.service.UserService;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
-import com.myapp.model.User;
-import com.myapp.service.UserService;
-import javax.ws.rs.Produces;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserRestController {
 
+    
     @Autowired
     private UserService userService;
-    
-    @Autowired
-    private RoleDAO roleDAO;
-    
-    //--------------------------------------------------------------------------
-    //*************************USER CONTROLLER**********************************
-    //--------------------------------------------------------------------------
-    
-    // --------------------- version 1 ------------------------ 
-    
-    @Produces("application/json")
+
     @ResponseBody
-    @RequestMapping(value = {"/users"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<User> listAllUsers() {
         return userService.findAllUsers();
-
     }
-    
-    @Produces("application/json")
+
     @ResponseBody
-    @RequestMapping(value = {"/users/{id}"}, method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable("id") int id) {
-        System.out.println("Fetching User with id " + id);
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public ResponseEntity<User> getUser(@PathVariable("id") Long id) {
         User user = userService.findUser(id);
         if (user == null) {
-            System.out.println("User with id " + id + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-     
-     
-    // -------------------Create User--------------------------------------------------------
-//    @Produces("application/json")
     @ResponseBody
-    @RequestMapping(value = {"/users"}, method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<User> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating User " + user.getLogin());
+    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    public ResponseEntity registerUser(@RequestBody User user) throws Exception {
 
-        userService.saveUser(user);
+        userService.registerUser(user);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/users/{id}").buildAndExpand(user.getLogin()).toUri());
-        return new ResponseEntity<User>(headers, HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    //------------------- Update User --------------------------------------------------------
     @ResponseBody
-    @RequestMapping(value = {"/users/update"}, method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
     public ResponseEntity<User> updateUser(@RequestBody User userJSON) {
-        System.out.println("Updating User " + userJSON.getId());
 
         User currentUser = userService.findUser(userJSON.getId());
 
+
         if (currentUser == null) {
-            System.out.println("User with id " + userJSON.getId() + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
-
         currentUser.setLogin(userJSON.getLogin());
         currentUser.setPassword(userJSON.getPassword());
         currentUser.setEmail(userJSON.getEmail());
+        currentUser.setEnabled(userJSON.getEnabled());
+//        currentUser.setAuthority(userJSON.getAuthority());
 
-        userService.updateUser(currentUser);
+        userService.saveUser(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
 
-    //------------------- Delete User --------------------------------------------------------
-//    @Produces("application/json")
-    @ResponseBody
-    @RequestMapping(value = "/users/delete", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<User> deleteUser(@RequestBody User userJSON) {
-        System.out.println("Fetching & Deleting User with login " + userJSON.getLogin());
+   @ResponseBody
+    @ResponseStatus( HttpStatus.OK )
+    @RequestMapping(value = "/user/delete/{id}", method = RequestMethod.POST)
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Long id) {
 
-        User user = userService.findUserByLogin(userJSON.getLogin());
+        User user = userService.findUser(id);
         if (user == null) {
-        
-            System.out.println("Unable to delete. User with login " + userJSON.getLogin() + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
 
-        userService.deleteUserByLogin(userJSON.getLogin());
+        userService.deleteUserBySession(user);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
     
-//  @RequestMapping(value = "/login",method = RequestMethod.POST, consumes = "application/json")
-// @ResponseBody
-// public User getUser(@RequestBody User userJSON) {
-// 
-//     
-//   return userService.findUser(userJSON.getLogin());
-//   
-//};
-    
 
-};
+    
+    
+}

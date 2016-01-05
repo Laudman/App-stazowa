@@ -1,65 +1,75 @@
 package com.myapp.service;
 
+import com.myapp.dao.UserDao;
+import com.myapp.model.Authority;
+import com.myapp.model.User;
+import com.myapp.service.exceptions.LoginExistsException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.myapp.dao.UserDao;
-import com.myapp.model.User;
-
-@Service("userService")
+@Service
 @Transactional
-public class UserServiceImpl implements UserService{
-	
-	@Autowired
-	private UserDao userDao;
-	
-//	private static List<User> users;
-        
-	public User findUserByLogin(String login) {
-        User user = userDao.findUserByLogin(login);
-        return user;
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserDao userDao;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public User findUserByLogin(String login) {
+        return userDao.findUserByLogin(login);
     }
 
-	
-	public User findUser(int id) {
-		return userDao.findUser(id);
-	}
+    public User findUser(Long userId) {
+        return userDao.findUser(userId);
+    }
 
-	public void saveUser(User user) {
-		userDao.saveUser(user);
-	}
-	
-	public void updateUser(User user) {
-		User entity = userDao.findUser(user.getId());
-		if(entity!=null){
-			entity.setLogin(user.getLogin());
-			entity.setPassword(user.getPassword());
-			entity.setEmail(user.getEmail());
-//                        entity.setUserRole(user.getUserRole());
-//                        entity.setEnabled(user.isEnabled());
-		}
-	}
-
-	public void deleteUser(int id) {
-		userDao.deleteUser(id);
-	}
+    public void registerUser(User user) throws LoginExistsException {
+        if(loginExists(user.getEmail())){
+            throw new LoginExistsException();
+        }
         
-        public void deleteUserByLogin(String login) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.addAuthority(new Authority("USER", user));
+        
+        userDao.saveUser(user);
+    }
+
+    public void saveUser(User user) {
+        userDao.saveUser(user);
+    }
+
+    
+   
+
+    public void deleteUserById(Long id) {
+        userDao.deleteUserById(id);
+        
+    }
+    
+    public void deleteUserBySession(User user) {
+        userDao.deleteUserBySession(user);
+        
+    }
+    
+    public void saveUserBySession(User user) {
+        userDao.saveUserBySession(user);
+    }
+
+    public void deleteUserByLogin(String login) {
         userDao.deleteUserByLogin(login);
     }
 
-	public List<User> findAllUsers() {
-		return userDao.findAllUsers();
-	}
+    public List<User> findAllUsers() {
+        return userDao.findAllUsers();
+    }
 
- 
-//    public boolean isUserLoginUnique(Integer id_user, String login) {
-//        User user = findUserByLogin(login);
-//        return ( user == null || ((id_user != null) && (user.getId_user() == id_user)));
-//    }
-
+    private boolean loginExists(String login) {
+        return userDao.findUserByLogin(login) != null;
+    }
 
 }

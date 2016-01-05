@@ -5,11 +5,11 @@ import java.util.List;
 import com.myapp.model.Task;
 
 public interface TaskDao {
-	Task findTask(int id);
+	Task findTask(Long id);
 
-	void saveOrUpdateTask(Task task);
+	void saveTask(Task task);
 	
-	void deleteTask(int id);
+	void deleteTask(Long id);
 	
 	List<Task> findAllTasks();
 }

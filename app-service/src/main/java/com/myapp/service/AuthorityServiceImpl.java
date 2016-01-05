@@ -5,25 +5,32 @@
  */
 package com.myapp.service;
 
-import com.myapp.model.Role;
+import com.myapp.dao.AuthorityDao;
+import com.myapp.model.Authority;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.myapp.dao.RoleDAO;
 
 /**
  *
  * @author zama
  */
-
-@Service
+@Service("userProfileService")
 @Transactional
-public class RoleServiceImpl {
+public class AuthorityServiceImpl implements AuthorityService{
     @Autowired
-    private RoleDAO roleDAO;
+    AuthorityDao dao;
+     
+    public Authority findById(Long id) {
+        return dao.findById(id);
+    }
  
-    public Role getRole(int id) {
-        return roleDAO.getRole(id);
+    public Authority findByType(String type){
+        return dao.findByType(type);
+    }
+ 
+    public List<Authority> findAll() {
+        return dao.findAll();
     }
 }

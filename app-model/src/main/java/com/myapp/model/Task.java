@@ -12,16 +12,16 @@ public class Task {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_task;
+	private Long id_task;
 	private String text;
-	private int id_user;
+	private Long id_user;
 	private String type_of_question;
 	private String type_of_speak;
 	private String type_of_job;
 	private int amount_answer;
 	
 	public Task(){}
-	public Task ( int id_task, String text, int id_user, String type_of_question, 
+	public Task ( Long id_task, String text, Long id_user, String type_of_question, 
 				  String type_of_speak, String type_of_job, int amount_answer){
 		id_task = this.id_task;
 		text = this.text;
@@ -31,10 +31,10 @@ public class Task {
 		type_of_job = this.type_of_job;
 		amount_answer = this.amount_answer;
 	}
-	public int getId_task() {
+	public Long getId_task() {
 		return id_task;
 	}
-	public void setId_task(int id_task) {
+	public void setId_task(Long id_task) {
 		this.id_task = id_task;
 	}
 	public String getText() {
@@ -43,10 +43,10 @@ public class Task {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public int getId_user() {
+	public Long getId_user() {
 		return id_user;
 	}
-	public void setId_user(int id_user) {
+	public void setId_user(Long id_user) {
 		this.id_user = id_user;
 	}
 	public String getType_of_question() {

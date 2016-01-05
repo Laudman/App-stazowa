@@ -56,7 +56,7 @@
     <servlet-name>/*</servlet-name>
 </filter-mapping>-->
 
- <filter>
+<!-- <filter>
     <filter-name>hiddenHttpMethodFilter</filter-name>
     <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
 </filter>
@@ -64,6 +64,6 @@
 <filter-mapping>
     <filter-name>hiddenHttpMethodFilter</filter-name>
     <servlet-name>SpringDispatcher</servlet-name>
-</filter-mapping>
+</filter-mapping>-->
 
 </web-app>

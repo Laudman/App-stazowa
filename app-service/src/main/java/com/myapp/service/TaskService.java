@@ -6,11 +6,11 @@ import com.myapp.model.Task;
 
 public interface TaskService {
 
-	Task findTask(int id_task);
+	Task findTask(Long id_task);
 
-	void saveOrUpdateTask(Task task);
+	void saveTask(Task task);
 	
-	void deleteTask(int id_task);
+	void deleteTask(Long id_task);
         
         void updateTask (Task task);
 	

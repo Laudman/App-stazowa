@@ -37,7 +37,7 @@ public class TaskRestController {
     @Produces("application/json")
     @ResponseBody
     @RequestMapping(value = "/tasks/{id_task}", method = RequestMethod.GET)
-    public  ResponseEntity<Task> getTask(@PathVariable("id_task") int id_task) {
+    public  ResponseEntity<Task> getTask(@PathVariable("id_task") Long id_task) {
         System.out.println("Fetching Task with id " + id_task);
         Task task = taskService.findTask(id_task);
         if (task == null) {
@@ -54,7 +54,7 @@ public class TaskRestController {
     public  ResponseEntity<Task> addTask(@RequestBody Task task, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating Task " + task.getText());
 
-        taskService.saveOrUpdateTask(task);
+        taskService.saveTask(task);
  
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/tasks/{id_task}").buildAndExpand(task.getId_task()).toUri());

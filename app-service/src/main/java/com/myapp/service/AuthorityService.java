@@ -5,12 +5,17 @@
  */
 package com.myapp.service;
 
-import com.myapp.model.Role;
+import com.myapp.model.Authority;
+import java.util.List;
 
 /**
  *
  * @author zama
  */
-public interface RoleService {
-     public Role getRole(int id);
+public interface AuthorityService {
+    Authority findById(Long id);
+ 
+    Authority findByType(String type);
+     
+    List<Authority> findAll();
 }

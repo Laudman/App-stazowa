@@ -1,81 +1,67 @@
 <!DOCTYPE html>
 <html data-ng-app="mainApp">
-    <head lang="pl">
-    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="static/css/app.css"/>
-
-  <title>It Interviews</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script type="text/javascript" src="static/angular.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script></head>
-<body>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">IT interview Questin & Answer</a>
-    </div>
-    <div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#">Account</a></li>
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin Tools <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#users">Users manager</a></li>
-            <li><a href="#tasks">Tasks manager</a></li>
-            <li><a href="#">Page 1-3</a></li>
-          </ul>
-        </li>
-      </ul>
+    <head>
+        <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="static/css/app.css"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-  <div ng-if="currentUser">Welcome, {{ currentUser.name }}</div>
-<div ng-if="isAuthorized(userRoles.admin)">You're admin.</div>
-<div ng-switch on="currentUser.role">
-  <div ng-switch-when="userRoles.admin">You're admin.</div>
-  <div ng-switch-when="userRoles.user">You're user.</div>
-  <div ng-switch-default>You're guest.</div>
-</div>
- 
- <div class="container">
-      <div class="row top-buffer">
-        <div class="col-xs-8 col-xs-offset-2">
-          <div ui-view></div>
-        </div>
-      </div>
-    </div>
+        <base href="/"/>
+
+        <title>It Interviews</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">IT interview Questions & Answer</a>
+                </div>
+                <div ng-controller="AppController">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">Home</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        
+                        <li ng-show="authenticated" class="ng-cloak"><a href="#/user"><span class="glyphicon glyphicon-cog" ></span> <span class="text-primary">{{currentUser.name}}</span></a></li>
+                        <li ng-show="!authenticated" class="ng-cloak"><a href="#/signup"><span class="glyphicon glyphicon-cog"></span> Sign Up</a></li>
+                        <li ng-show="!authenticated"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li ng-show="authenticated" class="ng-cloak"><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+<!--    <div ng-show="authenticated" ng-controller="AppController" class="col-sm-2"> 
+        <p class="text-primary"> Welcome: {{user}}</p>
+    </div> -->
     
-      
-      <script type="text/javascript" src="static/angular.js"></script>
-      <script type="text/javascript" src="static/angular-resource.min.js"></script>
-      <script type="text/javascript" src="static/angular-ui-router.js"></script>
-      <script type="text/javascript" src="static/ui-bootstrap.js"></script>
-      <script type="text/javascript" src="static/ui-bootstrap-tpls.js"></script>
-      <script type="text/javascript" src="static/js/app.js"></script>
-      
-      
-      <script type="text/javascript" src="static/js/service/task_service.js"></script>
-      <script type="text/javascript" src="static/js/service/user_service.js"></script>
-      <script type="text/javascript" src="static/js/service/auth.js"></script>
-      <script type="text/javascript" src="static/js/service/authInterceptor.js"></script>
-      <script type="text/javascript" src="static/js/service/session.js"></script>
-      
-      <script type="text/javascript" src="static/js/controller/user_controller.js"></script>
-      <script type="text/javascript" src="static/js/controller/task_controller.js"></script>
+       
+        
+        <div class="container">
+            <div class="row top-buffer">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <div ui-view></div>
+                </div>
+            </div>
+        </div>
 
-      
-  </body>
+
+        <script type="text/javascript" src="static/angular.js"></script>
+        <script type="text/javascript" src="static/angular-route.js"></script>
+        <script type="text/javascript" src="static/angular-resource.min.js"></script>
+        <script type="text/javascript" src="static/angular-ui-router.js"></script>
+        <script type="text/javascript" src="static/js/app.js"></script>
+        <script type="text/javascript" src="static/js/services.js"></script>
+        <script type="text/javascript" src="static/js/controllers.js"></script>
+        <script type="text/javascript" src="static/js/constants.js"></script>
+        <script type="text/javascript" src="static/js/constants/storageConstant.js"></script>
+        <script type="text/javascript" src="static/js/service/app_services.js"></script>
+        <script type="text/javascript" src="static/js/controller/app_controller.js"></script>
+        <script type="text/javascript" src="static/js/service/user_service.js"></script>
+        <script type="text/javascript" src="static/js/controller/user_controller.js"></script>
+
+    </body>
 </html>
-
-

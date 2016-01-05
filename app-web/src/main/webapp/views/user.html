@@ -1,16 +1,40 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>USEEEEEER</div>
-    </body>
-</html>
+<form id="viewbox" style="margin-top: 10px;"
+      class="mainbox col-md-12" ng-controller="UserEditController"  ng-submit="updateUser()">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">Edit state</div>
+        </div>
+        <div style="padding-top: 30px" class="panel-body">   
+            
+				
+				<div style="margin-top: 25px" class="input-group">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-user"></i></span> 
+                                                <input  class="form-control" 
+                                              ng-model="editUser.login"  placeholder="{{user.login}}"/>
+				</div>
+				<div style="margin-top: 25px" class="input-group">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-lock"></i></span> 
+                                                <input  class="form-control" 
+                                                     ng-model="editUser.password"   placeholder="***********" type="password" required/>
+				</div>
+                                <div style="margin-top: 25px" class="input-group">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-envelope"></i></span> 
+                                                <input  class="form-control" 
+					ng-model="editUser.email" placeholder="{{user.email}}"/>
+				</div>
+				
+				<div style="margin-top: 10px" class="form-group">
+					<div class="col-sm-12 controls">
+                                                <input type="submit" class="btn btn-primary" value="Save"/>
+                                                
+                                                <a class="btn btn-danger"  ng-click="deleteUser(user.id)">Delete</a>
+                                               
+					</div>
+				</div>
+			
+                </div>
+         </div>
+</form>
