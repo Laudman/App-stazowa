@@ -22,23 +22,6 @@ angular.module('app.controllers')
         $scope.user = User.get({ id: $stateParams.id }); //Get a single user.Issues a GET to /App/users/:id
         })
 
-//        .controller('UserEditController', function($scope, $state, popupService, $window, $stateParams, User) {
-//            $scope.updateUser = function() { 
-//                $scope.user.$update(function() {
-//                $state.go('user'); 
-//                });
-//            };   
-//             $scope.loadUser = function() { 
-//            $scope.user = User.get({ id: $stateParams.id });
-//            $scope.editUser = new User(){
-//                id : $stateParams.id,
-//                login : $stateParams.login,
-//                password: $stateParams.password,
-//                email: $stateParams.email         
-//            }
-//            
-//            };
-//            $scope.loadUser();
         .controller('UserEditController', function($scope, $state, popupService, $window, $stateParams, User) {
             $scope.updateUser = function() { 
                 
