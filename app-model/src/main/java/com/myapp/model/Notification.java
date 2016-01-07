@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="NOTIFICATIONS")
+@Table(name="notifications")
 public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

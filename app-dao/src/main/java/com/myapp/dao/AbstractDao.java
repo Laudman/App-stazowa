@@ -26,8 +26,8 @@ public abstract class AbstractDao<PK extends Serializable, T> {
     }
 
     @SuppressWarnings("unchecked")
-    public T getByKey(Long id) {
-        return (T) getSession().get(persistentClass, id);
+    public T getByKey(Long key) {
+        return (T) getSession().get(persistentClass, key);
     }
 
     
@@ -35,10 +35,14 @@ public abstract class AbstractDao<PK extends Serializable, T> {
     getSession().saveOrUpdate(entity);
     }
     
+    public void update (T entity) {
+        getSession().update(entity);
+    }
+    
     public void merge(T entity) {
-//    getSession().evict(entity);
     getSession().merge(entity);
     getSession().flush();
+//    getSession().refresh(entity);
     
     }
 

@@ -24,7 +24,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         
-                        <li ng-show="authenticated" class="ng-cloak"><a href="#/user"><span class="glyphicon glyphicon-cog" ></span> <span class="text-primary">{{currentUser.name}}</span></a></li>
+                        <li ng-show="authenticated" class="ng-cloak"><a ui-sref="currentUser({id:currentUser.id})"><span class="glyphicon glyphicon-cog" ></span> <span class="text-primary">{{currentUser.login}}</span></a></li>
                         <li ng-show="!authenticated" class="ng-cloak"><a href="#/signup"><span class="glyphicon glyphicon-cog"></span> Sign Up</a></li>
                         <li ng-show="!authenticated"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                         <li ng-show="authenticated" class="ng-cloak"><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -61,7 +61,9 @@
         <script type="text/javascript" src="static/js/service/app_services.js"></script>
         <script type="text/javascript" src="static/js/controller/app_controller.js"></script>
         <script type="text/javascript" src="static/js/service/user_service.js"></script>
+        <script type="text/javascript" src="static/js/service/task_service.js"></script>
         <script type="text/javascript" src="static/js/controller/user_controller.js"></script>
+        <script type="text/javascript" src="static/js/controller/task_controller.js"></script>
 
     </body>
 </html>

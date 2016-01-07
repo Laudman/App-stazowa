@@ -9,12 +9,20 @@ angular.module('app.controllers')
         .controller('AdminController', function ($scope, $window, User) {
             $scope.users = User.query();
         })
-        
-        .controller('UserCreateController', function ($scope, User) {
+        .controller('CurrentUser', function ($scope, User, $stateParams){
+        $scope.loadUser = function() { 
+            User.get({ id: $stateParams.id }, function(user) {
+            $scope.user = user; 
+            });
+            };
+            $scope.loadUser();
+        })
+        .controller('UserCreateController', function ($scope, $state, User) {
             $scope.user = new User();
 
             $scope.addUser = function () {
                 $scope.user.$save(function () {
+                    $state.go('login');
                 });
             };
         })
@@ -25,47 +33,29 @@ angular.module('app.controllers')
         .controller('UserEditController', function($scope, $state, popupService, $window, $stateParams, User) {
             $scope.updateUser = function() { 
                 
-                $scope.user.$update(function() {  
-                $state.go('user'); 
+                $scope.editUser.$update(function() {  
+                $state.go('/'); 
                 });
             };
-            
+          
             $scope.loadUser = function() { 
-            $scope.user = User.get({ id: $stateParams.id });
-            $scope.editUser = new User();
-            $scope.editUser.id = $scope.user.id;
-            $scope.editUser.login = $scope.user.login;
-            $scope.editUser.password = $scope.user.password;
-            $scope.editUser.email = $scope.user.email;
+            User.get({id: $stateParams.id}, function (data) {
+                    $scope.editUser = new User();
+                    $scope.editUser.id = data.id;
+                    $scope.editUser.login = data.login;
+                    $scope.editUser.password = data.password;
+                    $scope.editUser.email = data.email;
+                });
             };           
             $scope.loadUser();
             
 //            $scope.loadUser({login: $stateParams.login, password: $stateParams.password, email: $stateParams.email});
 //            $scope.loadUser({id: $stateParams.id, login: $stateParams.login, password: $stateParams.password, email: $stateParams.email});
-//        })
-//        .controller('UserDelController', function($scope, $state, popupService, $window, User) {
-//            $scope.deleteUser = function() {
-//            if (popupService.showPopup('Really delete this?')) {
-//                $scope.user.$delete(function() {
-//                    $window.location.href = ''; 
-//                });
-//            }
-//        };
+
             $scope.deleteUser = function() {
-            $scope.user.$delete({ id: $stateParams.id });$window.location.href = '/';};
+            $scope.editUser.$delete({ id: $stateParams.id });$window.location.href = '/';};
         });
         
-        
-//        .controller('UserListController', function($scope, $state, popupService, $window, User) {
-//            $scope.users = User.query(); //fetch all users. Issues a GET to /App/users
-//
-//            $scope.deleteUser = function(user) { // Delete a user. Issues a DELETE to /App/users/:id
-//             if (popupService.showPopup('Really delete this?')) {
-//            user.$delete(function() {
-//            $window.location.href = ''; //redirect to home
-//      });
-//    }
-//  };
-//        });
+  
 
 

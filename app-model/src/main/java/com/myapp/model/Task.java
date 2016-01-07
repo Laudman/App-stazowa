@@ -1,5 +1,6 @@
 package com.myapp.model;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TASKS")
-public class Task {
+@Table(name="tasks")
+public class Task implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,6 @@ public class Task {
 	private String type_of_job;
 	private int amount_answer;
 	
-	public Task(){}
 	public Task ( Long id_task, String text, Long id_user, String type_of_question, 
 				  String type_of_speak, String type_of_job, int amount_answer){
 		id_task = this.id_task;

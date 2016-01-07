@@ -1,6 +1,6 @@
 //'use strict';
 
-var mainApp = angular.module('mainApp', ['ui.router', 'ngResource', 'app.controllers', 'app.services', 'app.constants']);
+var mainApp = angular.module('mainApp', ['ui.router','mainApp.task.controllers','mainApp.task.services', 'ngResource', 'app.controllers', 'app.services', 'app.constants']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
@@ -8,18 +8,14 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', functio
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
         $urlRouterProvider.otherwise("/");
-        $stateProvider.state('/', {
-            url:'/',
-            templateUrl: 'views/no_authentication.html'
-        }).state('user', {
-            url:'/user',
-            templateUrl: 'views/user_authentication.html'
-
-//        }).state('user', {
-//            url:'/user',
-//            templateUrl: 'views/users.html',
-//            controller: 'UserListController',
-
+        $stateProvider
+          .state('/', {
+            url:'/tasks',
+            templateUrl: 'views/tasks.html'
+        }).state('currentUser', {
+            url:'/user/:id',
+            templateUrl: 'views/user_authentication.html',
+            controller: 'CurrentUser'
         }).state('admin', {
             url:'/',
             templateUrl: 'views/admin_authentication.html',
@@ -36,13 +32,13 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', functio
             url: '/user/:id/edit',
             templateUrl: 'views/user.html',
             controller: 'UserEditController'
-//        }).state('updateUser', { 
-//            url:'/user/:id/update',
-//            templateUrl: 'views/user.html',
-//            controller: 'UserEditController'
-            
- 
         })
+                
+                .state('newTask', {
+            url:'/tasks/new-task',
+            templateUrl: 'views/task-new.html',
+            controller: 'NewTaskController'
+        });
 
     }]);
 

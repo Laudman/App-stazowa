@@ -42,7 +42,10 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         userDao.saveUser(user);
     }
-
+    
+    public void updateUser (User user) {
+        userDao.updateUser(user);
+    }
     
    
 
@@ -54,10 +57,6 @@ public class UserServiceImpl implements UserService {
     public void deleteUserBySession(User user) {
         userDao.deleteUserBySession(user);
         
-    }
-    
-    public void saveUserBySession(User user) {
-        userDao.saveUserBySession(user);
     }
 
     public void deleteUserByLogin(String login) {

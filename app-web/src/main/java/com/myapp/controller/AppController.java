@@ -36,14 +36,18 @@ public class AppController {
     public Map<String, Object> user(Principal user) {
     Map<String, Object> map = new LinkedHashMap<String, Object>();
     User getuser = userService.findUserByLogin(user.getName());
+    if(getuser.getId() != null)
+    {
     map.put("name", user.getName());
+    map.put("login", getuser.getLogin());
     map.put("id", getuser.getId());
     map.put("email", getuser.getEmail());
     map.put("enabled", getuser.getEnabled());
     map.put("authority", AuthorityUtils.authorityListToSet(((Authentication) user)
         .getAuthorities()));
-
+    }
     return map;
+    
   }
     
         

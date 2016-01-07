@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(unauthorisedEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/static/**", "/views/no_authentication.html", "/views/signup.html", "/views/home.html", "/views/login.html", "/user/register", "/user/delete", "/user/update", "/user/:id_user/update", "/views/user.html").permitAll()
+                .antMatchers("/", "/static/**", "/views/no_authentication.html", "/views/signup.html", "/views/home.html", "/views/login.html", "/user/register", "/user/delete", "/user/update", "/tasks", "/user/:id_user/update", "/views/user.html").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and().logout()

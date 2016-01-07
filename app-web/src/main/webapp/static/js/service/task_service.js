@@ -1,6 +1,8 @@
-'use strict';
+//'use strict';
+
 angular.module('mainApp.task.services', []).factory('Task', function($resource) {
   return $resource('/tasks/:id_task', { id_task: '@_id_task' }, {
+    
     delete: {
       method: 'POST',
       url: '/tasks/delete/:id_task'

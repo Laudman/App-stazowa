@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="FLAGGEDS")
+@Table(name="flaggeds")
 public class Flagged {
 	@Id
 	private int id_user;

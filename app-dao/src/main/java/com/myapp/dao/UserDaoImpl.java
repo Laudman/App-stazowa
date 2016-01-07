@@ -29,6 +29,10 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
             save(user);
         }
     }    
+   
+    public void updateUser (User user){
+        update (user);
+    }
     
     public List<User> findAllUsers() {
         return getSession().createCriteria(User.class).list();
@@ -57,10 +61,6 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
     }
     public void deleteUserBySession(User user) {
         getSession().delete(user);
-    }
-    
-    public void saveUserBySession(User user) {
-        getSession().save(user);
     }
    
 
