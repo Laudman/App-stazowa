@@ -24,7 +24,7 @@ angular.module('mainApp.task.controllers', [])
       $state.go('/'); 
     });  
   };
-  $scope.type_of_job = {
+  $scope.typeOfJob = {
     repeatSelect: null,
     availableOptions: [
       {id: 1, name: 'Applications developer'},
@@ -38,7 +38,7 @@ angular.module('mainApp.task.controllers', [])
     ]
        };
        
-       $scope.type_of_question = {
+       $scope.typeOfQuestion = {
     repeatSelect: null,
     availableOptions: [
       {id: 1, name: 'Applications'},
@@ -48,7 +48,7 @@ angular.module('mainApp.task.controllers', [])
     ]
        };
        
-        $scope.type_of_speak = {
+        $scope.typeOfSpeak = {
     repeatSelect: null,
     availableOptions: [
       {id: 1, name: 'Face to face'},

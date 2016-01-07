@@ -2,7 +2,7 @@
 
 angular.module('app.constants').constant('taskConstant', {
     
-    TYPE_OF_JOB : [
+    typeOfJob : [
       {id: 1, name: 'Applications developer'},
       {id: 2, name: 'Database administrator'},
       {id: 3, name: 'Games developer'},
@@ -13,14 +13,14 @@ angular.module('app.constants').constant('taskConstant', {
       {id: 8, name: 'Web developer'}
     ],
     
-    TYPE_OF_QUESTION: [
+    typeOfQuestion: [
       {id: 1, name: 'Applications'},
       {id: 2, name: 'Database'},
       {id: 3, name: 'Graphics'},
       {id: 4, name: 'Systems'}
     ],
     
-    TYPE_OF_SPEAK: [
+    typeOfSpeak: [
       {id: 1, name: 'Face to face'},
       {id: 2, name: 'Call'},
       {id: 3, name: 'Writing'},

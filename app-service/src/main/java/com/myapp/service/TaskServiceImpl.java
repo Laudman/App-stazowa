@@ -30,10 +30,10 @@ public class TaskServiceImpl implements TaskService{
 		Task entity = taskdao.findTask(task.getId_task());
 		if(entity!=null){
 			entity.setText(task.getText());
-			entity.setType_of_question(task.getType_of_question());
-			entity.setType_of_speak(task.getType_of_speak());
-			entity.setType_of_job(task.getType_of_job());
-			entity.setAmount_answer(task.getAmount_answer());
+			entity.setTypeOfQuestion(task.getTypeOfQuestion());
+			entity.setTypeOfSpeak(task.getTypeOfSpeak());
+			entity.setTypeOfJob(task.getTypeOfJob());
+			entity.setAmountAnswer(task.getAmountAnswer());
 		}
 	}
 
