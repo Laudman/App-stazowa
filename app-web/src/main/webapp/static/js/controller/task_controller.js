@@ -3,7 +3,7 @@
 angular.module('mainApp.task.controllers', [])
         .controller('TaskListController', function($scope, $state, popupService, $window, Task) {
   $scope.tasks = Task.query(); //fetch all tasks. Issues a GET to /App/tasks
-
+ 
   $scope.deleteTask = function(task) { // Delete a task. Issues a DELETE to /App/tasks/:id
     if (popupService.showPopup('Really delete this?')) {
          task.$delete(function() {

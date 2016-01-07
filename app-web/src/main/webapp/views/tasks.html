@@ -19,7 +19,12 @@
     <td>{{task.text}}</td>
     <td>{{task.id_user}}</td>
     <td>{{task.type_of_question}}</td>
-    <td>{{task.type_of_speak}}</td>
+    <!--<td>{{task.type_of_speak}}</td>-->
+    
+    <td> <select
+                                    ng-options="option.id as option.name for option in type_of_speak.availableOptions "
+                                    ng-model="task.type_of_speak"> </select>
+    </td>
     <td>{{task.type_of_job}}</td>
     <td>{{task.amount_answer}}</td>
     <td>

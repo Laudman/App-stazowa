@@ -26,6 +26,14 @@ public class TaskRestController {
     
     
     @ResponseBody
+    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
+    public  List<Task>listAllTasks() {
+        return taskService.findAllTasks();
+        
+    }
+    
+    
+    @ResponseBody
     @RequestMapping(value = "/tasks", method = RequestMethod.POST)
     public ResponseEntity addTask(@RequestBody Task task) throws Exception {
 

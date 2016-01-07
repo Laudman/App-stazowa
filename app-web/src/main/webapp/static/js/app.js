@@ -11,15 +11,16 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', functio
         $stateProvider
           .state('/', {
             url:'/tasks',
-            templateUrl: 'views/tasks.html'
+            templateUrl: 'views/tasks.html',
+            controller: 'TaskListController'
         }).state('currentUser', {
             url:'/user/:id',
             templateUrl: 'views/user_authentication.html',
             controller: 'CurrentUser'
-        }).state('admin', {
-            url:'/',
-            templateUrl: 'views/admin_authentication.html',
-            controller: 'AdminController'
+//        }).state('admin', {
+//            url:'/',
+//            templateUrl: 'views/admin_authentication.html',
+//            controller: 'AdminController'
         }).state('signup', {
             url:'/signup',
             templateUrl: 'views/signup.html',
