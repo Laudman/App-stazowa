@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html data-ng-app="mainApp">
+    <head>
+        <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="static/css/app.css"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        
+        <base href="/"/>
+
+        <title>It Interviews</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">IT interview Questions & Answer</a>
+                </div>
+                <div ng-controller="AppController">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a ui-sref="home">Home</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        
+                        <li ng-show="authenticated" class="ng-cloak"><a ui-sref="currentUser({id:currentUser.id})"><span class="glyphicon glyphicon-cog" ></span> <span class="text-primary">{{currentUser.login}}</span></a></li>
+                        <li ng-show="!authenticated" class="ng-cloak"><a href="#/signup"><span class="glyphicon glyphicon-cog"></span> Sign Up</a></li>
+                        <li ng-show="!authenticated"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li ng-show="authenticated" class="ng-cloak"><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <div class="container">
+            <div class="row top-buffer">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <div ui-view></div>
+                    <div ui-view="taskView"></div>
+                    <div ui-view="answerView"></div>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+        <script type="text/javascript" src="static/angular.js"></script>
+        <script type="text/javascript" src="static/angular-route.js"></script>
+        <script type="text/javascript" src="static/angular-resource.min.js"></script>
+        <script type="text/javascript" src="static/angular-ui-router.js"></script>
+        <script type="text/javascript" src="static/js/app.js"></script>
+        <script type="text/javascript" src="static/js/services.js"></script>
+        <script type="text/javascript" src="static/js/controllers.js"></script>
+        <script type="text/javascript" src="static/js/constants.js"></script>
+        <script type="text/javascript" src="static/js/constants/storageConstant.js"></script>      
+        
+        <script type="text/javascript" src="static/js/service/app_services.js"></script>
+        <script type="text/javascript" src="static/js/service/user_service.js"></script>
+        <script type="text/javascript" src="static/js/service/task_service.js"></script>
+        <script type="text/javascript" src="static/js/service/answer_service.js"></script>
+        <script type="text/javascript" src="static/js/service/vote_service.js"></script>
+        
+        <script type="text/javascript" src="static/js/controller/user_controller.js"></script>
+        <script type="text/javascript" src="static/js/controller/task_controller.js"></script>
+        <script type="text/javascript" src="static/js/controller/answer_controller.js"></script>
+        <script type="text/javascript" src="static/js/controller/vote_controller.js"></script>
+        <script type="text/javascript" src="static/js/controller/app_controller.js"></script>
+
+    </body>
+</html>

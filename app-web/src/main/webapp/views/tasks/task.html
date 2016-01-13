@@ -1,0 +1,68 @@
+<a ui-sref="newTask" class=" btn-lg nodecoration">Add New Task</a>
+    
+    <div ng-controller="TaskViewController" id="viewbox" style="margin-top: 5px;"
+     class="mainbox col-md-12">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title"><strong>Task</strong></div>
+        </div>
+        
+        <div style="padding-top: 10px" class="panel-body">   
+            <form name="editForm" class="form-horizontal" method="post"
+				ng-submit="updateTask()" novalidate>
+				<div class="input-group" style="margin-top: 5px">
+                                                
+                                            Author: {{task.id_user}} 
+				</div>
+                
+                
+                                <div class="input-group" style="width:250px; height:20px; margin-top: 5px">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-bullhorn"></i></span> 
+                                                <input  class="form-control"
+                                                ng-model="task.typeOfQuestion"
+						placeholder="{{task.typeOfQuestion}}"/>
+				</div>
+                
+                
+                                 <div class="input-group" style="width:250px; height:20px; margin-top: 5px" >
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-eye-open"></i></span> 
+                                                <input  class="form-control" 
+                                                ng-model="task.typeOfSpeak"
+						placeholder="{{task.typeOfSpeak}}"/>
+				</div>
+                
+                                <div class="input-group" style="width:250px; height:20px; margin-top: 5px" >
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-briefcase"></i></span> 
+                                                <input  class="form-control" 
+                                                ng-model="task.typeOfJob"
+						placeholder="{{task.typeOfJob}}"/>
+				</div>
+                               
+                          
+                            <div style="width:20px; height:20px; margin-top: 15px" class="input-group">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-pencil"></i></span> 
+                                                <textarea  class="form-control custom-control" style="height:120px; width:650px"  
+                                                ng-model="task.text"
+                                                placeholder="{{task.text}}"></textarea>
+                            </div>
+                            <div style="width:200px; margin-top: 15px" class="input-group">
+                                <a ui-sref="showRequest({id_task: task.id_task})"><span class="glyphicon glyphicon-circle-arrow-up" ></span> <span class="text-primary">Answers: {{task.amountAnswer}}</span></a>
+                                 <a ui-sref="newAnswer({id_task: task.id_task})"><span class="glyphicon glyphicon-circle-arrow-right" ></span><span class="text-primary">Add answer</span></a>
+                               </div> 
+				<div style="margin-top: 40px" class="form-group">
+					<div class="col-sm-12 controls">
+						<!--<a class="btn btn-primary" ng-click="viewUser({id_user:{{currentUser.id}}})">Edit</a>-->
+                                                <!--<a href="/user/update/{{currentUser.id}}">Edit</a>-->
+                                                <a class="btn btn-primary" ui-sref="editTask({id_task:task.id_task})">Edit</a>
+                                               
+                                        </div>
+                                </div>
+ 
+                </form>
+           </div>
+      </div>
+    </div>

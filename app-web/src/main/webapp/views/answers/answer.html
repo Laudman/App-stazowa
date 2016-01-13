@@ -1,0 +1,26 @@
+<div ng-controller="AnswerListController" 
+     data-ng-repeat="answer in answers | filter: {'id_task' : currentTask.id_task } ">
+    
+    <div  id="newanswerbox" style="margin-top: 10px;"
+	class="mainbox col-md-12">
+	<div class="panel panel-info">
+
+		<div style="padding-top: 30px" class="panel-body">
+			<form  class="form-horizontal" method="post"
+				ng-submit="addAnswer()" novalidate form-autofill-fix>
+			
+                            <div class="input-group" style="margin-top: 5px">
+                                            Author: {{answer.id_user}} Id Task:{{answer.id_task}}
+				</div>
+                            
+                                <div style="width:20px; height:20px; margin-top: 25px" class="input-group">
+               <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                <textarea class="form-control custom-control" style="height:120px; width:650px"  id="textareaEdit" ng-model="answer.textAnswer" 
+                                          ></textarea>
+                                </div>
+				<a  ui-sref="editAnswer({id_answer: answer.id_answer})" >Edit</a> <a  ng-click="deleteAnswer(this.answer)"style='cursor:pointer'>Delete</a>
+			</form>
+		</div>
+	</div>
+    </div>
+  </div>

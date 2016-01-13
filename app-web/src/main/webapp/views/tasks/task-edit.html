@@ -1,0 +1,76 @@
+    
+    <div  id="edittaskbox" style="margin-top: 5px;"
+     class="mainbox col-md-12">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title"><strong>Task</strong></div>
+        </div>
+        
+        <div style="padding-top: 10px" class="panel-body">   
+            <form name="editForm" class="form-horizontal" method="post" ng-controller="TaskEditController"
+				ng-submit="updateTask()" novalidate form-autofill-fix>
+				<div class="input-group" style="margin-top: 5px">
+                                                
+                                            Author: {{task.id_user}} 
+				</div>
+                
+                
+                                <div class="input-group" style="width:250px; height:20px; margin-top: 5px">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-bullhorn"></i></span> 
+                                                <select required name="mySelect" id="typeOfQuestion" class="form-control custom-control" style="cursor: pointer;"
+                                    ng-options="option.id as option.name  for option in  typeOfQuestion.availableOptions"
+                                    ng-model="task.typeOfQuestion">
+                                        <!--<option value="">Type of question</option>-->
+                                        <option value="">{{task.typeOfQuestion}}</option>
+                                    </select>
+				</div>
+                
+                
+                                 <div class="input-group" style="width:250px; height:20px; margin-top: 5px">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-bullhorn"></i></span> 
+                                                <select required name="mySelect" id="typeOfSpeak" class="form-control custom-control" style="cursor: pointer;"
+                                    ng-options="option.id as option.name  for option in  typeOfSpeak.availableOptions"
+                                    ng-model="task.typeOfSpeak">
+                                        <!--<option value="">Type of question</option>-->
+                                        <option value="">{{task.typeOfSpeak}}</option>
+                                    </select>
+				</div>
+                
+                                <div class="input-group" style="width:250px; height:20px; margin-top: 5px">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-bullhorn"></i></span> 
+                                                <select required name="mySelect" id="typeOfJob" class="form-control custom-control" style="cursor: pointer;"
+                                    ng-options="option.id as option.name  for option in  typeOfJob.availableOptions"
+                                    ng-model="task.typeOfJob">
+                                        <!--<option value="">Type of question</option>-->
+                                        <option value="">{{task.typeOfJob}}</option>
+                                    </select>
+				</div>
+                               
+                          
+                            <div style="width:20px; height:20px; margin-top: 15px" class="input-group">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-pencil"></i></span> 
+                                                <textarea  class="form-control custom-control" style="height:120px; width:650px"  
+                                               ng-model="task.text" placeholder="{{task.text}}"></textarea>
+                            </div>
+                            <div style="width:200px; margin-top: 15px" class="input-group">
+                                <a ui-sref="showRequest({id_task: task.id_task})"><span class="glyphicon glyphicon-circle-arrow-up" ></span> <span class="text-primary">Answers: {{task.amountAnswer}}</span></a>
+                                 <a ui-sref="newAnswer({id_task: task.id_task})"><span class="glyphicon glyphicon-circle-arrow-right" ></span><span class="text-primary">Add answer</span></a>
+                               </div> 
+				<div style="margin-top: 40px" class="form-group">
+					<div class="col-sm-12 controls">
+                                                <input type="submit" class="btn btn-primary" value="Save"/>
+						<!--<a class="btn btn-primary" ng-click="viewUser({id_user:{{currentUser.id}}})">Edit</a>-->
+                                                <!--<a href="/user/update/{{currentUser.id}}">Edit</a>-->
+                                                <!--<a class="btn btn-primary" ui-sref="editTask({id_task:task.id_task})">Edit</a>-->
+                                               
+                                        </div>
+                                </div>
+ 
+                </form>
+           </div>
+      </div>
+    </div>
