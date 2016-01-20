@@ -5,6 +5,7 @@ import com.myapp.model.Answer;
 import com.myapp.model.Task;
 import com.myapp.service.AnswerService;
 import com.myapp.service.TaskService;
+import com.myapp.service.VoteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,8 @@ public class AnswerRestController {
     
     @Autowired
         private AnswerService answerService;
+    @Autowired
+        private VoteService voteService;
       
     @ResponseBody
     @RequestMapping(value = "/answers", method = RequestMethod.GET)
@@ -97,6 +100,7 @@ public class AnswerRestController {
         currentTask.setAmountAnswer(--autoincrement);
         taskService.saveTask(currentTask);
  
+        voteService.deleteAllVotesIncludedIdAnswer(answerJSON.getId_answer());
         answerService.deleteAnswerBySession(answerJSON);
         return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);
     }

@@ -1,6 +1,6 @@
 
 <div  id="newanswerbox" style="margin-top: 10px;"
-	class="mainbox col-md-12">
+	class="mainbox col-md-16">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<div class="panel-title">New answer</div>
@@ -9,9 +9,12 @@
 			<form  name="editForm" class="form-horizontal" method="post" ng-controller="AnswerEditController"
 				ng-submit="updateAnswer()" novalidate form-autofill-fix>
 			
-                            <div class="input-group" style="margin-top: 5px">
+                            <div class="input-group col-md-3" style="margin-top: 5px">
                                 
-                                            Author: {{answer.id_user}} Id Task:{{answer.id_task}} Suma: {{answer.voteAnswerPkt}}
+                                            <div>  Author: {{answer.id_user}} Id Task:{{answer.id_task}}  </div>  
+                                            <div  ng-controller="NewVoteController"  ng-click="upVote(this.answer)" class="glyphicon glyphicon-chevron-up" style='cursor:pointer'></div>
+                                            <div> {{answer.voteAnswerPkt}} </div>
+                                            <div ng-controller="NewVoteController"  ng-click="downVote(this.answer)" class="glyphicon glyphicon-chevron-down" style='cursor:pointer'></div>
 				</div>
                             
                                 <div style="width:20px; height:20px; margin-top: 25px" class="input-group">
@@ -26,11 +29,6 @@
 							value="Save" /> <a class="btn btn-danger" ng-click="deleteAnswer(answer)">Delete</a>
     
 					</div>
-    <div  ng-controller="NewVoteController"  ng-click="upVote(this.answer)" class="glyphicon glyphicon-chevron-up" style='cursor:pointer'></div>
-    <div ng-controller="VoteListController" ng-repeat="vote in votes"> {{answer.voteAnswerPkt}}</div>
-    <div ng-controller="NewVoteController"  ng-click="downVote(this.answer)" class="glyphicon glyphicon-chevron-down" style='cursor:pointer'></div>
-    
-                                    
 				</div>
 			</form>
 		</div>

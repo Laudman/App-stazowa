@@ -10,8 +10,13 @@
             <form name="editForm" class="form-horizontal" method="post" ng-controller="TaskEditController"
 				ng-submit="updateTask()" novalidate form-autofill-fix>
 				<div class="input-group" style="margin-top: 5px">
-                                                
-                                            Author: {{task.id_user}} 
+                                           <label class="checkbox">
+                                               <input ng-controller="NewSubscribeController" ng-model="task.subscribed" ng-change="isSubscribed(this.task)" type="checkbox"> Subscribe 
+                                           </label>
+                                            <div>Author: {{task.id_user}} </div>
+                                            <div  ng-controller="NewVoteTaskController"  ng-click="upVote(this.task)" class="glyphicon glyphicon-chevron-up" style='cursor:pointer'></div>
+                                            <div> {{task.voteTaskPkt}} </div>
+                                            <div ng-controller="NewVoteTaskController"  ng-click="downVote(this.task)" class="glyphicon glyphicon-chevron-down" style='cursor:pointer'></div>
 				</div>
                 
                 
@@ -66,7 +71,7 @@
 						<!--<a class="btn btn-primary" ng-click="viewUser({id_user:{{currentUser.id}}})">Edit</a>-->
                                                 <!--<a href="/user/update/{{currentUser.id}}">Edit</a>-->
                                                 <!--<a class="btn btn-primary" ui-sref="editTask({id_task:task.id_task})">Edit</a>-->
-                                               
+                                               <a  ng-controller="TaskListController" class="btn btn-danger" ng-click="deleteTask(this.task)">Delete</a>
                                         </div>
                                 </div>
  

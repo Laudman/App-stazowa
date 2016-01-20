@@ -30,4 +30,5 @@ public interface VoteService {
         
         public Long amountPktInTask(Long idTask);
         
+        public void deleteAllVotesIncludedIdAnswer (Long idAnswer);
 }

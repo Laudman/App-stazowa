@@ -8,6 +8,7 @@ package com.myapp.dao;
 import com.myapp.model.User;
 import com.myapp.model.Vote;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -40,17 +41,24 @@ public class VoteDaoImpl extends AbstractDao<Integer, Vote> implements VoteDao {
     
     public Long amountPktInAnswer(Long idAnswer){ 
     Long sum = (Long)getSession().createCriteria(Vote.class)
-        .setProjection(Projections.sum("vote_pkt"))
+        .setProjection(Projections.sum("votePkt"))
         .add(Restrictions.eq("id_answer", idAnswer))
-        .uniqueResult()
+        .uniqueResult();
     return sum;
     }
     
     public Long amountPktInTask(Long idTask){ 
     Long sum = (Long)getSession().createCriteria(Vote.class)
-        .setProjection(Projections.sum("vote_pkt"))
+        .setProjection(Projections.sum("votePkt"))
         .add(Restrictions.eq("id_task", idTask))
         .uniqueResult();
     return sum;
     }
+    
+    public void deleteAllVotesIncludedIdAnswer (Long id_answer){
+        Query query = getSession().createSQLQuery("delete from votes where id_answer = :id_answer");
+        query.setParameter("id_answer", id_answer);
+        query.executeUpdate();  
+    }
+    
 }

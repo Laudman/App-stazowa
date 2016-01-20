@@ -1,7 +1,14 @@
 package com.myapp.controller;
 
+import com.myapp.model.Answer;
 import com.myapp.model.Task;
+import com.myapp.model.Vote;
+import com.myapp.model.dto.TaskDTO;
+import com.myapp.model.dto.TaskMapper;
 import com.myapp.service.TaskService;
+import com.myapp.service.VoteService;
+import com.myapp.service.AnswerService;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,15 +26,23 @@ public class TaskRestController {
     
     @Autowired
         private TaskService taskService;
+    @Autowired
+        private VoteService voteService;
+    @Autowired
+        private AnswerService answerService;
     
     
     @ResponseBody
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public  List<Task>listAllTasks() {
-        return taskService.findAllTasks();
-        
+    public  List<TaskDTO> listAllTasks()  { 
+        return TaskMapper.map(taskService.findAllTasks());        
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/tasks/submited/{id_user}", method = RequestMethod.GET)
+    public  List<TaskDTO> listMyTasks(@PathVariable("id_user") Long id_user)  { 
+            return TaskMapper.map(taskService.findTasksWithSubscribes(id_user));   
+    } 
     
     @ResponseBody
     @RequestMapping(value = "/tasks", method = RequestMethod.POST)
@@ -68,10 +83,28 @@ public class TaskRestController {
         return new ResponseEntity<Task>(currentTask, HttpStatus.OK);
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/tasks/delete", method = RequestMethod.POST)
+    public ResponseEntity<Task> deleteTask(@RequestBody Task taskJSON) {
+ 
+        Task task = taskService.findTask(taskJSON.getId_task());
+        if (task == null) {
+            return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+        }
+        
+        ArrayList<Long> listIdAnswers = new ArrayList<Long>();
+        listIdAnswers.addAll(answerService.findAllAnswersIdIncludedCurrentTaskId (taskJSON.getId_task()));
+        for (Long listIdAnswer : listIdAnswers) {
+            voteService.deleteAllVotesIncludedIdAnswer (listIdAnswer);
+        }
+        
+        answerService.deleteAllAnswersIncludedIdTask(taskJSON.getId_task());
+        taskService.deleteTask(taskJSON.getId_task());
+        return new ResponseEntity<Task>(HttpStatus.NO_CONTENT);
     
+    }
     
-    
-    
+}
     
     
     
@@ -166,6 +199,6 @@ public class TaskRestController {
 //    
 //    //***************************END TASK CONTROLLER*********************************************
 
-}
+//}
     
     

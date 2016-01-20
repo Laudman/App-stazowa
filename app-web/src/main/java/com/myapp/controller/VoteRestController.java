@@ -1,8 +1,10 @@
 package com.myapp.controller;
 
 import com.myapp.model.Answer;
+import com.myapp.model.Task;
 import com.myapp.model.Vote;
 import com.myapp.service.AnswerService;
+import com.myapp.service.TaskService;
 import com.myapp.service.VoteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class VoteRestController {
         private VoteService voteService;
     @Autowired
         private AnswerService answerService;
+    @Autowired
+        private TaskService taskService;
   
       
     @ResponseBody
@@ -46,12 +50,14 @@ public class VoteRestController {
       
     @ResponseBody
     @RequestMapping(value = "/votes", method = RequestMethod.POST)
-    public ResponseEntity addVote(@RequestBody Vote voteJSON) throws Exception {    
-            
-       if(voteService.addPkt(voteJSON) == 1){
-           voteJSON.setVotePkt(1L);
+    public ResponseEntity addVote(@RequestBody Vote voteJSON) throws Exception { 
+        
+       if(voteJSON.getId_task() == 0)  {
            
+       if(voteService.addPkt(voteJSON) == 1){
+           voteJSON.setVotePkt(1L);       
            voteService.saveVote(voteJSON);
+           
            Answer answer = answerService.findAnswer(voteJSON.getId_answer());
            answer.setVoteAnswerPkt(voteService.amountPktInAnswer(voteJSON.getId_answer()));
            answerService.saveAnswer(answer);
@@ -60,11 +66,43 @@ public class VoteRestController {
        if(voteService.addPkt(voteJSON) == 2){
            voteJSON.setVotePkt(-1L);
            voteService.saveVote(voteJSON);
+           
+           Answer answer = answerService.findAnswer(voteJSON.getId_answer());
+           answer.setVoteAnswerPkt(voteService.amountPktInAnswer(voteJSON.getId_answer()));
+           answerService.saveAnswer(answer);
            return new ResponseEntity(HttpStatus.CREATED); 
        }
        else{
            return new ResponseEntity(HttpStatus.NOT_FOUND);
        }      
+       }
+       
+       if(voteJSON.getId_answer() == 0)  {
+           if(voteService.addPkt(voteJSON) == 1){
+           voteJSON.setVotePkt(1L);       
+           voteService.saveVote(voteJSON);
+           
+           Task task = taskService.findTask(voteJSON.getId_task());
+           task.setVoteTaskPkt(voteService.amountPktInTask(voteJSON.getId_task()));
+           taskService.saveTask(task);
+           return new ResponseEntity(HttpStatus.CREATED);
+       }
+       if(voteService.addPkt(voteJSON) == 2){
+           voteJSON.setVotePkt(-1L);
+           voteService.saveVote(voteJSON);
+           
+           Task task = taskService.findTask(voteJSON.getId_task());
+           task.setVoteTaskPkt(voteService.amountPktInTask(voteJSON.getId_task()));
+           taskService.saveTask(task);
+           return new ResponseEntity(HttpStatus.CREATED); 
+       }
+       else{
+           return new ResponseEntity(HttpStatus.NOT_FOUND);
+       }      
+       }
+      
+       return new ResponseEntity(HttpStatus.CREATED);
+       
 }
 }
         

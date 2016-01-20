@@ -18,9 +18,9 @@ public class Vote implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id_vote;
 	private Long id_user;
-	private Long id_task;
-	private Long id_answer;
-        @Column (name = "vote_pkt")
+	private Long id_task = 0L;
+	private Long id_answer = 0L;
+        @Column (name = "vote_pkt", nullable = false)
 	private Long votePkt;
 	
 	public Vote(){}

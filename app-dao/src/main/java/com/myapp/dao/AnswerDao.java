@@ -21,5 +21,9 @@ public interface AnswerDao {
         public void updateAnswer (Answer answer);
 	
 	List<Answer> findAllAnswers();
+        
+        public void deleteAllAnswersIncludedIdTask (Long idTask);
+        
+        public List<Long> findAllAnswersIdIncludedCurrentTaskId (Long idTask);
     
 }

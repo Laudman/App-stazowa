@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "users")
@@ -31,15 +32,14 @@ public class User implements Serializable {
     private String login;
 
     private String password;
-
+//    @Email
     private String email;
 
     private Boolean enabled = true;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Authority> authority = new HashSet<Authority>();
-
-
+    
     public Long getId() {
         return id;
     }

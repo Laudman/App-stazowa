@@ -32,7 +32,7 @@ public class VoteServiceImpl implements VoteService{
                 if(findAllVotes() == null){
                     x = 1;
                 }
-                else if(findAllVotes() != null && vote.getId_task() == null){
+                else if(findAllVotes() != null && vote.getId_task() == 0){
                         for(Vote v: findAllVotes()){
                             if( (v.getId_user().equals(vote.getId_user())) && (v.getId_answer().equals(vote.getId_answer())) ){
                                 x = 0;
@@ -40,7 +40,7 @@ public class VoteServiceImpl implements VoteService{
                             }
                         }
                     }
-                else if(findAllVotes() != null && vote.getId_answer() == null){
+                else if(findAllVotes() != null && vote.getId_answer() == 0){
                         for(Vote v: findAllVotes()){
                             if( (v.getId_user().equals(vote.getId_user())) && (v.getId_task().equals(vote.getId_task())) ){
                                 x = 0;
@@ -55,7 +55,7 @@ public class VoteServiceImpl implements VoteService{
                     x =  2;
                 }
             return x;
-        }
+        } 
         
     
 
@@ -84,5 +84,8 @@ public class VoteServiceImpl implements VoteService{
             return voteDao.amountPktInTask(idTask);
         }
 
+        public void deleteAllVotesIncludedIdAnswer (Long idAnswer){
+            voteDao.deleteAllVotesIncludedIdAnswer(idAnswer);
+        }
   
 }

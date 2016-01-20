@@ -15,4 +15,8 @@ public interface TaskService {
         void updateTask (Task task);
 	
 	List<Task> findAllTasks();
+        
+        public List<Task> findTasksWithSubscribes(Long id_user);
+        
+        public void updateTaskWithNewSubscribe (Long idTask, Long idUser);
 }

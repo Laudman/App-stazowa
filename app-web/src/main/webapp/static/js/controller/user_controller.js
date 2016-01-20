@@ -49,9 +49,6 @@ angular.module('app.controllers')
             };           
             $scope.loadUser();
             
-//            $scope.loadUser({login: $stateParams.login, password: $stateParams.password, email: $stateParams.email});
-//            $scope.loadUser({id: $stateParams.id, login: $stateParams.login, password: $stateParams.password, email: $stateParams.email});
-
             $scope.deleteUser = function() {
             $scope.editUser.$delete({ id: $stateParams.id });$window.location.href = '/';};
         });

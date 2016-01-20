@@ -1,3 +1,4 @@
+
 <div ng-controller="AnswerListController" 
      data-ng-repeat="answer in answers | filter: {'id_task' : currentTask.id_task } ">
     
@@ -10,7 +11,11 @@
 				ng-submit="addAnswer()" novalidate form-autofill-fix>
 			
                             <div class="input-group" style="margin-top: 5px">
-                                            Author: {{answer.id_user}} Id Task:{{answer.id_task}}
+                                <div>  Author: {{answer.id_user}} Id Task:{{answer.id_task}}  </div>  
+                                            <div  ng-controller="NewVoteController"  ng-click="upVote(this.answer)" class="glyphicon glyphicon-chevron-up" style='cursor:pointer'></div>
+                                            <div> {{answer.voteAnswerPkt}} </div>
+                                            <div ng-controller="NewVoteController"  ng-click="downVote(this.answer)" class="glyphicon glyphicon-chevron-down" style='cursor:pointer'></div>
+    
 				</div>
                             
                                 <div style="width:20px; height:20px; margin-top: 25px" class="input-group">
@@ -20,6 +25,7 @@
                                 </div>
 				<a  ui-sref="editAnswer({id_answer: answer.id_answer})" >Edit</a> <a  ng-click="deleteAnswer(this.answer)"style='cursor:pointer'>Delete</a>
 			</form>
+                 
 		</div>
 	</div>
     </div>

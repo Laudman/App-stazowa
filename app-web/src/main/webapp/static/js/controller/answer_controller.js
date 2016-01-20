@@ -62,16 +62,4 @@ angular.module('mainApp.answer.controllers', [])
   $scope.loadAnswer(); 
 })
 
-//.controller('VoteCtrl', function ($scope) {
-//    
-//    $scope.upVote = function () {
-//        $scope.vote = new Vote();
-//    };
-//
-//    $scope.downVote = function () {
-//        $scope.vote--;
-//    };
-//
-////    $scope.vote = 0;
-//});
 

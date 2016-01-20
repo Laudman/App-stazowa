@@ -14,4 +14,6 @@ public interface TaskDao {
         void updateTask (Task task);
 	
 	List<Task> findAllTasks();
+        
+        public List <Task> findTasksWithSubscribes(Long id_user);
 }

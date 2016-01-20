@@ -1,6 +1,6 @@
 //'use strict';
 
-var mainApp = angular.module('mainApp', ['ui.router','mainApp.vote.controllers', 'mainApp.vote.services', 'mainApp.answer.services' ,'mainApp.answer.controllers' ,'mainApp.task.controllers','mainApp.task.services', 'ngResource', 'app.controllers', 'app.services', 'app.constants']);
+var mainApp = angular.module('mainApp', ['ui.router', 'mainApp.subscribe.services', 'mainApp.subscribe.controllers','mainApp.vote.controllers', 'mainApp.vote.services', 'mainApp.answer.services' ,'mainApp.answer.controllers' ,'mainApp.task.controllers','mainApp.task.services', 'ngResource', 'app.controllers', 'app.services', 'app.constants']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
@@ -35,8 +35,13 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', functio
             templateUrl: 'views/users/user.html',
             controller: 'UserEditController'
         })
-// --------------------TASK-----------------------------------------        
-                .state('newTask', {
+// --------------------TASK-----------------------------------------    
+
+            .state('showMyTasks', {
+            url:'/my-tasks',
+            templateUrl: 'views/tasks/myTasks.html',
+            controller: 'TaskListController'
+        }).state('newTask', {
             url:'/tasks/new-task',
             templateUrl: 'views/tasks/task-new.html',
             controller: 'NewTaskController'
@@ -59,6 +64,10 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', functio
             url: '/tasks/:id_task/edit',
             templateUrl: 'views/tasks/task-edit.html',
             controller: 'TaskEditController'
+        }).state('showMySubscribed', { 
+            url: '/tasks-subscribed',
+            templateUrl: 'views/tasks/mySubscribedTasks.html',
+            controller: 'TaskListJoinController'
         })
 //------------------------ANSWER--------------------------------------------------       
             .state('newAnswer', {

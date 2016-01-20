@@ -7,6 +7,8 @@
         <div style="padding-top: 30px" class="panel-body">   
             <form name="editForm" class="form-horizontal" method="post"
 				ng-submit="editUser()" novalidate>
+                <a class="btn btn-default" ui-sref="showMyTasks({id_user:user.id_user})">Show all my tasks</a>
+                <a class="btn btn-default" ui-sref="showMySubscribed({id_user:user.id_user})">Show subscribed tasks</a>
 				
 				<div style="margin-top: 25px" class="input-group">
 					<span class="input-group-addon"><i
@@ -32,6 +34,7 @@
 						<!--<a class="btn btn-primary" ng-click="viewUser({id_user:{{currentUser.id}}})">Edit</a>-->
                                                 <!--<a href="/user/update/{{currentUser.id}}">Edit</a>-->
                                                 <a class="btn btn-primary" ui-sref="editUser({id:user.id})">Edit</a>
+                                                
                                                
 					</div>
 				</div>

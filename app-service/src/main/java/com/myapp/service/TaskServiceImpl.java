@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.myapp.dao.TaskDao;
+import com.myapp.model.Subscribe;
 import com.myapp.model.Task;
 
 @Service("taskService")
@@ -37,5 +38,22 @@ public class TaskServiceImpl implements TaskService{
 	public List<Task> findAllTasks() {
 		return taskDao.findAllTasks();
 	}
+        
+        public List<Task> findTasksWithSubscribes(Long id_user){
+            return taskDao.findTasksWithSubscribes(id_user);
+        }
+        
+        public void updateTaskWithNewSubscribe (Long idTask, Long idUser){
+           Task currentTask = findTask(idTask);
+           Subscribe s = new Subscribe();
+           s.setIdUserSubscribe(idUser);
+           s.setIdTaskSubscribe(currentTask);
+           
+           currentTask.addSubscribe(s);
+           saveTask(currentTask);
+            
+        }
+        
+                
 
 }

@@ -1,5 +1,6 @@
 package com.myapp.service;
 
+import com.myapp.model.Task;
 import com.myapp.model.User;
 import com.myapp.service.exceptions.LoginExistsException;
 import java.util.List;
@@ -23,4 +24,5 @@ public interface UserService {
     void deleteUserByLogin(String login);
 
     List<User> findAllUsers();
+   
 }

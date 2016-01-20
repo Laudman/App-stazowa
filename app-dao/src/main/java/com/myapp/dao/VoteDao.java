@@ -27,4 +27,6 @@ public interface VoteDao {
         public Long amountPktInAnswer(Long idAnswer);
         
         public Long amountPktInTask(Long idTask);
+        
+        public void deleteAllVotesIncludedIdAnswer (Long idAnswer);
 }

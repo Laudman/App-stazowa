@@ -1,10 +1,14 @@
 package com.myapp.dao;
 
+import com.myapp.model.Subscribe;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import com.myapp.model.Task;
+import org.hibernate.Hibernate;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 @Repository("taskDao")
@@ -33,4 +37,11 @@ public class TaskDaoImpl extends AbstractDao<Integer, Task> implements TaskDao{
 		Criteria criteria = createEntityCriteria();
 		return (List<Task>) criteria.list();
 	}
+   
+        public List<Task> findTasksWithSubscribes(Long id_user) {
+        Criteria crit = getSession().createCriteria(Task.class)
+                .createAlias("sub", "subs")
+                .add(Restrictions.eq("subs.idUserSubscribe", id_user));
+        return crit.list();
+    }
 }

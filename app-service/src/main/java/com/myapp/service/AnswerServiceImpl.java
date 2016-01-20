@@ -7,6 +7,7 @@ package com.myapp.service;
 
 import com.myapp.dao.AnswerDao;
 import com.myapp.model.Answer;
+import com.myapp.model.Task;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,5 +49,12 @@ public class AnswerServiceImpl implements AnswerService{
 	public List<Answer> findAllAnswers() {
 		return answerDao.findAllAnswers();
 	}
-
+        
+        public void deleteAllAnswersIncludedIdTask (Long idTask){
+            answerDao.deleteAllAnswersIncludedIdTask(idTask);
+        }
+        
+        public List<Long> findAllAnswersIdIncludedCurrentTaskId (Long idTask){
+           return  answerDao.findAllAnswersIdIncludedCurrentTaskId(idTask);
+        }
 }

@@ -70,5 +70,6 @@ public class UserServiceImpl implements UserService {
     private boolean loginExists(String login) {
         return userDao.findUserByLogin(login) != null;
     }
+    
 
 }

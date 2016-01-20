@@ -22,5 +22,7 @@ public interface AnswerService {
 	
 	List<Answer> findAllAnswers();
         
+        public void deleteAllAnswersIncludedIdTask (Long idTask);
         
+        public List<Long> findAllAnswersIdIncludedCurrentTaskId (Long idTask);
 }

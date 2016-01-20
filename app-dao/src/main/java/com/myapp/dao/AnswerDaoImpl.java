@@ -7,8 +7,9 @@ package com.myapp.dao;
 
 import com.myapp.model.Answer;
 import java.util.List;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -41,6 +42,21 @@ public class AnswerDaoImpl extends AbstractDao<Integer, Answer> implements Answe
 
     public List<Answer> findAllAnswers() {
         return getSession().createCriteria(Answer.class).list();
+    }
+
+    public List<Long> findAllAnswersIdIncludedCurrentTaskId (Long id_task){
+         Query query = getSession().createSQLQuery("select id_answer as num from answers where id_task = :id_task")
+         .addScalar("num", StandardBasicTypes.LONG);
+         query.setParameter("id_task", id_task);
+         List <Long> answersIdByIdTask = query.list();         
+         return answersIdByIdTask;
+    }
+    
+    public void deleteAllAnswersIncludedIdTask (Long id_task){
+        Query query = getSession().createSQLQuery("delete from answers where id_task = :id_task");
+        query.setParameter("id_task", id_task);
+        query.executeUpdate();    
+        
     }
  
     

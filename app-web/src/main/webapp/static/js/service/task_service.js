@@ -2,6 +2,11 @@
 
 angular.module('mainApp.task.services', []).factory('Task', function($resource) {
   return $resource('/tasks/:id_task', { id_task: '@_id_task' }, {
+      
+      queryForSubs:{
+        method: 'GET', isArray: true,
+        url:'/tasks/submited/:id_user'
+      },
     
     delete: {
       method: 'POST',
