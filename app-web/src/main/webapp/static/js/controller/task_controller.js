@@ -1,8 +1,10 @@
 //'use strict';
 
 angular.module('mainApp.task.controllers', [])
-        .controller('TaskListController', function($scope, $rootScope, popupService, $window, Task) {
+        .controller('TaskListController', function($scope, $rootScope, popupService, $window, Task, taskConstant) {
   $scope.tasks = Task.query();
+  
+  $scope.typeOfJobs = taskConstant.typeOfJob;
   
   $rootScope.currentTask = "";
   $scope.deleteTask = function(task) { 
