@@ -31,7 +31,7 @@ $scope.typeOfJob = {
       {id: 2, name: 'Call'},
       {id: 3, name: 'Writing'},
       {id: 4, name: 'Skype'}
-    ],
+    ]
        };
                 var authenticate = function (credentials, callback) {
   

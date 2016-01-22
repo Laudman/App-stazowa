@@ -13,14 +13,14 @@
                                            <label class="checkbox">
                                                <input ng-controller="NewSubscribeController" ng-model="task.subscribed" ng-change="isSubscribed(this.task)" type="checkbox"> Subscribe 
                                            </label>
-                                            <div>Author: {{task.id_user}} </div>
+                                            <div>Author: {{task.id_user}} </div><div ng-style="{'color': 'blue'}"> {{task.addDate | date:'yyyy-MM-dd HH:mm:ss'}}</div>
                                             <div  ng-controller="NewVoteTaskController"  ng-click="upVote(this.task)" class="glyphicon glyphicon-chevron-up" style='cursor:pointer'></div>
                                             <div> {{task.voteTaskPkt}} </div>
                                             <div ng-controller="NewVoteTaskController"  ng-click="downVote(this.task)" class="glyphicon glyphicon-chevron-down" style='cursor:pointer'></div>
 				</div>
                 
                 
-                                <div class="input-group" style="width:250px; height:20px; margin-top: 5px">
+                                <div class="input-group" style="width:300px; height:20px; margin-top: 5px">
 					<span class="input-group-addon"><i
 						class="glyphicon glyphicon-bullhorn"></i></span> 
                                                 <select required name="mySelect" id="typeOfQuestion" class="form-control custom-control" style="cursor: pointer;"
@@ -32,7 +32,7 @@
 				</div>
                 
                 
-                                 <div class="input-group" style="width:250px; height:20px; margin-top: 5px">
+                                 <div class="input-group" style="width:300px; height:20px; margin-top: 5px">
 					<span class="input-group-addon"><i
 						class="glyphicon glyphicon-bullhorn"></i></span> 
                                                 <select required name="mySelect" id="typeOfSpeak" class="form-control custom-control" style="cursor: pointer;"
@@ -43,7 +43,7 @@
                                     </select>
 				</div>
                 
-                                <div class="input-group" style="width:250px; height:20px; margin-top: 5px">
+                                <div class="input-group" style="width:300px; height:20px; margin-top: 5px">
 					<span class="input-group-addon"><i
 						class="glyphicon glyphicon-bullhorn"></i></span> 
                                                 <select required name="mySelect" id="typeOfJob" class="form-control custom-control" style="cursor: pointer;"

@@ -3,10 +3,12 @@ package com.myapp.dao;
 
 import com.myapp.model.Subscribe;
 import com.myapp.model.Task;
+import com.myapp.model.User;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -39,18 +41,27 @@ public class SubscribeDaoImpl extends AbstractDao<Integer, Subscribe> implements
     public List<Subscribe> findAllSubscribes() {
         return getSession().createCriteria(Subscribe.class).list();
     }
-    
-//    public void deleteSubscribeIncludeIdUserAndTask (Long id_user_subscribe, Task id_task){
-//        Query query = getSession().createSQLQuery("delete from subscribes where id_user_subscribe = :id_user_subscribe and id_task = :id_task");
-//        query.setParameter("id_user_subscribe", id_user_subscribe);
-//        query.setParameter("id_task", id_task);
-//        query.executeUpdate();    
-//        
-//    }
+
     public Subscribe findSubscribeIncludeIdUserAndTask (Long id_user_subscribe, Task id_task){
         Criteria crit = getSession().createCriteria(Subscribe.class)
                 .add(Restrictions.eq("idUserSubscribe", id_user_subscribe))
                 .add(Restrictions.eq("task", id_task));
                  return (Subscribe) crit.uniqueResult();
+    }
+    
+    public List<Long> findAllIdUsersSubscribedIdTask (Task id_task){
+        Query query = getSession().createSQLQuery("select id_user_subscribe as num from subscribes where id_task = :id_task")
+            .addScalar("num", StandardBasicTypes.LONG);
+            query.setParameter("id_task", id_task);
+            List <Long> allIdUsers = query.list();         
+            return allIdUsers;
+    }
+    
+    public List<Long> findAllSubscribesIdIncludedCurrentTaskId (Long id_task){
+        Query query = getSession().createSQLQuery("select id_sub as num from subscribes where id_task = :id_task")
+         .addScalar("num", StandardBasicTypes.LONG);
+         query.setParameter("id_task", id_task);
+         List <Long> answersIdByIdTask = query.list();         
+         return answersIdByIdTask;
     }
 }

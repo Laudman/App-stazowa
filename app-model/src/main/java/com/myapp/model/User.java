@@ -3,7 +3,9 @@ package com.myapp.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,6 +41,9 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Authority> authority = new HashSet<Authority>();
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+        private List<Information> information = new ArrayList<Information>();
     
     public Long getId() {
         return id;
@@ -91,6 +96,15 @@ public class User implements Serializable {
     public void addAuthority(Authority authority) {
         this.authority.add(authority);
     }
+    
+    public List<Information> getInformation() {
+        return information;
+    }
+    public void setInformation(List<Information> information) {
+        this.information = information;
+    }
+    public void addInformation(Information information) {
+        this.information.add(information);
+    }
 
-   
 }

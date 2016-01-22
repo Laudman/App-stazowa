@@ -24,6 +24,7 @@ angular.module('mainApp.answer.controllers', [])
       
     $scope.answer.id_user = $rootScope.currentUser.id;
     $scope.answer.id_task = $rootScope.currentTask.id_task;
+    $scope.answer.addDate = new Date();
     
     $scope.answer.$save(function() {
       $state.go("showRequest",{id_task: $scope.answer.id_task}); 

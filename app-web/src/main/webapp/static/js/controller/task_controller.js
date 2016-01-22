@@ -1,8 +1,12 @@
 //'use strict';
 
 angular.module('mainApp.task.controllers', [])
-        .controller('TaskListController', function($scope, $rootScope, popupService, $window, Task) {
-  $scope.tasks = Task.query();
+        .controller('TaskListController', function($scope, $rootScope, popupService, $window, Task, taskConstant) {
+  $scope.tasks = Task.query({id_user: $rootScope.currentUser.id});
+  
+  $scope.typeOfJobs = taskConstant.typeOfJob;
+  $scope.typeOfQuestions = taskConstant.typeOfQuestion;
+  $scope.typeOfSpeaks = taskConstant.typeOfSpeak;
   
   $rootScope.currentTask = "";
   $scope.deleteTask = function(task) { 
@@ -12,11 +16,19 @@ angular.module('mainApp.task.controllers', [])
       });
     }
   };
-}).controller('TaskListJoinController', function($scope, $rootScope, Task) {
+}).controller('TaskListJoinController', function($scope, $rootScope, Task, taskConstant) {
   $scope.tasks = Task.queryForSubs({id_user: $rootScope.currentUser.id});
+  
+  $scope.typeOfJobs = taskConstant.typeOfJob;
+  $scope.typeOfQuestions = taskConstant.typeOfQuestion;
+  $scope.typeOfSpeaks = taskConstant.typeOfSpeak;
+
       
-}).controller('TaskViewController', function($scope, $stateParams, Task, $rootScope) {
-  $scope.task = Task.get({ id_task: $stateParams.id_task }); 
+}).controller('TaskViewController', function($scope, $stateParams, Task, $rootScope, taskConstant) {
+  $scope.task = Task.get({ id_task: $stateParams.id_task });
+  $scope.typeOfJobs = taskConstant.typeOfJob;
+  $scope.typeOfQuestions = taskConstant.typeOfQuestion;
+  $scope.typeOfSpeaks = taskConstant.typeOfSpeak;
   Task.get({ id_task: $stateParams.id_task }, function(task) {
             $rootScope.currentTask = task;
             });
@@ -27,6 +39,7 @@ angular.module('mainApp.task.controllers', [])
   $scope.addTask = function() { 
       
     $scope.task.id_user = $rootScope.currentUser.id;
+    $scope.task.addDate = new Date();
     
     $scope.task.$save(function() {
       $state.go('/'); 

@@ -3,8 +3,11 @@ package com.myapp.controller;
 
 import com.myapp.model.Answer;
 import com.myapp.model.Task;
+import com.myapp.model.User;
 import com.myapp.service.AnswerService;
+import com.myapp.service.SubscribeService;
 import com.myapp.service.TaskService;
+import com.myapp.service.UserService;
 import com.myapp.service.VoteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +33,15 @@ public class AnswerRestController {
     
     @Autowired
         private AnswerService answerService;
+    
     @Autowired
         private VoteService voteService;
+    
+    @Autowired
+        private SubscribeService subscribeService;
+    
+    @Autowired
+        private UserService userService;
       
     @ResponseBody
     @RequestMapping(value = "/answers", method = RequestMethod.GET)
@@ -61,8 +71,16 @@ public class AnswerRestController {
         int autoincrement = currentTask.getAmountAnswer();
         currentTask.setAmountAnswer(++autoincrement);
         taskService.saveTask(currentTask);
-        
         answerService.saveAnswer(answer);
+        
+        List<Long> users = subscribeService.findAllIdUsersSubscribedIdTask(currentTask);
+        if(!users.isEmpty()){  
+            String login = userService.findUser(answer.getId_user()).getLogin();
+            String textInformation ="User " + login + " added new comment.";
+            for (Long idUser :users){
+                userService.addNewInformation(textInformation, idUser, answer.getId_task());
+            }
+        }
         return new ResponseEntity(HttpStatus.CREATED);
     }
     
@@ -79,6 +97,7 @@ public class AnswerRestController {
         currentAnswer.setTextAnswer(answerJSON.getTextAnswer());
 
         answerService.saveAnswer(currentAnswer);
+        
         return new ResponseEntity<Answer>(currentAnswer, HttpStatus.OK);
     }
     
@@ -102,6 +121,15 @@ public class AnswerRestController {
  
         voteService.deleteAllVotesIncludedIdAnswer(answerJSON.getId_answer());
         answerService.deleteAnswerBySession(answerJSON);
+        
+        List<Long> users = subscribeService.findAllIdUsersSubscribedIdTask(currentTask);
+        if(!users.isEmpty()){  
+            String login = userService.findUser(answer.getId_user()).getLogin();
+            String textInformation ="User " + login + " deleted comment.";
+            for (Long idUser :users){
+                userService.addNewInformation(textInformation, idUser, answer.getId_task());
+            }
+        }
         return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);
     }
     

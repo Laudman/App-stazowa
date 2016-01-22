@@ -1,6 +1,7 @@
 package com.myapp.model.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -17,10 +18,19 @@ public class TaskDTO implements Serializable{
     private int amountAnswer;
     private Long voteTaskPkt;
     private Boolean subscribed;
+    private Date addDate;
 
     public TaskDTO() {
     }
-
+    
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
+        }
+        
+        public Date getAddDate(){
+            return addDate;
+        }
+        
     public Long getVoteTaskPkt() {
         return voteTaskPkt;
     }

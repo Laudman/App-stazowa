@@ -51,6 +51,13 @@ public class SubscribeServiceImpl implements SubscribeService{
            deleteSubscribeById(currentSub.getIdSub());
           
         }
+    public List<Long> findAllIdUsersSubscribedIdTask (Task idTask){
+        return subscribeDao.findAllIdUsersSubscribedIdTask(idTask);
+    }
+    
+    public List<Long> findAllSubscribesIdIncludedCurrentTaskId (Long idTask){
+           return  subscribeDao.findAllSubscribesIdIncludedCurrentTaskId(idTask);
+        }
     
     
 }

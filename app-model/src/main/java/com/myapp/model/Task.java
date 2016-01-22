@@ -1,11 +1,10 @@
 package com.myapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,7 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name="tasks")
@@ -37,10 +38,22 @@ public class Task implements Serializable{
 	private int amountAnswer;
         @Column (name = "vote_task_pkt")
         private Long voteTaskPkt;
+        @Column (name = "add_date")
+        @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+        private Date addDate;
         @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         private List<Subscribe> sub = new ArrayList<Subscribe>();
         
 	public Task() {}
+        
+        @PrePersist
+        public void setAddDate() {
+        this.addDate = new Date();
+        }
+        
+        public Date getAddDate(){
+            return addDate;
+        }
         
         public Long getVoteTaskPkt(){
             return voteTaskPkt;

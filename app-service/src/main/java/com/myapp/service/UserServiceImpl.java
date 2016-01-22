@@ -2,6 +2,7 @@ package com.myapp.service;
 
 import com.myapp.dao.UserDao;
 import com.myapp.model.Authority;
+import com.myapp.model.Information;
 import com.myapp.model.User;
 import com.myapp.service.exceptions.LoginExistsException;
 import java.util.List;
@@ -71,5 +72,17 @@ public class UserServiceImpl implements UserService {
         return userDao.findUserByLogin(login) != null;
     }
     
+    public void addNewInformation (String textInformation, Long idUser, Long idTask){
+        User currentUser = findUser(idUser);
+        Information info = new Information();
+        info.setTextInformation(textInformation);
+        info.setIdUser(currentUser);
+        info.setIdTask(idTask);
+        info.setIsRead(false);
+        
+        currentUser.addInformation(info);
+        saveUser(currentUser);
+        
+   }
 
 }

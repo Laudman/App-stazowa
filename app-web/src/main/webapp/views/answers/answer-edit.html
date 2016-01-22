@@ -11,7 +11,7 @@
 			
                             <div class="input-group col-md-3" style="margin-top: 5px">
                                 
-                                            <div>  Author: {{answer.id_user}} Id Task:{{answer.id_task}}  </div>  
+                                            <div>  Author: {{answer.id_user}} Id Task:{{answer.id_task}}  </div>  <div ng-style="{'color': 'blue'}"> {{answer.addDate | date:'yyyy-MM-dd HH:mm:ss'}}</div>
                                             <div  ng-controller="NewVoteController"  ng-click="upVote(this.answer)" class="glyphicon glyphicon-chevron-up" style='cursor:pointer'></div>
                                             <div> {{answer.voteAnswerPkt}} </div>
                                             <div ng-controller="NewVoteController"  ng-click="downVote(this.answer)" class="glyphicon glyphicon-chevron-down" style='cursor:pointer'></div>

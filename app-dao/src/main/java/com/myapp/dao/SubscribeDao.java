@@ -22,4 +22,8 @@ public interface SubscribeDao {
     public Subscribe findSubscribeIncludeIdUserAndTask (Long id_user_subscribe, Task id_task);
     
     public void deleteSubscribeById(Long id_sub);
+    
+    public List<Long> findAllIdUsersSubscribedIdTask (Task id_task);
+    
+    public List<Long> findAllSubscribesIdIncludedCurrentTaskId (Long id_task);
 }

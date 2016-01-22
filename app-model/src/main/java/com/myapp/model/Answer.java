@@ -1,12 +1,15 @@
 package com.myapp.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name="answers")
@@ -21,9 +24,21 @@ public class Answer implements Serializable{
 	private String textAnswer;
         @Column (name = "vote_answer_pkt")
         private Long voteAnswerPkt;
+        @Column (name = "add_date")
+        @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+        private Date addDate;
+        
 	
 	public Answer(){}
         
+        @PrePersist
+        public void setAddDate() {
+        this.addDate = new Date();
+        }
+        
+        public Date getAddDate(){
+            return addDate;
+        }
         public Long getVoteAnswerPkt(){
             return voteAnswerPkt;
         }

@@ -1,14 +1,10 @@
 package com.myapp.dao;
-
-import com.myapp.model.Subscribe;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import com.myapp.model.Task;
-import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 @Repository("taskDao")

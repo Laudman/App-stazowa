@@ -24,4 +24,8 @@ public interface SubscribeService {
     public void deleteSubscribe ( Long idTask, Long idUser );
     
     public void deleteSubscribeById(Long id_sub);
+    
+    public List<Long> findAllIdUsersSubscribedIdTask (Task idTask);
+    
+    public List<Long> findAllSubscribesIdIncludedCurrentTaskId (Long id_task);
 }

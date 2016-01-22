@@ -13,33 +13,30 @@
 				ng-submit="updateTask()" novalidate>
 				<div class="input-group" style="margin-top: 5px">
                                                 
-                                         <div>   Author: {{task.id_user}} </div>
+                                         <div>   Author: {{task.id_user}} </div> <div ng-style="{'color': 'blue'}"> {{task.addDate | date:'yyyy-MM-dd HH:mm:ss'}}</div>
                                             <div  ng-controller="NewVoteTaskController"  ng-click="upVote(this.task)" class="glyphicon glyphicon-chevron-up" style='cursor:pointer'></div>
-                                            <div> {{task.voteTaskPkt}} </div>
+                                            <div> {{task.voteTaskPkt}} </div> 
                                             <div ng-controller="NewVoteTaskController"  ng-click="downVote(this.task)" class="glyphicon glyphicon-chevron-down" style='cursor:pointer'></div>
 				</div>
                 
                 
-                                <div class="input-group" style="width:250px; height:20px; margin-top: 5px">
+                                <div class="input-group" style="width:300px; height:20px; margin-top: 5px">
 					<span class="input-group-addon"><i
 						class="glyphicon glyphicon-bullhorn"></i></span> 
-                                                <input  class="form-control"
-						placeholder="{{task.typeOfQuestion}}"/>
+                                                <select class="form-control" ng-disabled="true" ng-model="task.typeOfQuestion" ng-options="item.id as item.name for item in typeOfQuestions"></select>
 				</div>
                 
                 
-                                 <div class="input-group" style="width:250px; height:20px; margin-top: 5px" >
+                                 <div class="input-group" style="width:300px; height:20px; margin-top: 5px" >
 					<span class="input-group-addon"><i
 						class="glyphicon glyphicon-eye-open"></i></span> 
-                                                <input  class="form-control" 
-						placeholder="{{task.typeOfSpeak}}"/>
+                                                <select class="form-control" ng-disabled="true" ng-model="task.typeOfSpeak" ng-options="item.id as item.name for item in typeOfSpeaks"></select>
 				</div>
                 
-                                <div class="input-group" style="width:250px; height:20px; margin-top: 5px" >
+                                <div class="input-group" style="width:300px; height:20px; margin-top: 5px" >
 					<span class="input-group-addon"><i
 						class="glyphicon glyphicon-briefcase"></i></span> 
-                                                <input  class="form-control" 
-						placeholder="{{task.typeOfJob}}"/>
+                                                <select class="form-control" ng-disabled="true" ng-model="task.typeOfJob" ng-options="item.id as item.name for item in typeOfJobs"></select>
 				</div>
                                
                           

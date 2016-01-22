@@ -24,5 +24,7 @@ public interface UserService {
     void deleteUserByLogin(String login);
 
     List<User> findAllUsers();
+    
+    public void addNewInformation (String textInformation, Long idUser, Long idTask);
    
 }

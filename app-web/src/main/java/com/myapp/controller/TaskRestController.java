@@ -1,10 +1,9 @@
 package com.myapp.controller;
 
-import com.myapp.model.Answer;
 import com.myapp.model.Task;
-import com.myapp.model.Vote;
 import com.myapp.model.dto.TaskDTO;
 import com.myapp.model.dto.TaskMapper;
+import com.myapp.model.global.Globals;
 import com.myapp.service.TaskService;
 import com.myapp.service.VoteService;
 import com.myapp.service.AnswerService;
@@ -31,10 +30,11 @@ public class TaskRestController {
     @Autowired
         private AnswerService answerService;
     
-    
     @ResponseBody
-    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public  List<TaskDTO> listAllTasks()  { 
+    @RequestMapping(value = "/tasks/{id_user}", method = RequestMethod.GET)
+    public  List<TaskDTO> listAllTasks(@PathVariable("id_user") Long id_user)  { 
+            Globals idCurrentUser = new Globals();
+            idCurrentUser.setIdCurrentUser(id_user);
         return TaskMapper.map(taskService.findAllTasks());        
     }
     
@@ -53,7 +53,7 @@ public class TaskRestController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/tasks/{id_task}", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/task/{id_task}", method = RequestMethod.GET)
     public  ResponseEntity<Task> getTask(@PathVariable("id_task") Long id_task) {
    
         Task task = taskService.findTask(id_task);
@@ -96,6 +96,12 @@ public class TaskRestController {
         listIdAnswers.addAll(answerService.findAllAnswersIdIncludedCurrentTaskId (taskJSON.getId_task()));
         for (Long listIdAnswer : listIdAnswers) {
             voteService.deleteAllVotesIncludedIdAnswer (listIdAnswer);
+        }
+        
+        ArrayList<Long> listIdSubscribes = new ArrayList<Long>();
+        listIdAnswers.addAll(answerService.findAllAnswersIdIncludedCurrentTaskId (taskJSON.getId_task()));
+        for (Long listIdSubscribe : listIdSubscribes) {
+            voteService.deleteAllVotesIncludedIdAnswer (listIdSubscribe);
         }
         
         answerService.deleteAllAnswersIncludedIdTask(taskJSON.getId_task());
