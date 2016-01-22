@@ -8,6 +8,8 @@ angular.module('mainApp.task.controllers', [])
   $scope.typeOfQuestions = taskConstant.typeOfQuestion;
   $scope.typeOfSpeaks = taskConstant.typeOfSpeak;
   
+  $scope.typeOfJobs = taskConstant.typeOfJob;
+  
   $rootScope.currentTask = "";
   $scope.deleteTask = function(task) { 
     if (popupService.showPopup('Really delete this?')) {
