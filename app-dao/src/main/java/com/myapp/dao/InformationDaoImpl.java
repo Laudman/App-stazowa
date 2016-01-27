@@ -29,10 +29,10 @@ public class InformationDaoImpl extends AbstractDao<Integer, Information> implem
         getSession().delete(information);
     }
     
-    public void deleteInformationById(Long idInformation) {
+    public void deleteInformationById(Long id_inf) {
 
-		Query query = getSession().createSQLQuery("delete from informations where id_information = :idInformation");
-		query.setParameter("id_information", idInformation);
+		Query query = getSession().createSQLQuery("delete from informations where id_inf = :id_inf");
+		query.setParameter("id_inf", id_inf);
 		query.executeUpdate();
 	}
 
@@ -41,9 +41,16 @@ public class InformationDaoImpl extends AbstractDao<Integer, Information> implem
     }
     
     public Information findInformationsIncludeIdTaskAndUser (Long idTask, User idUser){
-        Criteria crit = getSession().createCriteria(Subscribe.class)
+        Criteria crit = getSession().createCriteria(Information.class)
                 .add(Restrictions.eq("idTask", idTask))
                 .add(Restrictions.eq("user", idUser));
                  return (Information) crit.uniqueResult();
     }
+    
+    public List<Information> findMyInformations(Long id){
+        Query query = getSession().getNamedQuery("findMyInformations")
+        .setLong("id", id);
+        return query.list();
+    }
+    
 }

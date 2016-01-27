@@ -1,0 +1,27 @@
+<style>
+table, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+</style>
+<h3>Mailbox</h3>
+<table class="mailbox">
+  <tr ng-repeat="information in informations">
+    <td>{{ $index + 1 }}</td>
+    <td>{{information.addDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+    <td>{{information.textInformation}}</td>
+    <td>
+        <a class="text-primary"  ui-sref="showRequest({id_task:information.idTask})">Go to task</a>
+        <a class="text-primary" ui-sref="currentUser({id:information.idUserInfo})">Show user</a>
+        <a class="text-primary" style='cursor:pointer' ng-click="deleteInformation(information)">Delete</a>
+      
+    </td>
+  </tr>
+</table>

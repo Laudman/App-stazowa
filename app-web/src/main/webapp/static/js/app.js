@@ -1,6 +1,6 @@
 //'use strict';
 
-var mainApp = angular.module('mainApp', ['ui.router', 'mainApp.subscribe.services', 'mainApp.subscribe.controllers','mainApp.vote.controllers', 'mainApp.vote.services', 'mainApp.answer.services' ,'mainApp.answer.controllers' ,'mainApp.task.controllers','mainApp.task.services', 'ngResource', 'app.controllers', 'app.services', 'app.constants']);
+var mainApp = angular.module('mainApp', ['ui.router', 'mainApp.information.services', 'mainApp.subscribe.services', 'mainApp.subscribe.controllers','mainApp.vote.controllers', 'mainApp.vote.services', 'mainApp.answer.services' ,'mainApp.answer.controllers' ,'mainApp.task.controllers','mainApp.task.services', 'ngResource', 'app.controllers', 'app.services', 'app.constants']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
@@ -11,14 +11,16 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', functio
         $stateProvider
 //---------------------USER-------------------------------------------
           .state('/', {
-            url:'/tasks',
+            url:'/',
             templateUrl: 'views/tasks/tasks.html',
             controller: 'TaskListController'
-        }).state('home', {
-            url:'/tasks',
-            templateUrl: 'views/tasks/tasks.html',
-            controller: 'TaskListController'
-        }).state('currentUser', {
+        })
+//                .state('home', {
+//            url:'/tasks',
+//            templateUrl: 'views/tasks/tasks.html',
+//            controller: 'TaskListController'
+//        })
+                .state('currentUser', {
             url:'/user/:id',
             templateUrl: 'views/users/user_authentication.html',
             controller: 'CurrentUser'
@@ -34,6 +36,10 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', functio
             url: '/user/:id/edit',
             templateUrl: 'views/users/user.html',
             controller: 'UserEditController'
+        }).state('mailbox', { 
+            url: '/informations/:id_user/mailbox',
+            templateUrl: 'views/users/mailBox.html',
+            controller: 'UserMailboxController'
         })
 // --------------------TASK-----------------------------------------    
 
@@ -92,7 +98,15 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', functio
             templateUrl: 'views/answers/answer-edit.html',
             controller: 'AnswerListController'
         })
-          
-        
-;
+//--------------------------ADMIN----------------------------------------------
+          .state('users', {
+            url:'/admin/users',
+            templateUrl: 'views/admin/users.html',
+            controller: 'UserController'
+        }).state('tasks', {
+            url:'/admin/tasks',
+            templateUrl: 'views/admin/tasks.html',
+            controller: 'TaskListController'
+        })
+       ;
     }]);

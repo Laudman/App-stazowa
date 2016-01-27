@@ -34,8 +34,17 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
         update (user);
     }
     
+//    public List<User> findAllUsers() {
+//        return getSession().createCriteria(User.class).list();
+//    }
+//    public List<User> findAllUsers() {
+//        Query query = getSession().createSQLQuery("select * from users");
+//        List <User> users = query.list();         
+//            return users;
+//    }
     public List<User> findAllUsers() {
-        return getSession().createCriteria(User.class).list();
+        Query query = getSession().getNamedQuery("users");
+        return query.list();
     }
 
     public void deleteUserByLogin(String login) {

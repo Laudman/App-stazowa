@@ -4,6 +4,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import com.myapp.model.Task;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -30,8 +31,8 @@ public class TaskDaoImpl extends AbstractDao<Integer, Task> implements TaskDao{
 
 	@SuppressWarnings("unchecked")
 	public List<Task> findAllTasks() {
-		Criteria criteria = createEntityCriteria();
-		return (List<Task>) criteria.list();
+		return createEntityCriteria().setFetchMode("sub", FetchMode.JOIN)
+                        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
    
         public List<Task> findTasksWithSubscribes(Long id_user) {

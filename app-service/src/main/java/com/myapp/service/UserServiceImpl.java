@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service ("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -72,11 +72,13 @@ public class UserServiceImpl implements UserService {
         return userDao.findUserByLogin(login) != null;
     }
     
-    public void addNewInformation (String textInformation, Long idUser, Long idTask){
+    public void addNewInformation (String textInformation, Long idUser, Long idTask, Long thisUser){
         User currentUser = findUser(idUser);
         Information info = new Information();
         info.setTextInformation(textInformation);
         info.setIdUser(currentUser);
+        info.setIdUserInfo(thisUser);
+        info.setAddDate();
         info.setIdTask(idTask);
         info.setIsRead(false);
         

@@ -1,7 +1,7 @@
 //'use strict';
 
 angular.module('app.services').factory('User', function ($resource) {
-    return $resource('user/:id', {id_user: '@_id'}, {
+    return $resource('/user/:id', {id_user: '@_id'}, {
         save:{
             method:'POST',
             url: '/user/register'

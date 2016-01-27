@@ -1,5 +1,5 @@
 <a ui-sref="newTask" class=" btn-lg nodecoration">Add New Task</a>
-<div ng-repeat="task in tasks">
+<div ng-repeat="task in tasks ">
     
     <div ng-controller="AppController" id="viewbox" style="margin-top: 5px;"
      >
@@ -16,7 +16,7 @@
 				<div class="input-group" style="margin-top: 5px" class="mainbox col-md-12">
                                                 
                                             <label class="checkbox">
-                                               <input ng-controller="NewSubscribeController" ng-model="task.subscribed" ng-change="isSubscribed(this.task)" type="checkbox"> Subscribe 
+                                               <input ng-show="currentUser.user" ng-controller="NewSubscribeController" ng-model="task.subscribed" ng-change="isSubscribed(this.task)" type="checkbox"> Subscribe 
                                             </label>
                                                
                                             <div>Author: {{task.id_user}}</div>    <div ng-style="{'color': 'blue'}"> {{task.addDate | date:'yyyy-MM-dd HH:mm:ss'}}</div>
@@ -60,8 +60,8 @@
                                </div> 
 				<div style="margin-top: 40px" class="form-group">
 					<div class="col-sm-12 controls">
-                                                <a class="btn btn-primary" ui-sref="editTask({id_task:task.id_task})">Edit</a>
-                                                <a  ng-controller="TaskListController" class="btn btn-danger" ng-click="deleteTask(this.task)">Delete</a>
+                                                <a class="btn btn-primary" ng-show="isOwner(this.task)" ui-sref="editTask({id_task:task.id_task})">Edit</a>
+                                                <a class="btn btn-danger" ng-show="isOwner(this.task)" ng-click="deleteTask(this.task)">Delete</a>
                                         </div>
                                 </div>
                 </form>

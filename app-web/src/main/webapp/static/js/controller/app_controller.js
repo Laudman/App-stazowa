@@ -44,14 +44,13 @@ $scope.typeOfJob = {
                         if (data.name) {
                             $rootScope.authenticated = true;
                             $rootScope.currentUser = data;
-                            $scope.admin = data && data.roles && data.roles.indexOf("ROLE_ADMIN")>0;
                         } else {
                             $rootScope.authenticated = false;
                             $scope.admin = false;
                         }
                         callback && callback();
                     }).error(function (data) {
-                        $rootScope.authenticated = false;
+                        $rootScope.currentUser ="";
                         callback && callback();
                     });
 
@@ -61,7 +60,7 @@ $scope.typeOfJob = {
                 $scope.credentials = {};     
                 $scope.login = function () {
                     authenticate($scope.credentials, function () {              
-                        if ($rootScope.authenticated) {
+                        if ($rootScope.currentUser.user) {
                             $state.go("/");
                             $scope.error = false;
                         } else {
@@ -73,11 +72,11 @@ $scope.typeOfJob = {
                 
                 $scope.logout = function () {
                     $http.post('logout', {}).success(function () {
-                        $rootScope.authenticated = false;
+                        $rootScope.currentUser ="";
                         $scope.admin = false;
                         $state.go("/");
                     }).error(function (data) {
-                        $rootScope.authenticated = false;
+                        $rootScope.currentUser ="";
                         $scope.authenticated = false;
                         $scope.admin = false;
                     });

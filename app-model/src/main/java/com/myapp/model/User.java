@@ -14,9 +14,20 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.Email;
+
+
+@NamedNativeQueries({
+	@NamedNativeQuery(
+	name = "users",
+	query = "select * from users",
+        resultClass = User.class
+	)
+})
 
 @Entity
 @Table(name = "users")

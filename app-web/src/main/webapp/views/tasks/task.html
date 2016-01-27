@@ -11,6 +11,10 @@
             <form name="editForm" class="form-horizontal" method="post"
 				ng-submit="updateTask()" novalidate>
 				<div class="input-group" style="margin-top: 5px">
+                                    
+                                    <label ng-show="currentUser.user" class="checkbox">
+                                      <input  ng-controller="NewSubscribeController" ng-model="task.subscribed" ng-change="isSubscribed(this.task)" type="checkbox"> Subscribe
+                                            </label>
                                                 
                                             <div>Author: {{task.id_user}} </div> <div ng-style="{'color': 'blue'}"> {{task.addDate | date:'yyyy-MM-dd HH:mm:ss'}}</div>
                                             <div  ng-controller="NewVoteTaskController"  ng-click="upVote(this.task)" class="glyphicon glyphicon-chevron-up" style='cursor:pointer'></div>
@@ -52,10 +56,8 @@
                                </div> 
 				<div style="margin-top: 40px" class="form-group">
 					<div class="col-sm-12 controls">
-						<!--<a class="btn btn-primary" ng-click="viewUser({id_user:{{currentUser.id}}})">Edit</a>-->
-                                                <!--<a href="/user/update/{{currentUser.id}}">Edit</a>-->
-                                                <a class="btn btn-primary" ui-sref="editTask({id_task:task.id_task})">Edit</a>
-                                               
+                                                <a class="btn btn-primary" ng-show="isOwner(this.task)" ui-sref="editTask({id_task:task.id_task})">Edit</a>
+                                                <a class="btn btn-danger" ng-show="isOwner(this.task)" ng-click="deleteTask(this.task)">Delete</a>
                                         </div>
                                 </div>
  

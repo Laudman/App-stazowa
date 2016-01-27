@@ -1,10 +1,12 @@
 package com.myapp.controller;
 
+import com.myapp.model.Authority;
 import com.myapp.model.User;
 import com.myapp.service.UserService;
-import java.nio.file.attribute.UserPrincipal;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -42,9 +44,23 @@ public class AppController {
     map.put("login", getuser.getLogin());
     map.put("id", getuser.getId());
     map.put("email", getuser.getEmail());
-    map.put("enabled", getuser.getEnabled());
-    map.put("authority", AuthorityUtils.authorityListToSet(((Authentication) user)
-        .getAuthorities()));
+    map.put("enabled", getuser.getEnabled()); 
+//    map.put("isAdmin", new ArrayList(AuthorityUtils.authorityListToSet(((Authentication) user).getAuthorities())).indexOf("ADMIN") > 0);
+    boolean isAdmin = false;
+    boolean isUser = false;
+    for(Authority iterator: getuser.getAuthority()){
+        if(iterator.getAuthority().equals("ADMIN")) {
+            isAdmin = true;
+            isUser = true;
+        }
+    }
+    map.put("admin", isAdmin);
+    for(Authority iterator: getuser.getAuthority()){
+        if(iterator.getAuthority().equals("USER")) isUser = true;
+    }
+    map.put("user", isUser);
+//    map.put("authority", AuthorityUtils.authorityListToSet(((Authentication) user)
+//        .getAuthorities()));
     }
     return map;
     

@@ -8,6 +8,7 @@ package com.myapp.model.global;
 public class Globals {
     public static Long idCurrentUser;
     
+    
     public Long getIdCurrentUser() {
         return idCurrentUser;
     }

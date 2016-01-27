@@ -2,13 +2,27 @@
 
 angular.module('mainApp.task.controllers', [])
         .controller('TaskListController', function($scope, $rootScope, popupService, $window, Task, taskConstant) {
-  $scope.tasks = Task.query({id_user: $rootScope.currentUser.id});
-  
+            if($rootScope.currentUser.id == null){
+                $scope.tasks = Task.queryGuest();
+            }
+            else{
+                Task.query({id_user: $rootScope.currentUser.id}, function(tasks) {
+                    $scope.tasks = tasks;
+                });
+            }
   $scope.typeOfJobs = taskConstant.typeOfJob;
   $scope.typeOfQuestions = taskConstant.typeOfQuestion;
   $scope.typeOfSpeaks = taskConstant.typeOfSpeak;
   
-  $scope.typeOfJobs = taskConstant.typeOfJob;
+   $scope.isOwner = function (task) {
+               if (task.id_user == $rootScope.currentUser.id || $rootScope.currentUser.admin) {
+                        return true;
+                    
+                    };
+                
+                };
+  
+  
   
   $rootScope.currentTask = "";
   $scope.deleteTask = function(task) { 
@@ -34,6 +48,12 @@ angular.module('mainApp.task.controllers', [])
   Task.get({ id_task: $stateParams.id_task }, function(task) {
             $rootScope.currentTask = task;
             });
+            
+             $scope.isOwner = function (task) {
+               if (task.id_user == $rootScope.currentUser.id || $rootScope.currentUser.admin) {
+                        return true;
+                    };
+                };
 
 })
   .controller('NewTaskController', function($scope, $state, Task, $rootScope) {

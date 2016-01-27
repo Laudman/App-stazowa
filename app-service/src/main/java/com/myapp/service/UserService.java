@@ -1,6 +1,5 @@
 package com.myapp.service;
 
-import com.myapp.model.Task;
 import com.myapp.model.User;
 import com.myapp.service.exceptions.LoginExistsException;
 import java.util.List;
@@ -25,6 +24,6 @@ public interface UserService {
 
     List<User> findAllUsers();
     
-    public void addNewInformation (String textInformation, Long idUser, Long idTask);
+    public void addNewInformation (String textInformation, Long idUser, Long idTask, Long thisUser);
    
 }

@@ -26,4 +26,6 @@ public interface InformationDao {
     public Information findInformationsIncludeIdTaskAndUser (Long idTask, User idUser);
     
     public void deleteInformationById(Long idInformation);
+    
+    List<Information> findMyInformations(Long id);
 }

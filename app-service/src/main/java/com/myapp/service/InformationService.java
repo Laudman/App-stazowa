@@ -27,4 +27,6 @@ public interface InformationService {
     public void deleteInformationById(Long idInformation);
     
     public void deleteInformation ( Long idTask, Long idUser );
+    
+    List<Information> findMyInformations(Long id);
 }

@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<!-- Tooltip on top */
+  .test + .tooltip.top > .tooltip-arrow {
+      border-top: 5px solid green;
+  }-->
+<!--<script>
+$(document).ready(function(){
+    $('.btn-warning').tooltip({title: "Hooray", placement: "top"}); 
+    $('.btn-success').tooltip({title: "Hooray", placement: "bottom"}); 
+    $('.btn-danger').tooltip({title: "Hooray", placement: "left"}); 
+    $('.btn-default').tooltip({title: "Hooray", placement: "right"}); 
+});
+</script>-->
 <html data-ng-app="mainApp">
     <head>
         <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"/>
@@ -16,19 +28,25 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/">IT interview Questions & Answer</a>
+                    <a class="navbar-brand" href="#/">IT interview Questions & Answer</a>
                 </div>
                 <div ng-controller="AppController">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a ui-sref="home">Home</a></li>
+                        <li class="active"><a ui-sref="/" title="Hooray!">Home</a></li>
+                    <li ng-show="currentUser.admin" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin manager <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="users">Users</a></li>
+                            <li><a ui-sref="tasks">Tasks</a></li>
+                        </ul>
+                    </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         
-                        <li ng-show="authenticated" class="ng-cloak"><a ui-sref="currentUser({id:currentUser.id})"><span class="glyphicon glyphicon-envelope" ></span> <span class="text-primary">{{currentEmail}}</span></a></li>
-                        <li ng-show="authenticated" class="ng-cloak"><a ui-sref="currentUser({id:currentUser.id})"><span class="glyphicon glyphicon-cog" ></span> <span class="text-primary">{{currentUser.login}}</span></a></li>
-                        <li ng-show="!authenticated" class="ng-cloak"><a href="#/signup"><span class="glyphicon glyphicon-cog"></span> Sign Up</a></li>
-                        <li ng-show="!authenticated"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                        <li ng-show="authenticated" class="ng-cloak"><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li ng-show="currentUser.user" class="ng-cloak"><a ui-sref="mailbox({id:currentUser.id})"><span class="glyphicon glyphicon-envelope" ></span> <span class="text-primary">{{currentEmail}}</span></a></li>
+                        <li ng-show="currentUser.user" class="ng-cloak"><a ui-sref="currentUser({id:currentUser.id})"><span class="glyphicon glyphicon-cog" ></span> <span class="text-primary">{{currentUser.login}}</span></a></li>
+                        <li ng-show="!currentUser.user" class="ng-cloak"><a href="#/signup"><span class="glyphicon glyphicon-cog"></span> Sign Up</a></li>
+                        <li ng-show="!currentUser.user"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li ng-show="currentUser.user" class="ng-cloak"><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -66,6 +84,8 @@
         <script type="text/javascript" src="static/js/service/answer_service.js"></script>
         <script type="text/javascript" src="static/js/service/vote_service.js"></script>
         <script type="text/javascript" src="static/js/service/subscribe_service.js"></script>
+        <script type="text/javascript" src="static/js/service/mailbox_service.js"></script>
+       
         
         <script type="text/javascript" src="static/js/controller/user_controller.js"></script>
         <script type="text/javascript" src="static/js/controller/task_controller.js"></script>
@@ -73,6 +93,7 @@
         <script type="text/javascript" src="static/js/controller/vote_controller.js"></script>
         <script type="text/javascript" src="static/js/controller/app_controller.js"></script>
         <script type="text/javascript" src="static/js/controller/subscribe_controller.js"></script>
+        
 
     </body>
 </html>

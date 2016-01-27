@@ -3,7 +3,6 @@ package com.myapp.controller;
 
 import com.myapp.model.Answer;
 import com.myapp.model.Task;
-import com.myapp.model.User;
 import com.myapp.service.AnswerService;
 import com.myapp.service.SubscribeService;
 import com.myapp.service.TaskService;
@@ -76,9 +75,9 @@ public class AnswerRestController {
         List<Long> users = subscribeService.findAllIdUsersSubscribedIdTask(currentTask);
         if(!users.isEmpty()){  
             String login = userService.findUser(answer.getId_user()).getLogin();
-            String textInformation ="User " + login + " added new comment.";
+            String textInformation ="User '" + login + "' added new comment.";
             for (Long idUser :users){
-                userService.addNewInformation(textInformation, idUser, answer.getId_task());
+                userService.addNewInformation(textInformation, idUser, answer.getId_task(), answer.getId_user());
             }
         }
         return new ResponseEntity(HttpStatus.CREATED);
@@ -125,9 +124,9 @@ public class AnswerRestController {
         List<Long> users = subscribeService.findAllIdUsersSubscribedIdTask(currentTask);
         if(!users.isEmpty()){  
             String login = userService.findUser(answer.getId_user()).getLogin();
-            String textInformation ="User " + login + " deleted comment.";
+            String textInformation ="User '" + login + "' deleted comment.";
             for (Long idUser :users){
-                userService.addNewInformation(textInformation, idUser, answer.getId_task());
+                userService.addNewInformation(textInformation, idUser, answer.getId_task(), answer.getId_user());
             }
         }
         return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);

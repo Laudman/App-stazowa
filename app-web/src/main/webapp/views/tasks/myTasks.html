@@ -52,8 +52,8 @@
                                </div> 
 				<div style="margin-top: 40px" class="form-group">
 					<div class="col-sm-12 controls">
-                                                <a class="btn btn-primary" ui-sref="editTask({id_task:task.id_task})">Edit</a>
-                                                <a  ng-controller="TaskListController" class="btn btn-danger" ng-click="deleteTask(this.task)">Delete</a>
+                                                <a class="btn btn-primary" ng-show="isOwner(this.task)" ui-sref="editTask({id_task:task.id_task})">Edit</a>
+                                                <a  ng-controller="TaskListController" ng-show="isOwner(this.task)" class="btn btn-danger" ng-click="deleteTask(this.task)">Delete</a>
                                         </div>
                                 </div>
                 </form>

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("informationService")
 @Transactional
-public class InformationServiceImpl {
+public class InformationServiceImpl implements InformationService{
     
     @Autowired
         private InformationDao informationDao;
@@ -53,4 +53,8 @@ public class InformationServiceImpl {
            deleteInformationById(currentInf.getIdInformation());
           
         }
+    
+    public List<Information> findMyInformations(Long id){
+       return informationDao.findMyInformations(id);
+    }
 }

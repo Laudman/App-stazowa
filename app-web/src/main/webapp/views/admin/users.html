@@ -1,3 +1,4 @@
+<div ng-repeat="user in users track by $index">
 <div ng-controller="AppController" id="viewbox" style="margin-top: 10px;"
      class="mainbox col-md-12">
     <div class="panel panel-info">
@@ -31,8 +32,9 @@
 				
 				<div style="margin-top: 10px" class="form-group">
 					<div class="col-sm-12 controls">
-						
-                                                <a ng-show="isOwner(this.user)" class="btn btn-primary" ui-sref="editUser({id:user.id})">Edit</a>
+						<!--<a class="btn btn-primary" ng-click="viewUser({id_user:{{currentUser.id}}})">Edit</a>-->
+                                                <!--<a href="/user/update/{{currentUser.id}}">Edit</a>-->
+                                                <a class="btn btn-primary" ui-sref="editUser({id:user.id})">Edit</a>
                                                 
                                                
 					</div>
@@ -41,3 +43,4 @@
                 </div>
          </div>
 </div>
+    </div>

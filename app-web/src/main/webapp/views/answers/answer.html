@@ -23,7 +23,7 @@
                                 <textarea class="form-control custom-control" style="height:120px; width:650px"  id="textareaEdit" ng-model="answer.textAnswer" 
                                           ></textarea>
                                 </div>
-				<a  ui-sref="editAnswer({id_answer: answer.id_answer})" >Edit</a> <a  ng-click="deleteAnswer(this.answer)"style='cursor:pointer'>Delete</a>
+				<a ng-show="isOwner(this.answer)" ui-sref="editAnswer({id_answer: answer.id_answer})" >Edit</a> <a ng-show="isOwner(this.answer)" ng-click="deleteAnswer(this.answer)"style='cursor:pointer'>Delete</a>
 			</form>
                  
 		</div>
