@@ -12,8 +12,7 @@
   		<groupId>com.myapp</groupId>
   		<artifactId>app-model</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
-  	</dependency>
-        
+  	</dependency>      
   	<dependency>
   		<groupId>com.myapp</groupId>
   		<artifactId>app-service</artifactId>

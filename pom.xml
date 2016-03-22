@@ -6,8 +6,8 @@
   <packaging>pom</packaging>
   <name>app</name>
   <modules>
-            <module>app-dao</module>
             <module>app-model</module>
+            <module>app-dao</module> 
             <module>app-service</module>
             <module>app-web</module>
   </modules>
